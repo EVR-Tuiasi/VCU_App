@@ -1143,7 +1143,7 @@
               </font>
              </property>
              <property name="text">
-              <string>lllll</string>
+              <string>TSAC</string>
              </property>
              <property name="textFormat">
               <enum>Qt::TextFormat::PlainText</enum>
