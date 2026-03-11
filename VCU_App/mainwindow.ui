@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1473</width>
-    <height>1006</height>
+    <width>2099</width>
+    <height>1296</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -148,7 +148,7 @@
        <enum>QTabWidget::TabShape::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_general">
        <property name="palette">
@@ -626,7 +626,7 @@
        <attribute name="title">
         <string>General</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,1,1">
+       <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,2,1,1">
         <property name="spacing">
          <number>2</number>
         </property>
@@ -14228,7 +14228,7 @@
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QLineEdit" name="lineEdit_12">
+                       <widget class="QLineEdit" name="Accel_Volt_S1_lineEdit">
                         <property name="readOnly">
                          <bool>true</bool>
                         </property>
@@ -14828,7 +14828,7 @@
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QLineEdit" name="lineEdit_14">
+                       <widget class="QLineEdit" name="Accel_Travel_S1_lineEdit">
                         <property name="readOnly">
                          <bool>true</bool>
                         </property>
@@ -24926,7 +24926,7 @@
                       <widget class="QLineEdit" name="lineEdit_50"/>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_51"/>
+                      <widget class="QLineEdit" name="Tsac_Temp_Highest_lineEdit"/>
                      </item>
                      <item>
                       <widget class="QLineEdit" name="lineEdit_52"/>
@@ -26690,7 +26690,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QFrame" name="">
+               <widget class="QFrame" name="frame">
                 <property name="palette">
                  <palette>
                   <active>
@@ -29204,7 +29204,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QFrame" name="">
+               <widget class="QFrame" name="frame">
                 <property name="palette">
                  <palette>
                   <active>
@@ -29709,7 +29709,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QFrame" name="">
+                  <widget class="QFrame" name="frame">
                    <property name="autoFillBackground">
                     <bool>true</bool>
                    </property>
@@ -33712,7 +33712,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QFrame" name="">
+               <widget class="QFrame" name="frame">
                 <property name="palette">
                  <palette>
                   <active>
@@ -36140,22 +36140,5 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>horizontalSlider_2</sender>
-   <signal>sliderMoved(int)</signal>
-   <receiver>lineEdit</receiver>
-   <slot>update()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>278</x>
-     <y>211</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>122</x>
-     <y>157</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

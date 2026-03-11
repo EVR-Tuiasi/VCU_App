@@ -17,11 +17,16 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
-private slots:
-    void on_horizontalSlider_valueChanged(int value);
-
-private:
     Ui::MainWindow *ui;
+    QTimer* timer;
 };
+
+void MainWindow_Create(void);
+
+void MainWindow_Show(void);
+
+void MainWindow_Update(void);
+
+void SimulatedData_Update(void);
+
 #endif // MAINWINDOW_H
