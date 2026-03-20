@@ -193,6 +193,89 @@ static UartBufferValidity_t UartMessaging_CheckValidityOfBuffer(uint8_t buffer[1
     }
 }
 static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){//this should parse the data from the buffer and update the global structure holding all values with the received ones.
+    uint8_t id = buffer[0];
+    uint8_t data[8];
+    for(int i=1;i<=8;i++)
+        data[i-1] = buffer[i];
+    switch(id){
+        case idUartFrana:
+            //extragere date
+            CarData_SetValue(PEDALS_BrakeSensor1Voltage, ((((uint16_t)data[6])<<8) | data[7]) & (0x3FFF));
+            CarData_SetValue(PEDALS_BrakeSensor2Voltage, ((((((uint16_t)data[4])<<8) | data[5]) & (0x0FFF)) << 2) | (data[6]>>6));
+            CarData_SetValue(PEDALS_BrakeSensor1TravelPercentage, (((uint8_t)(data[3]<<4)) | (data[4]>>4)) & (0x7F));
+            CarData_SetValue(PEDALS_BrakeSensor2TravelPercentage, (((uint8_t)(data[2]<<5)) | (data[3]>>3)) & (0x7F));
+            CarData_SetValue(PEDALS_PressureSensorBars, ((uint8_t)(data[1]<<6)) | (data[2]>>2));
+            CarData_SetValue(PEDALS_Brake_Implausibility, (data[0] & (1<<1)) >> 1);
+            CarData_SetValue(PEDALS_Brake_Sensor1_OutOfRangeOutput, (data[0] & (1<<5)) >> 5);
+            CarData_SetValue(PEDALS_Brake_Sensor1_ShortToVcc, (data[0] & (1<<6)) >> 6);
+            CarData_SetValue(PEDALS_Brake_Sensor1_ShortToGnd, (data[0] & (1<<7)) >> 7);
+            CarData_SetValue(PEDALS_Brake_Sensor2_OutOfRangeOutput, (data[0] & (1<<2)) >> 2);
+            CarData_SetValue(PEDALS_Brake_Sensor2_ShortToVcc, (data[0] & (1<<3)) >> 3);
+            CarData_SetValue(PEDALS_Brake_Sensor2_ShortToGnd, (data[0] & (1<<4)) >> 4);
+            break;
+
+        case idUartAcceleratie:
+            //extragere date
+            CarData_SetValue(PEDALS_AcceleratorSensor1Voltage, ((((uint16_t)data[6])<<8) | data[7]) & (0x3FFF));
+            CarData_SetValue(PEDALS_AcceleratorSensor2Voltage, ((((((uint16_t)data[4])<<8) | data[5]) & (0x0FFF)) << 2) | (data[6]>>6));
+            CarData_SetValue(PEDALS_AcceleratorSensor1TravelPercentage, (((uint8_t)(data[3]<<4)) | (data[4]>>4)) & (0x7F));
+            CarData_SetValue(PEDALS_AcceleratorSensor2TravelPercentage, (((uint8_t)(data[2]<<5)) | (data[3]>>3)) & (0x7F));
+            CarData_SetValue(PEDALS_PressureSensorVoltage, ((((uint16_t)data[1]<<6)) | (data[2]>>2)) & (0x01FF));
+            CarData_SetValue(PEDALS_Accel_Implausibility, (data[0] & (1<<1)) >> 1);
+            CarData_SetValue(PEDALS_Accel_Sensor1_OutOfRangeOutput, (data[0] & (1<<5)) >> 5);
+            CarData_SetValue(PEDALS_Accel_Sensor1_ShortToVcc, (data[0] & (1<<6)) >> 6);
+            CarData_SetValue(PEDALS_Accel_Sensor1_ShortToGnd, (data[0] & (1<<7)) >> 7);
+            CarData_SetValue(PEDALS_Accel_Sensor2_OutOfRangeOutput, (data[0] & (1<<2)) >> 2);
+            CarData_SetValue(PEDALS_Accel_Sensor2_ShortToVcc, (data[0] & (1<<3)) >> 3);
+            CarData_SetValue(PEDALS_Accel_Sensor2_ShortToGnd, (data[0] & (1<<4)) >>4);
+            break;
+
+        case idUartInvertorStanga:
+            //extragere date
+            CarData_SetValue(INVERTERS_LeftMotorTemperature, data[7]);
+            CarData_SetValue(INVERTERS_LeftInverterTemperature, data[6]);
+            CarData_SetValue(INVERTERS_LeftInverterThrottle, data[5]);
+            CarData_SetValue(INVERTERS_LeftMotorSpeedKmh, data[4]);
+            CarData_SetValue(INVERTERS_LeftInverterThrottleFeedback, data[3]);
+            CarData_SetValue(INVERTERS_LeftInverterInputVoltage, ((((uint16_t)data[1])<<8) | data[2]) & (0x07FF));
+            CarData_SetValue(INVERTERS_LeftMotorRpm, ((((uint16_t)data[0])<<8) | data[1]) >> 3);
+            break;
+
+        case idUartInvertorDreapta:
+            //extragere date
+            CarData_SetValue(INVERTERS_RightMotorTemperature, data[7]);
+            CarData_SetValue(INVERTERS_RightInverterTemperature, data[6]);
+            CarData_SetValue(INVERTERS_RightInverterSentThrottle, data[5]);
+            CarData_SetValue(INVERTERS_RightMotorSpeedKmh, data[4]);
+            CarData_SetValue(INVERTERS_RightInverterThrottleFeedback, data[3]);
+            CarData_SetValue(INVERTERS_RightInverterInputVoltage, ((((uint16_t)data[1])<<8) | data[2]) & (0x7FF));
+            CarData_SetValue(INVERTERS_RightMotorRpm, ((((uint16_t)data[0])<<8) | data[1]) >> 3);
+            break;
+
+        case idUartInvertoare:
+            CarData_SetValue(INVERTERS_IsCarRunning, (data[0] & (1<<7)) >> 7);
+            CarData_SetValue(INVERTERS_IsCarInReverse, (data[0] & (1<<6)) >> 6);
+            CarData_SetValue(INVERTERS_LeftInverterCurrent, ((((uint16_t)data[6])<<8) | data[7]) & (0x0FFF));
+            CarData_SetValue(INVERTERS_RightInverterCurrent, ((((uint16_t)data[5])<<8) | data[6]) >> 4);
+            break;
+
+        case idUartBaterie:
+            //extragere date
+            CarData_SetValue(TSAC_OverallCurrent, ((((uint16_t)data[6])<<8) | data[7]) & (0x1FFF));
+            CarData_SetValue(TSAC_OverallVoltage, ((((uint16_t)data[5])<<8) | data[6]) >> 5);
+            CarData_SetValue(TSAC_HighestCellTemperature, ((((uint16_t)data[3])<<8) | data[4]) & (0x03FF));
+            CarData_SetValue(TSAC_HighestCellVoltage, (((((uint16_t)data[2])<<8) | data[3]) >> 2) & (0x03FF));
+            //More To Come:)
+            break;
+
+        case idUartBord:
+            //extragere date
+            CarData_SetValue(DASHBOARD_ActivationButtonPressed, (data[0] & (1<<7)) >> 7);
+            CarData_SetValue(DASHBOARD_CarReverseCommandPressed, (data[0] & (1<<6)) >> 6);
+            CarData_SetValue(DASHBOARD_IsDisplayWorking, (data[0] & (1<<5)) >> 5);
+            CarData_SetValue(DASHBOARD_IsSegmentsDriverWorking, (data[0] & (1<<4)) >> 4);
+            break;
+    }
 }
 #ifdef __cplusplus
 }
