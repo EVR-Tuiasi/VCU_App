@@ -4,7 +4,7 @@
 #include <QApplication>
 #include <QThread>
 
-static const bool simulateUart = true; // --- IMPORTANT ---
+static const bool simulateUart = false; // --- IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ---
 //TRUE: values will be generated randomly by the data acquisition thread to test the user interface.
 //FALSE: value will be read from the COM port
 static bool shouldDataAcquisitionThreadRun = true;

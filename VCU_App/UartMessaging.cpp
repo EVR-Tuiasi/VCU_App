@@ -1,3 +1,6 @@
+#include <QSerialPort>
+#include <QElapsedTimer>
+
 #ifdef __cplusplus
 extern "C"{
 #endif
@@ -13,6 +16,7 @@ extern "C"{
 #include "stdint.h"
 #include "UartMessaging.h"
 #include "CarData.h"
+
 
 /*==================================================================================================
 *                          LOCAL TYPEDEFS (STRUCTURES, UNIONS, ENUMS)
@@ -43,6 +47,10 @@ extern "C"{
 *                                      GLOBAL VARIABLES
 ==================================================================================================*/
 
+static QSerialPort *serialPort = nullptr;
+static QElapsedTimer timer;
+static uint32_t timeSinceLastMessage = 0;
+ComPortSettings_t settings = {true, 9600};
 
 /*==================================================================================================
 *                                   LOCAL FUNCTION PROTOTYPES
@@ -64,6 +72,28 @@ static void UartMessaging_ParseBuffer()
         //else daca bufferul nu are crc valid:
             //scoate 10 caractere din buffer (lungimea unui mesaj intreg)
     //reia bucla
+
+    while(serialPort->bytesAvailable()>=10){
+        uint8_t buffer[10];
+        serialPort->peek(reinterpret_cast<char*>(buffer), 10);
+        UartBufferValidity_t response = UartMessaging_CheckValidityOfBuffer(buffer);
+        if(response==BufferValid){
+            serialPort->read(reinterpret_cast<char*>(buffer), 10);
+            timeSinceLastMessage = 0;
+            timer.restart();
+            UartMessaging_ExtractValuesFromValidatedBuffer(buffer);
+        }
+        else{
+            if(response==BufferHeaderInvalid){
+                char tmp[1];
+                serialPort->read(tmp, 1);
+            }
+            else{
+                serialPort->read(reinterpret_cast<char*>(buffer), 10);
+            }
+        }
+    }
+
 }
 
 static uint8_t calculateCRC(uint8_t buffer[10]) /* This was slightly modified but NOT tested so it NEEDS to be retested! Do not assume it works */
@@ -93,6 +123,34 @@ static uint8_t calculateCRC(uint8_t buffer[10]) /* This was slightly modified bu
 
 void UartMessaging_Update(void)
 {
+    if(settings.shouldPortBeConnected){
+        if(!serialPort){
+            serialPort = new QSerialPort();
+            serialPort->setPortName("COM9");
+            serialPort->setBaudRate(settings.desiredBaudRate);
+            if(serialPort->open(QIODevice::ReadOnly)){
+                serialPort->clear();
+                timer.start();
+                timeSinceLastMessage = 0;
+            }
+        }
+        else{
+            if(serialPort->isOpen()){
+                if(serialPort->bytesAvailable()>=10)
+                    UartMessaging_ParseBuffer();
+                else
+                    timeSinceLastMessage = timer.elapsed();
+            }
+        }
+    }
+    else{
+        if(serialPort){
+            delete serialPort;
+            serialPort = nullptr;
+            timer.invalidate();
+            timeSinceLastMessage = 0;
+        }
+    }
     //daca ar trebui sa fie conectat:
         //verifica daca e conectat
         //daca e conectat:
@@ -112,8 +170,30 @@ void UartMessaging_Update(void)
             //deconecteaza portul COM
             //seteaza timpul de la ultimul mesaj pe 0
             //opreste temporizatorul
+
 }
 
+static UartBufferValidity_t UartMessaging_CheckValidityOfBuffer(uint8_t buffer[10]){ //this should check if the provided buffer has a valid CRC and header type.
+    uint8_t readCRC = buffer[9];
+    uint8_t readHeader = buffer[0];
+    uint8_t calculatedCRC = calculateCRC(buffer);
+    if(readCRC!=calculatedCRC)
+        return BufferCrcInvalid;
+    switch (readHeader) {
+        case idUartAcceleratie:
+        case idUartBaterie:
+        case idUartBord:
+        case idUartFrana:
+        case idUartInvertoare:
+        case idUartInvertorStanga:
+        case idUartInvertorDreapta:
+            return BufferValid;
+        default:
+            return BufferHeaderInvalid;
+    }
+}
+static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){//this should parse the data from the buffer and update the global structure holding all values with the received ones.
+}
 #ifdef __cplusplus
 }
 #endif

@@ -13,6 +13,7 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Graphs)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS QuickWidgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS SerialPort)
 
 include_directories(${Qt6Quick_INCLUDE_DIRS})
 
@@ -53,6 +54,7 @@ endif()
 target_link_libraries(VCU_App PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(VCU_App PRIVATE Qt${QT_VERSION_MAJOR}::Graphs)
 target_link_libraries(VCU_App PRIVATE Qt${QT_VERSION_MAJOR}::QuickWidgets)
+target_link_libraries(VCU_App PRIVATE Qt${QT_VERSION_MAJOR}::SerialPort)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
