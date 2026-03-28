@@ -148,7 +148,7 @@
        <enum>QTabWidget::TabShape::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_general">
        <property name="palette">
@@ -1715,21 +1715,21 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit">
+                   <widget class="QLineEdit" name="General_Tsac_Temp_Median_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_2">
+                   <widget class="QLineEdit" name="General_Tsac_Temp_Highest_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_3">
+                   <widget class="QLineEdit" name="General_Tsac_Temp_Lowest_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
@@ -2339,21 +2339,21 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_7">
+                   <widget class="QLineEdit" name="General_Tsac_Volt_Median_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_8">
+                   <widget class="QLineEdit" name="General_Tsac_Volt_Highest_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_9">
+                   <widget class="QLineEdit" name="General_Tsac_Volt_Lowest_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
@@ -2956,14 +2956,14 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_10">
+                   <widget class="QLineEdit" name="General_Tsac_V_Median_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_11">
+                   <widget class="QLineEdit" name="General_Tsac_Current_Median_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
@@ -14235,7 +14235,7 @@
                        </widget>
                       </item>
                       <item>
-                       <widget class="QLineEdit" name="lineEdit_13">
+                       <widget class="QLineEdit" name="Accel_Volt_S2_lineEdit">
                         <property name="readOnly">
                          <bool>true</bool>
                         </property>
@@ -14835,7 +14835,7 @@
                        </widget>
                       </item>
                       <item>
-                       <widget class="QLineEdit" name="lineEdit_15">
+                       <widget class="QLineEdit" name="Accel_Travel_S2_lineEdit">
                         <property name="readOnly">
                          <bool>true</bool>
                         </property>
@@ -15939,14 +15939,14 @@
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QLineEdit" name="lineEdit_16">
+                       <widget class="QLineEdit" name="Brake_Volt_S1_lineEdit">
                         <property name="readOnly">
                          <bool>true</bool>
                         </property>
                        </widget>
                       </item>
                       <item>
-                       <widget class="QLineEdit" name="lineEdit_17">
+                       <widget class="QLineEdit" name="Brake_Volt_S2_lineEdit">
                         <property name="readOnly">
                          <bool>true</bool>
                         </property>
@@ -16539,7 +16539,7 @@
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QLineEdit" name="lineEdit_20">
+                       <widget class="QLineEdit" name="Brake_Travel_S1_lineEdit">
                         <property name="frame">
                          <bool>true</bool>
                         </property>
@@ -16549,7 +16549,7 @@
                        </widget>
                       </item>
                       <item>
-                       <widget class="QLineEdit" name="lineEdit_21">
+                       <widget class="QLineEdit" name="Brake_Travel_S2_lineEdit">
                         <property name="readOnly">
                          <bool>true</bool>
                         </property>
@@ -24923,13 +24923,13 @@
                    <item>
                     <layout class="QVBoxLayout" name="verticalLayout_111">
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_50"/>
+                      <widget class="QLineEdit" name="Tsac_Temp_Median_lineEdit"/>
                      </item>
                      <item>
                       <widget class="QLineEdit" name="Tsac_Temp_Highest_lineEdit"/>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_52"/>
+                      <widget class="QLineEdit" name="Tsac_Temp_Lowest_lineEdit"/>
                      </item>
                     </layout>
                    </item>
@@ -25531,13 +25531,13 @@
                    <item>
                     <layout class="QVBoxLayout" name="verticalLayout_107">
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_45"/>
+                      <widget class="QLineEdit" name="Tsac_Volt_Median_lineEdit"/>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_46"/>
+                      <widget class="QLineEdit" name="Tsac_Volt_Highest_lineEdit"/>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_48"/>
+                      <widget class="QLineEdit" name="Tsac_Volt_Lowest_lineEdit"/>
                      </item>
                     </layout>
                    </item>
@@ -26132,10 +26132,10 @@
                    <item>
                     <layout class="QVBoxLayout" name="verticalLayout_102">
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_43"/>
+                      <widget class="QLineEdit" name="Tsac_V_Median_lineEdit"/>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_44"/>
+                      <widget class="QLineEdit" name="Tsac_Current_Median_lineEdit"/>
                      </item>
                     </layout>
                    </item>
