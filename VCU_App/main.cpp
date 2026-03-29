@@ -43,8 +43,8 @@ int main(int argc, char *argv[])
     {//creare thread nou uart
         dataAcquisitionThread = dataAcquisitionThread->create(UartThread, 0);
     }
-    dataAcquisitionThread->start(); //Start the data acquisition thread
     MainWindow_Show(); //Make the user interface visible on the screen
+    dataAcquisitionThread->start(); //Start the data acquisition thread
     a.exec(); //this function is the main app's internal loop. This returns when the user closes the app.
     shouldDataAcquisitionThreadRun = false; //Signal the data acquisition thread that it should stop.
     while(dataAcquisitionThread->isRunning()); //Wait for the data acquisition thread to stop.

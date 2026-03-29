@@ -50,7 +50,7 @@ extern "C"{
 static QSerialPort *serialPort = nullptr;
 static QElapsedTimer timer;
 static uint32_t timeSinceLastMessage = 0;
-ComPortSettings_t settings = {true, 9600};
+static ComPortSettings_t settings = {true, 9600};
 
 /*==================================================================================================
 *                                   LOCAL FUNCTION PROTOTYPES
@@ -75,10 +75,10 @@ static void UartMessaging_ParseBuffer()
 
     while(serialPort->bytesAvailable()>=10){
         uint8_t buffer[10];
-        serialPort->peek(reinterpret_cast<char*>(buffer), 10);
+        serialPort->peek((char*)(buffer), 10);
         UartBufferValidity_t response = UartMessaging_CheckValidityOfBuffer(buffer);
         if(response==BufferValid){
-            serialPort->read(reinterpret_cast<char*>(buffer), 10);
+            serialPort->read((char*)(buffer), 10);
             timeSinceLastMessage = 0;
             timer.restart();
             UartMessaging_ExtractValuesFromValidatedBuffer(buffer);
@@ -121,34 +121,38 @@ static uint8_t calculateCRC(uint8_t buffer[10]) /* This was slightly modified bu
 *                                       GLOBAL FUNCTIONS
 ==================================================================================================*/
 
-void UartMessaging_Update(void)
-{
+void UartMessaging_Update(void){
+    if(!serialPort)
+        serialPort = new QSerialPort();
     if(settings.shouldPortBeConnected){
-        if(!serialPort){
-            serialPort = new QSerialPort();
-            serialPort->setPortName("COM9");
+        if(serialPort->isOpen()){
+            if(serialPort->waitForReadyRead(10)){
+                if(serialPort->bytesAvailable()>=10)
+                    UartMessaging_ParseBuffer();
+            }
+            else{
+                timeSinceLastMessage = timer.elapsed();
+            }
+        }
+        else{
+            serialPort->setPortName("COM4");
             serialPort->setBaudRate(settings.desiredBaudRate);
-            if(serialPort->open(QIODevice::ReadOnly)){
+            serialPort->setReadBufferSize(100);
+            serialPort->setDataBits(QSerialPort::Data8);
+            serialPort->setParity(QSerialPort::NoParity);
+            if(serialPort->open(QIODevice::ReadWrite)){
+                serialPort->setDataTerminalReady(true);
                 serialPort->clear();
                 timer.start();
                 timeSinceLastMessage = 0;
             }
         }
-        else{
-            if(serialPort->isOpen()){
-                if(serialPort->bytesAvailable()>=10)
-                    UartMessaging_ParseBuffer();
-                else
-                    timeSinceLastMessage = timer.elapsed();
-            }
-        }
     }
     else{
-        if(serialPort){
-            delete serialPort;
-            serialPort = nullptr;
+        if(serialPort->isOpen()){
             timer.invalidate();
             timeSinceLastMessage = 0;
+            serialPort->close();
         }
     }
     //daca ar trebui sa fie conectat:
