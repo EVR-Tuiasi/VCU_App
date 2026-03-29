@@ -74,7 +74,7 @@ void SimulatedData_Update(void)
     BrakeSensor2Voltage += 10U;
     BrakeSensor1TravelPercentage += 1U;
     BrakeSensor2TravelPercentage += 1U;
-    PressureSensorVoltage += 10U;
+    PressureSensorVoltage += 1U;
     PressureSensorBars += 1U;
 
     MedianCellTemperature += 1U;

@@ -499,7 +499,9 @@ void GeneralTab_Update(MainWindow* window)
     if(readValue >= 100U){
         char_array[index++] = '0' + (readValue/100U)%10U;
     }
-    char_array[index++] = '0' + (readValue/10U)%10U;
+    if(readValue >= 10U){
+        char_array[index++] = '0' + (readValue/10U)%10U;
+    }
     char_array[index++] = '0' + readValue%10U;
     char_array[index++] = ' ';
     char_array[index++] = 'R';
@@ -518,7 +520,9 @@ void GeneralTab_Update(MainWindow* window)
     if(readValue >= 100U){
         char_array[index++] = '0' + (readValue/100U)%10U;
     }
-    char_array[index++] = '0' + (readValue/10U)%10U;
+    if(readValue >= 10U){
+        char_array[index++] = '0' + (readValue/10U)%10U;
+    }
     char_array[index++] = '0' + readValue%10U;
     char_array[index++] = ' ';
     char_array[index++] = 'R';
@@ -533,11 +537,16 @@ void GeneralTab_Update(MainWindow* window)
     if(readValue >= 100U){
         char_array[index++] = '0' + (readValue/100U)%10U;
     }
-    char_array[index++] = '0' + (readValue/10U)%10U;
+    if(readValue>=10)
+    {
+        char_array[index++] = '0' + (readValue/10U)%10U;
+    }
     char_array[index++] = '0' + readValue%10U;
     char_array[index++] = ' ';
     char_array[index++] = 'K';
-    char_array[index++] = 'M';
+    char_array[index++] = 'm';
+    char_array[index++] = '/';
+    char_array[index++] = 'h';
     char_array[index++] = 0;
     window->ui->Inverter_Left_Motor_Speed_lineEdit->setText((const QString)QString(char_array));
 
@@ -547,11 +556,16 @@ void GeneralTab_Update(MainWindow* window)
     if(readValue >= 100U){
         char_array[index++] = '0' + (readValue/100U)%10U;
     }
-    char_array[index++] = '0' + (readValue/10U)%10U;
+    if(readValue>=10)
+    {
+        char_array[index++] = '0' + (readValue/10U)%10U;
+    }
     char_array[index++] = '0' + readValue%10U;
     char_array[index++] = ' ';
     char_array[index++] = 'K';
-    char_array[index++] = 'M';
+    char_array[index++] = 'm';
+    char_array[index++] = '/';
+    char_array[index++] = 'h';
     char_array[index++] = 0;
     window->ui->Inverter_Right_Motor_Speed_lineEdit->setText((const QString)QString(char_array));
 
@@ -604,32 +618,36 @@ void GeneralTab_Update(MainWindow* window)
     char_array[index++] = 0;
     window->ui->Inverter_Right_Feedback_lineEdit->setText((const QString)QString(char_array));
 
-/*
     //PEDALS_PressureSensorVoltage
-    readValue = (CarData_ReadValue(PEDALS_PressureSensorVoltage)* 5000U) / 500U; // 9 bits, 0-500, 0 to 5.00 Volts, 0.1 Volts per bit
-    char_array[0] = '0' + readValue/1000U;
-    char_array[1] = '.';
-    char_array[2] = '0' + (readValue/100U)%10U;
-    char_array[3] = '0' +(readValue/10U)%10U;
-    char_array[4] = '0' + readValue%10U;
-    char_array[5] = 'V';
-    char_array[6] = 0U;
-    //window->ui->Brake_Volt_S2_lineEdit->setText((const QString)QString(char_array));
+    readValue = CarData_ReadValue(PEDALS_PressureSensorVoltage);
+    index = 0U;
+    char_array[index++] = '0' + readValue/100U;
+    char_array[index++] = '.';
+    char_array[index++] = '0' + (readValue/10U)%10U;
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'V';
+    char_array[index++] = 0;
+    window->ui->Pressure_Volt_lineEdit->setText((const QString)QString(char_array));
 
     //PEDALS_PressureSensorBars
     readValue = CarData_ReadValue(PEDALS_PressureSensorBars);
     index = 0U;
-    if(readValue >= 255U)
+    if(readValue >= 100U)
     {
-        char_array[index++] = '0' + readValue/255U;
+        char_array[index++] = '0' + readValue/100U;
     }
     if(readValue >= 10U){
         char_array[index++] = '0' + (readValue/10U)%10U;
     }
     char_array[index++] = '0' + readValue%10U;
-    char_array[index++] = 'B';
+    char_array[index++] = ' ';
+    char_array[index++] = 'b';
+    char_array[index++] = 'a';
+    char_array[index++] = 'r';
     char_array[index++] = 0;
-*/
+    window->ui->Pressure_Bars_lineEdit->setText((const QString)QString(char_array));
+
 
 }
 
