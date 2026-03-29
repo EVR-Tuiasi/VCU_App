@@ -16531,7 +16531,7 @@
                       <item>
                        <widget class="QLabel" name="label_35">
                         <property name="text">
-                         <string>Voltage</string>
+                         <string>Sensor 1</string>
                         </property>
                         <property name="textFormat">
                          <enum>Qt::TextFormat::PlainText</enum>
@@ -16541,7 +16541,7 @@
                       <item>
                        <widget class="QLabel" name="label_36">
                         <property name="text">
-                         <string>Current</string>
+                         <string>Sensor 2</string>
                         </property>
                         <property name="textFormat">
                          <enum>Qt::TextFormat::PlainText</enum>
