@@ -14820,17 +14820,10 @@
                         </property>
                        </widget>
                       </item>
-                      <item>
-                       <widget class="QLabel" name="label_122">
-                        <property name="text">
-                         <string>Pressure</string>
-                        </property>
-                       </widget>
-                      </item>
                      </layout>
                     </item>
                     <item>
-                     <layout class="QVBoxLayout" name="verticalLayout_21" stretch="0,0,0">
+                     <layout class="QVBoxLayout" name="verticalLayout_21" stretch="0,0">
                       <property name="spacing">
                        <number>0</number>
                       </property>
@@ -14848,9 +14841,6 @@
                         </property>
                        </widget>
                       </item>
-                      <item>
-                       <widget class="QLineEdit" name="Pressure_Volt_lineEdit"/>
-                      </item>
                      </layout>
                     </item>
                     <item>
@@ -14867,13 +14857,6 @@
                       </item>
                       <item>
                        <widget class="QSlider" name="horizontalSlider_15">
-                        <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QSlider" name="horizontalSlider_45">
                         <property name="orientation">
                          <enum>Qt::Orientation::Horizontal</enum>
                         </property>
@@ -15948,10 +15931,17 @@
                         </property>
                        </widget>
                       </item>
+                      <item>
+                       <widget class="QLabel" name="label_122">
+                        <property name="text">
+                         <string>Pressure</string>
+                        </property>
+                       </widget>
+                      </item>
                      </layout>
                     </item>
                     <item>
-                     <layout class="QVBoxLayout" name="verticalLayout_24" stretch="0,0">
+                     <layout class="QVBoxLayout" name="verticalLayout_24" stretch="0,0,0">
                       <property name="spacing">
                        <number>0</number>
                       </property>
@@ -15969,6 +15959,9 @@
                         </property>
                        </widget>
                       </item>
+                      <item>
+                       <widget class="QLineEdit" name="Pressure_Volt_lineEdit"/>
+                      </item>
                      </layout>
                     </item>
                     <item>
@@ -15985,6 +15978,13 @@
                       </item>
                       <item>
                        <widget class="QSlider" name="horizontalSlider_17">
+                        <property name="orientation">
+                         <enum>Qt::Orientation::Horizontal</enum>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QSlider" name="horizontalSlider_45">
                         <property name="orientation">
                          <enum>Qt::Orientation::Horizontal</enum>
                         </property>
