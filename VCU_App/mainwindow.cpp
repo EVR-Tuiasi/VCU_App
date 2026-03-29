@@ -62,8 +62,9 @@ void MainWindow_Update(void)
 
 void GeneralTab_Update(MainWindow* window)
 {
-    uint32_t readValue;
+    uint32_t readValue, Value;
     char char_array[20], index = 0U;
+    bool IsNegative;
     //PEDALS_AcceleratorSensor1Voltage
     readValue = (CarData_ReadValue(PEDALS_AcceleratorSensor1Voltage) * 5000U) / 16383U;//this translates the value from interval 0-16383 to interval 0-5000
     char_array[0] = '0' + readValue/1000U;
@@ -225,13 +226,10 @@ void GeneralTab_Update(MainWindow* window)
     //TSAC_HighestCellVoltage
     readValue = CarData_ReadValue(TSAC_HighestCellVoltage);
     index = 0U;
-    if(readValue >= 100U)
-    {
-        char_array[index++] = '0' + readValue/1000U;
+    if(readValue >= 1000U){
+        char_array[index++] = '0' + (readValue/1000U);
     }
-    if(readValue >= 10U){
-        char_array[index++] = '0' + (readValue/100U)%10U;
-    }
+    char_array[index++] = '0' + (readValue/100U)%10U;
     char_array[index++] = '.';
     char_array[index++] = '0' + (readValue/10U)%10U;
     char_array[index++] = '0' + readValue%10U;
@@ -243,13 +241,10 @@ void GeneralTab_Update(MainWindow* window)
     //TSAC_MedianCellVoltage
     readValue = CarData_ReadValue(TSAC_MedianCellVoltage);
     index = 0U;
-    if(readValue >= 100U)
-    {
-        char_array[index++] = '0' + readValue/1000U;
+    if(readValue >= 1000U){
+        char_array[index++] = '0' + (readValue/1000U);
     }
-    if(readValue >= 10U){
-        char_array[index++] = '0' + (readValue/100U)%10U;
-    }
+    char_array[index++] = '0' + (readValue/100U)%10U;
     char_array[index++] = '.';
     char_array[index++] = '0' + (readValue/10U)%10U;
     char_array[index++] = '0' + readValue%10U;
@@ -261,16 +256,12 @@ void GeneralTab_Update(MainWindow* window)
     //TSAC_LowestCellVoltage
     readValue = CarData_ReadValue(TSAC_LowestCellVoltage);
     index = 0U;
-    char_array[0] = '0' + readValue/1000U;
     if(readValue >= 1000U){
         char_array[index++] = '0' + (readValue/1000U);
     }
-    if(readValue >= 100U){
-        char_array[index++] = '0' + (readValue/100U)%10U;
-    }
+    char_array[index++] = '0' + (readValue/100U)%10U;
     char_array[index++] = '.';
     char_array[index++] = '0' + (readValue/10U)%10U;
-
     char_array[index++] = '0' + readValue%10U;
     char_array[index++] = ' ';
     char_array[index++] = 'V';
@@ -314,9 +305,308 @@ void GeneralTab_Update(MainWindow* window)
     char_array[index++] = 0;
     window->ui->General_Tsac_Current_Median_lineEdit->setText((const QString)QString(char_array));
 
+    //INVERTERS_LeftInverterTemperature
+    readValue = CarData_ReadValue(INVERTERS_LeftInverterTemperature);
+    index = 0U;
+    IsNegative = false;
+    if(readValue < 40U)
+    {
+        IsNegative = true;
+        Value = 40U - readValue;
+    }
+    else
+    {
+        Value = readValue - 40U;
+    }
+    if(IsNegative==true)
+    {
+        char_array[index++] = '-';
+    }
+    if(Value >= 100U)
+    {
+        char_array[index++] = '0' + Value/100U;
+    }
+    char_array[index++] = '0' + (Value/10U)%10U;
+    char_array[index++] = '0' + Value%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'C';
+    char_array[index++] = 0;
+    window->ui->Inverter_Left_Temp_lineEdit->setText((const QString)QString(char_array));
+
+    //INVERTERS_RightInverterTemperature
+    readValue = CarData_ReadValue(INVERTERS_RightInverterTemperature);
+    index = 0U;
+    IsNegative = false;
+    if(readValue < 40U)
+    {
+        IsNegative = true;
+        Value = 40U - readValue;
+    }
+    else
+    {
+        Value = readValue - 40U;
+    }
+    if(IsNegative==true)
+    {
+        char_array[index++] = '-';
+    }
+    if(Value >= 100U)
+    {
+        char_array[index++] = '0' + Value/100U;
+    }
+    char_array[index++] = '0' + (Value/10U)%10U;
+    char_array[index++] = '0' + Value%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'C';
+    char_array[index++] = 0;
+    window->ui->Inverter_Right_Temp_lineEdit->setText((const QString)QString(char_array));
+
+    //INVERTERS_LeftMotorTemperature
+    readValue = CarData_ReadValue(INVERTERS_LeftMotorTemperature);
+    index = 0U;
+    IsNegative = false;
+    if(readValue < 30U)
+    {
+        IsNegative = true;
+        Value = 30U - readValue;
+    }
+    else
+    {
+        Value = readValue - 30U;
+    }
+    if(IsNegative==true)
+    {
+        char_array[index++] = '-';
+    }
+    if(Value >= 100U)
+    {
+        char_array[index++] = '0' + Value/100U;
+    }
+    char_array[index++] = '0' + (Value/10U)%10U;
+    char_array[index++] = '0' + Value%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'C';
+    char_array[index++] = 0;
+    window->ui->Inverter_Left_Motor_lineEdit->setText((const QString)QString(char_array));
+
+    //INVERTERS_RightMotorTemperature
+    readValue = CarData_ReadValue(INVERTERS_RightMotorTemperature);
+    index = 0U;
+    IsNegative = false;
+    if(readValue < 30U)
+    {
+        IsNegative = true;
+        Value = 30U - readValue;
+    }
+    else
+    {
+        Value = readValue - 30U;
+    }
+    if(IsNegative==true)
+    {
+        char_array[index++] = '-';
+    }
+    if(Value >= 100U)
+    {
+        char_array[index++] = '0' + Value/100U;
+    }
+    char_array[index++] = '0' + (Value/10U)%10U;
+    char_array[index++] = '0' + Value%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'C';
+    char_array[index++] = 0;
+    window->ui->Inverter_Right_Motor_lineEdit->setText((const QString)QString(char_array));
+
+    //INVERTERS_LeftInverterInputVoltage
+    readValue = CarData_ReadValue(INVERTERS_LeftInverterInputVoltage);
+    index = 0U;
+    if(readValue >= 1000U)
+    {
+        char_array[index++] = '0' + readValue/1000U;
+    }
+    if(readValue >= 100U){
+        char_array[index++] = '0' + (readValue/100U)%10U;
+    }
+    char_array[index++] = '0' + (readValue/10U)%10U;
+    char_array[index++] = '.';
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'V';
+    char_array[index++] = 0;
+    window->ui->Inverter_Left_InV_lineEdit->setText((const QString)QString(char_array));
+
+    //INVERTERS_RightInverterInputVoltage
+    readValue = CarData_ReadValue(INVERTERS_RightInverterInputVoltage);
+    index = 0U;
+    if(readValue >= 1000U)
+    {
+        char_array[index++] = '0' + readValue/1000U;
+    }
+    if(readValue >= 100U){
+        char_array[index++] = '0' + (readValue/100U)%10U;
+    }
+    char_array[index++] = '0' + (readValue/10U)%10U;
+    char_array[index++] = '.';
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'V';
+    char_array[index++] = 0;
+    window->ui->Inverter_Right_InV_lineEdit->setText((const QString)QString(char_array));
+
+    //INVERTERS_LeftInverterCurrent
+    readValue = CarData_ReadValue(INVERTERS_LeftInverterCurrent);
+    index = 0U;
+    if(readValue >= 1000U)
+    {
+        char_array[index++] = '0' + readValue/1000U;
+    }
+    if(readValue >= 100U){
+        char_array[index++] = '0' + (readValue/100U)%10U;
+    }
+    char_array[index++] = '0' + (readValue/10U)%10U;
+    char_array[index++] = '.';
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'A';
+    char_array[index++] = 0;
+    window->ui->Inverter_Left_Current_lineEdit->setText((const QString)QString(char_array));
+
+    //INVERTERS_RightInverterCurrent
+    readValue = CarData_ReadValue(INVERTERS_RightInverterCurrent);
+    index = 0U;
+    if(readValue >= 1000U)
+    {
+        char_array[index++] = '0' + readValue/1000U;
+    }
+    if(readValue >= 100U){
+        char_array[index++] = '0' + (readValue/100U)%10U;
+    }
+    char_array[index++] = '0' + (readValue/10U)%10U;
+    char_array[index++] = '.';
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'A';
+    char_array[index++] = 0;
+    window->ui->Inverter_Right_Current_lineEdit->setText((const QString)QString(char_array));
+
+    //INVERTERS_LeftMotorRpm
+    readValue = CarData_ReadValue(INVERTERS_LeftMotorRpm);
+    index = 0U;
+    if(readValue >= 1000U)
+    {
+        char_array[index++] = '0' + readValue/1000U;
+    }
+    if(readValue >= 100U){
+        char_array[index++] = '0' + (readValue/100U)%10U;
+    }
+    char_array[index++] = '0' + (readValue/10U)%10U;
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'R';
+    char_array[index++] = 'P';
+    char_array[index++] = 'M';
+    char_array[index++] = 0;
+    window->ui->Inverter_Left_Motor_Rpm_lineEdit->setText((const QString)QString(char_array));
+
+    //INVERTERS_RightMotorRpm
+    readValue = CarData_ReadValue(INVERTERS_RightMotorRpm);
+    index = 0U;
+    if(readValue >= 1000U)
+    {
+        char_array[index++] = '0' + readValue/1000U;
+    }
+    if(readValue >= 100U){
+        char_array[index++] = '0' + (readValue/100U)%10U;
+    }
+    char_array[index++] = '0' + (readValue/10U)%10U;
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'R';
+    char_array[index++] = 'P';
+    char_array[index++] = 'M';
+    char_array[index++] = 0;
+    window->ui->Inverter_Right_Motor_Rpm_lineEdit->setText((const QString)QString(char_array));
+
+    //INVERTERS_LeftMotorSpeedKmh
+    readValue = CarData_ReadValue(INVERTERS_LeftMotorSpeedKmh);
+    index = 0U;
+    if(readValue >= 100U){
+        char_array[index++] = '0' + (readValue/100U)%10U;
+    }
+    char_array[index++] = '0' + (readValue/10U)%10U;
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'K';
+    char_array[index++] = 'M';
+    char_array[index++] = 0;
+    window->ui->Inverter_Left_Motor_Speed_lineEdit->setText((const QString)QString(char_array));
+
+    //INVERTERS_RightMotorSpeedKmh
+    readValue = CarData_ReadValue(INVERTERS_RightMotorSpeedKmh);
+    index = 0U;
+    if(readValue >= 100U){
+        char_array[index++] = '0' + (readValue/100U)%10U;
+    }
+    char_array[index++] = '0' + (readValue/10U)%10U;
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'K';
+    char_array[index++] = 'M';
+    char_array[index++] = 0;
+    window->ui->Inverter_Right_Motor_Speed_lineEdit->setText((const QString)QString(char_array));
+
+    //INVERTERS_LeftInverterThrottle
+    readValue = CarData_ReadValue(INVERTERS_LeftInverterThrottle)*2;
+    index = 0U;
+    char_array[index++] = '0' + (readValue/100U)%10U;
+    char_array[index++] = '.';
+    char_array[index++] = '0' + (readValue/10U)%10U;
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'V';
+    char_array[index++] = 0;
+    window->ui->Inverter_Left_Throttle_lineEdit->setText((const QString)QString(char_array));
+
+    //INVERTERS_RightInverterSentThrottle
+    readValue = CarData_ReadValue(INVERTERS_RightInverterSentThrottle);
+    Value=readValue*2;
+    index = 0U;
+    char_array[index++] = '0' + (Value/100U)%10U;
+    char_array[index++] = '.';
+    char_array[index++] = '0' + (Value/10U)%10U;
+    char_array[index++] = '0' + Value%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'V';
+    char_array[index++] = 0;
+    window->ui->Inverter_Right_Throttle_lineEdit->setText((const QString)QString(char_array));
+
+    //INVERTERS_LeftInverterThrottleFeedback
+    readValue = CarData_ReadValue(INVERTERS_LeftInverterThrottleFeedback)*2;
+    index = 0U;
+    char_array[index++] = '0' + (readValue/100U)%10U;
+    char_array[index++] = '.';
+    char_array[index++] = '0' + (readValue/10U)%10U;
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'V';
+    char_array[index++] = 0;
+    window->ui->Inverter_Left_Feedback_lineEdit->setText((const QString)QString(char_array));
+
+    //INVERTERS_RightInverterThrottleFeedback
+    readValue = CarData_ReadValue(INVERTERS_RightInverterThrottleFeedback)*2;
+    index = 0U;
+    char_array[index++] = '0' + (readValue/100U)%10U;
+    char_array[index++] = '.';
+    char_array[index++] = '0' + (readValue/10U)%10U;
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'V';
+    char_array[index++] = 0;
+    window->ui->Inverter_Right_Feedback_lineEdit->setText((const QString)QString(char_array));
+
 /*
     //PEDALS_PressureSensorVoltage
-    readValue = (CarData_ReadValue(PEDALS_PressureSensorVoltage)* 5000U) / 500U; /* 9 bits, 0-500, 0 to 5.00 Volts, 0.1 Volts per bit
+    readValue = (CarData_ReadValue(PEDALS_PressureSensorVoltage)* 5000U) / 500U; // 9 bits, 0-500, 0 to 5.00 Volts, 0.1 Volts per bit
     char_array[0] = '0' + readValue/1000U;
     char_array[1] = '.';
     char_array[2] = '0' + (readValue/100U)%10U;
@@ -404,13 +694,10 @@ void TsacTab_Update(MainWindow* window)
     //TSAC_HighestCellVoltage
     readValue = CarData_ReadValue(TSAC_HighestCellVoltage);
     index = 0U;
-    if(readValue >= 100U)
-    {
-        char_array[index++] = '0' + readValue/1000U;
+    if(readValue >= 1000U){
+        char_array[index++] = '0' + (readValue/1000U);
     }
-    if(readValue >= 10U){
-        char_array[index++] = '0' + (readValue/100U)%10U;
-    }
+    char_array[index++] = '0' + (readValue/100U)%10U;
     char_array[index++] = '.';
     char_array[index++] = '0' + (readValue/10U)%10U;
     char_array[index++] = '0' + readValue%10U;
@@ -422,13 +709,10 @@ void TsacTab_Update(MainWindow* window)
     //TSAC_MedianCellVoltage
     readValue = CarData_ReadValue(TSAC_MedianCellVoltage);
     index = 0U;
-    if(readValue >= 100U)
-    {
-        char_array[index++] = '0' + readValue/1000U;
+    if(readValue >= 1000U){
+        char_array[index++] = '0' + (readValue/1000U);
     }
-    if(readValue >= 10U){
-        char_array[index++] = '0' + (readValue/100U)%10U;
-    }
+    char_array[index++] = '0' + (readValue/100U)%10U;
     char_array[index++] = '.';
     char_array[index++] = '0' + (readValue/10U)%10U;
     char_array[index++] = '0' + readValue%10U;
@@ -440,13 +724,10 @@ void TsacTab_Update(MainWindow* window)
     //TSAC_LowestCellVoltage
     readValue = CarData_ReadValue(TSAC_LowestCellVoltage);
     index = 0U;
-    if(readValue >= 100U)
-    {
-        char_array[index++] = '0' + readValue/1000U;
+    if(readValue >= 1000U){
+        char_array[index++] = '0' + (readValue/1000U);
     }
-    if(readValue >= 10U){
-        char_array[index++] = '0' + (readValue/100U)%10U;
-    }
+    char_array[index++] = '0' + (readValue/100U)%10U;
     char_array[index++] = '.';
     char_array[index++] = '0' + (readValue/10U)%10U;
     char_array[index++] = '0' + readValue%10U;

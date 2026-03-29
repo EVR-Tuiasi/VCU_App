@@ -148,7 +148,7 @@
        <enum>QTabWidget::TabShape::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_general">
        <property name="palette">
@@ -15914,7 +15914,7 @@
                       <item>
                        <widget class="QLabel" name="label_29">
                         <property name="text">
-                         <string>Voltage</string>
+                         <string>Sensor 1</string>
                         </property>
                         <property name="textFormat">
                          <enum>Qt::TextFormat::PlainText</enum>
@@ -15924,7 +15924,7 @@
                       <item>
                        <widget class="QLabel" name="label_30">
                         <property name="text">
-                         <string>Current</string>
+                         <string>Sensor 2</string>
                         </property>
                         <property name="textFormat">
                          <enum>Qt::TextFormat::PlainText</enum>
@@ -18135,14 +18135,14 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_28">
+                   <widget class="QLineEdit" name="Inverter_Left_Temp_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_29">
+                   <widget class="QLineEdit" name="Inverter_Left_Motor_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
@@ -18735,14 +18735,14 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_26">
+                   <widget class="QLineEdit" name="Inverter_Left_InV_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_27">
+                   <widget class="QLineEdit" name="Inverter_Left_Current_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
@@ -19335,14 +19335,14 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_24">
+                   <widget class="QLineEdit" name="Inverter_Left_Motor_Rpm_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_25">
+                   <widget class="QLineEdit" name="Inverter_Left_Motor_Speed_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
@@ -19935,14 +19935,14 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_18">
+                   <widget class="QLineEdit" name="Inverter_Left_Throttle_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_19">
+                   <widget class="QLineEdit" name="Inverter_Left_Feedback_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
@@ -21518,14 +21518,14 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_30">
+                   <widget class="QLineEdit" name="Inverter_Right_Temp_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_31">
+                   <widget class="QLineEdit" name="Inverter_Right_Motor_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
@@ -22118,14 +22118,14 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_32">
+                   <widget class="QLineEdit" name="Inverter_Right_InV_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_33">
+                   <widget class="QLineEdit" name="Inverter_Right_Current_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
@@ -22718,14 +22718,14 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_34">
+                   <widget class="QLineEdit" name="Inverter_Right_Motor_Rpm_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_35">
+                   <widget class="QLineEdit" name="Inverter_Right_Motor_Speed_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
@@ -23318,14 +23318,14 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_22">
+                   <widget class="QLineEdit" name="Inverter_Right_Throttle_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit_23">
+                   <widget class="QLineEdit" name="Inverter_Right_Feedback_lineEdit">
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
