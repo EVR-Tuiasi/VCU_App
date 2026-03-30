@@ -50,7 +50,7 @@ extern "C"{
 static QSerialPort *serialPort = nullptr;
 static QElapsedTimer timer;
 static uint32_t timeSinceLastMessage = 0;
-static ComPortSettings_t settings = {true, 9600};
+static ComPortSettings_t settings = {true, 921600, "COM5"};
 
 /*==================================================================================================
 *                                   LOCAL FUNCTION PROTOTYPES
@@ -126,7 +126,7 @@ void UartMessaging_Update(void){
         serialPort = new QSerialPort();
     if(settings.shouldPortBeConnected){
         if(serialPort->isOpen()){
-            if(serialPort->waitForReadyRead(10)){
+            if(serialPort->waitForReadyRead(0)){
                 if(serialPort->bytesAvailable()>=10)
                     UartMessaging_ParseBuffer();
             }
@@ -135,13 +135,13 @@ void UartMessaging_Update(void){
             }
         }
         else{
-            serialPort->setPortName("COM4");
+            serialPort->setPortName(settings.port);
             serialPort->setBaudRate(settings.desiredBaudRate);
             serialPort->setReadBufferSize(100);
             serialPort->setDataBits(QSerialPort::Data8);
             serialPort->setParity(QSerialPort::NoParity);
             if(serialPort->open(QIODevice::ReadWrite)){
-                serialPort->setDataTerminalReady(true);
+                //serialPort->setDataTerminalReady(true);
                 serialPort->clear();
                 timer.start();
                 timeSinceLastMessage = 0;
@@ -153,6 +153,10 @@ void UartMessaging_Update(void){
             timer.invalidate();
             timeSinceLastMessage = 0;
             serialPort->close();
+            if(serialPort){
+                delete serialPort;
+                serialPort = nullptr;
+            }
         }
     }
     //daca ar trebui sa fie conectat:

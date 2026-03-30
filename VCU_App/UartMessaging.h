@@ -39,6 +39,7 @@ typedef enum{
 typedef struct{
     bool shouldPortBeConnected;
     uint32_t desiredBaudRate;
+    char port[5];
 }ComPortSettings_t;
 /*==================================================================================================
 *                                       LOCAL MACROS
