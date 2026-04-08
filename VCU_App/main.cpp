@@ -65,6 +65,9 @@ void SimulatedData_Update(void)
     static uint16_t LeftInverterInputVoltage = 0U, LeftInverterCurrent = 0U, RightInverterInputVoltage = 0U, RightInverterCurrent = 0U, LeftMotorRpm = 0U, RightMotorRpm = 0U;
     static uint8_t LeftMotorSpeedKmh = 0U, LeftInverterThrottle = 0U, LeftInverterThrottleFeedback = 0U, RightMotorSpeedKmh = 0U, RightInverterSentThrottle = 0U, RightInverterThrottleFeedback = 0U;
 
+
+    static bool AmsError, ImdError, TransceiverError, ShuntError, Bms0Error, Bms1Error;
+
     //STEP 1: incrementing the values
     AcceleratorSensor1Voltage += 10U;//increment by whatever value desired
     AcceleratorSensor2Voltage += 10U;
@@ -281,6 +284,14 @@ void SimulatedData_Update(void)
     CarData_SetValue(TSAC_LowestCellVoltage, LowestCellVoltage);
     CarData_SetValue(TSAC_OverallVoltage, OverallVoltage);
     CarData_SetValue(TSAC_OverallCurrent, OverallCurrent);
+
+    CarData_SetValue(TSAC_IsAmsSafe, AmsError);
+    CarData_SetValue(TSAC_IsImdSafe, ImdError);
+    CarData_SetValue(TSAC_IsTransceiverWorking, TransceiverError);
+    CarData_SetValue(TSAC_IsShuntWorking, ShuntError);
+    CarData_SetValue(TSAC_IsBms0Working, Bms0Error);
+    CarData_SetValue(TSAC_IsBms1Working, Bms1Error);
+
 
 }
 

@@ -648,6 +648,32 @@ void GeneralTab_Update(MainWindow* window)
     char_array[index++] = 0;
     window->ui->Pressure_Bars_lineEdit->setText((const QString)QString(char_array));
 
+    //TSAC_IsAmsSafe
+    readValue = CarData_ReadValue(TSAC_IsAmsSafe);
+    if(readValue == 0)
+    {
+        window->ui->General_Ams_Status_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->General_Ams_Status_Qlabel->setText("SAFE");
+    }
+    else
+    {
+        window->ui->General_Ams_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->General_Ams_Status_Qlabel->setText("UNSAFE");
+    }
+
+    //TSAC_IsImdSafe
+    readValue = CarData_ReadValue(TSAC_IsImdSafe);
+    if(readValue == 0)
+    {
+        window->ui->General_Imd_Status_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->General_Imd_Status_Qlabel->setText("SAFE");
+    }
+    else
+    {
+        window->ui->General_Imd_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->General_Imd_Status_Qlabel->setText("UNSAFE");
+    }
+
 
 }
 
@@ -790,7 +816,89 @@ void TsacTab_Update(MainWindow* window)
     char_array[index++] = 0;
     window->ui->Tsac_Current_Median_lineEdit->setText((const QString)QString(char_array));
 
-    //TODO rest
+
+    //TSAC_IsAmsSafe
+    readValue = CarData_ReadValue(TSAC_IsAmsSafe);
+    if(readValue == 0)
+    {
+        window->ui->TSAC_Ams_Status_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->TSAC_Ams_Status_Qlabel->setText("SAFE");
+    }
+    else
+    {
+        window->ui->TSAC_Ams_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->TSAC_Ams_Status_Qlabel->setText("UNSAFE");
+    }
+
+    //TSAC_IsImdSafe
+    readValue = CarData_ReadValue(TSAC_IsImdSafe);
+    if(readValue == 0)
+    {
+        window->ui->TSAC_Imd_Status_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->TSAC_Imd_Status_Qlabel->setText("SAFE");
+        window->ui->TSAC_Imd_Status_Qlabel_2->setStyleSheet("background-color: green;");
+        window->ui->TSAC_Imd_Status_Qlabel_2->setText("SAFE");
+
+    }
+    else
+    {
+        window->ui->TSAC_Imd_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->TSAC_Imd_Status_Qlabel->setText("UNSAFE");
+        window->ui->TSAC_Imd_Status_Qlabel_2->setStyleSheet("background-color: red;");
+        window->ui->TSAC_Imd_Status_Qlabel_2->setText("UNSAFE");
+    }
+
+    //TSAC_IsTransceiverWorking
+    readValue = CarData_ReadValue(TSAC_IsTransceiverWorking);
+    if(readValue == 0)
+    {
+        window->ui->TSAC_Transceiver_Status_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->TSAC_Transceiver_Status_Qlabel->setText("SAFE");
+    }
+    else
+    {
+        window->ui->TSAC_Transceiver_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->TSAC_Transceiver_Status_Qlabel->setText("UNSAFE");
+    }
+
+    //TSAC_IsShuntWorking
+    readValue = CarData_ReadValue(TSAC_IsShuntWorking);
+    if(readValue == 0)
+    {
+        window->ui->TSAC_Shunt_Status_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->TSAC_Shunt_Status_Qlabel->setText("SAFE");
+    }
+    else
+    {
+        window->ui->TSAC_Shunt_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->TSAC_Shunt_Status_Qlabel->setText("UNSAFE");
+    }
+
+    //TSAC_IsBms0Working
+    readValue = CarData_ReadValue(TSAC_IsBms0Working);
+    if(readValue == 0)
+    {
+        window->ui->TSAC_BMS0_Status_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->TSAC_BMS0_Status_Qlabel->setText("SAFE");
+    }
+    else
+    {
+        window->ui->TSAC_BMS0_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->TSAC_BMS0_Status_Qlabel->setText("UNSAFE");
+    }
+
+    //TSAC_IsBms1Working
+    readValue = CarData_ReadValue(TSAC_IsBms1Working);
+    if(readValue == 0)
+    {
+        window->ui->TSAC_BMS1_Status_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->TSAC_BMS1_Status_Qlabel->setText("SAFE");
+    }
+    else
+    {
+        window->ui->TSAC_BMS1_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->TSAC_BMS1_Status_Qlabel->setText("UNSAFE");
+    }
 }
 
 void ParametersTab_Update(MainWindow* window)
