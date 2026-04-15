@@ -65,9 +65,24 @@ void SimulatedData_Update(void)
     static uint16_t LeftInverterInputVoltage = 0U, LeftInverterCurrent = 0U, RightInverterInputVoltage = 0U, RightInverterCurrent = 0U, LeftMotorRpm = 0U, RightMotorRpm = 0U;
     static uint8_t LeftMotorSpeedKmh = 0U, LeftInverterThrottle = 0U, LeftInverterThrottleFeedback = 0U, RightMotorSpeedKmh = 0U, RightInverterSentThrottle = 0U, RightInverterThrottleFeedback = 0U;
 
-
-    static bool AmsError, ImdError, TransceiverError, ShuntError, Bms0Error, Bms1Error;
-
+    //Status indicators:
+    static bool AmsError = false, TransceiverError = false, ShuntError = false, Bms0Error = false, Bms1Error = false;
+    static bool Accel_Sensor1_ShortToGnd = false, Accel_Sensor1_ShortToVcc = false, Accel_Sensor1_OutOfRangeOutput = false, Accel_Sensor2_ShortToGnd = false, Accel_Sensor2_ShortToVcc = false, Accel_Sensor2_OutOfRangeOutput = false, Accel_Implausibility = false;
+    static bool Brake_Sensor1_ShortToGnd = false, Brake_Sensor1_ShortToVcc = false, Brake_Sensor1_OutOfRangeOutput = false, Brake_Sensor2_ShortToGnd = false, Brake_Sensor2_ShortToVcc = false, Brake_Sensor2_OutOfRangeOutput = false, Brake_Implausibility = false;
+    static bool ActivationButtonPressed = false, CarReverseCommandPressed = false, IsDisplayWorking = false, IsSegmentsDriverWorking = false;
+    static bool IsCarInReverse = false, IsCarRunning = false;
+/*
+    static uint32_t debounce = 100U;
+    if(debounce-- == 0)
+    {
+        AmsError = !AmsError;
+        TransceiverError = !TransceiverError;
+        ShuntError = !ShuntError;
+        Bms0Error = !Bms0Error;
+        Bms1Error = !Bms1Error;
+        debounce = 100U;
+    }
+*/
     //STEP 1: incrementing the values
     AcceleratorSensor1Voltage += 10U;//increment by whatever value desired
     AcceleratorSensor2Voltage += 10U;
@@ -285,13 +300,35 @@ void SimulatedData_Update(void)
     CarData_SetValue(TSAC_OverallVoltage, OverallVoltage);
     CarData_SetValue(TSAC_OverallCurrent, OverallCurrent);
 
+    //status indicators:
     CarData_SetValue(TSAC_IsAmsSafe, AmsError);
-    CarData_SetValue(TSAC_IsImdSafe, ImdError);
     CarData_SetValue(TSAC_IsTransceiverWorking, TransceiverError);
     CarData_SetValue(TSAC_IsShuntWorking, ShuntError);
     CarData_SetValue(TSAC_IsBms0Working, Bms0Error);
     CarData_SetValue(TSAC_IsBms1Working, Bms1Error);
 
+    CarData_SetValue(PEDALS_Accel_Sensor1_ShortToGnd, Accel_Sensor1_ShortToGnd);
+    CarData_SetValue(PEDALS_Accel_Sensor1_ShortToVcc, Accel_Sensor1_ShortToVcc);
+    CarData_SetValue(PEDALS_Accel_Sensor1_OutOfRangeOutput, Accel_Sensor1_OutOfRangeOutput);
+    CarData_SetValue(PEDALS_Accel_Sensor2_ShortToGnd, Accel_Sensor2_ShortToGnd);
+    CarData_SetValue(PEDALS_Accel_Sensor2_ShortToVcc, Accel_Sensor2_ShortToVcc);
+    CarData_SetValue(PEDALS_Accel_Sensor2_OutOfRangeOutput, Accel_Sensor2_OutOfRangeOutput);
+    CarData_SetValue(PEDALS_Accel_Implausibility, Accel_Implausibility);
+    CarData_SetValue(PEDALS_Brake_Sensor1_ShortToGnd, Brake_Sensor1_ShortToGnd);
+    CarData_SetValue(PEDALS_Brake_Sensor1_ShortToVcc, Brake_Sensor1_ShortToVcc);
+    CarData_SetValue(PEDALS_Brake_Sensor1_OutOfRangeOutput, Brake_Sensor1_OutOfRangeOutput);
+    CarData_SetValue(PEDALS_Brake_Sensor2_ShortToGnd, Brake_Sensor2_ShortToGnd);
+    CarData_SetValue(PEDALS_Brake_Sensor2_ShortToVcc, Brake_Sensor2_ShortToVcc);
+    CarData_SetValue(PEDALS_Brake_Sensor2_OutOfRangeOutput, Brake_Sensor2_OutOfRangeOutput);
+    CarData_SetValue(PEDALS_Brake_Implausibility, Brake_Implausibility);
+
+    CarData_SetValue(DASHBOARD_ActivationButtonPressed, ActivationButtonPressed);
+    CarData_SetValue(DASHBOARD_CarReverseCommandPressed, CarReverseCommandPressed);
+    CarData_SetValue(DASHBOARD_IsDisplayWorking, IsDisplayWorking);
+    CarData_SetValue(DASHBOARD_IsSegmentsDriverWorking, IsSegmentsDriverWorking);
+
+    CarData_SetValue(INVERTERS_IsCarInReverse, IsCarInReverse);
+    CarData_SetValue(INVERTERS_IsCarRunning, IsCarRunning);
 
 }
 

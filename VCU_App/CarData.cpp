@@ -93,9 +93,6 @@ void CarData_SetValue(MonitoredValue_t DesiredValueType, uint32_t Value){
     case TSAC_IsAmsSafe:
         TsacMonitoredvalues.AmsError = Value;
         break;
-    case TSAC_IsImdSafe:
-        TsacMonitoredvalues.ImdError = Value;
-        break;
     case TSAC_IsTransceiverWorking:
         TsacMonitoredvalues.TransceiverError = Value;
         break;
@@ -317,8 +314,6 @@ uint32_t CarData_ReadValue(MonitoredValue_t DesiredValueType){
         return TsacMonitoredvalues.OverallCurrent;
     case TSAC_IsAmsSafe:
         return TsacMonitoredvalues.AmsError;
-    case TSAC_IsImdSafe:
-        return TsacMonitoredvalues.ImdError;
     case TSAC_IsTransceiverWorking:
         return TsacMonitoredvalues.TransceiverError;
     case TSAC_IsShuntWorking:

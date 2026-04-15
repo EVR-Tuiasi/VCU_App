@@ -37,7 +37,6 @@ typedef struct
     uint16_t ThermistorTemperature[THERMISTOR_NUM];     /* 10 bits, 0-1023, 0 to 102.3 degrees C, 0.1 degrees C per bit */
     /* Status and errors */
     bool AmsError;                                      /* 1 bit, 0 means safe, 1 means errors */
-    bool ImdError;                                      /* 1 bit, 0 means safe, 1 means errors */
     bool TransceiverError;                              /* 1 bit, 0 means safe, 1 means errors */
     bool ShuntError;                                    /* 1 bit, 0 means safe, 1 means errors */
     bool Bms0Error;                                     /* 1 bit, 0 means safe, 1 means errors */
@@ -73,7 +72,7 @@ typedef struct
     bool Brake_Sensor2_ShortToGnd;                      /* 1 bit, 0 means safe, 1 means errors */
     bool Brake_Sensor2_ShortToVcc;                      /* 1 bit, 0 means safe, 1 means errors */
     bool Brake_Sensor2_OutOfRangeOutput;                /* 1 bit, 0 means safe, 1 means errors */
-    bool Brake_Implausibility;                          /* 1 bit, 0 means safe, 1 means errors */
+    bool Brake_Implausibility;                          /* 1 bit, 0 means safe, 1 means errors */  
 }PedalsMonitoredValues_t;
 
 typedef struct
@@ -120,7 +119,6 @@ typedef enum{
     TSAC_OverallVoltage,                                /* 11 bits, 0-2047, 0 to 204.7 Volts, 0.1 Volts per bit */
     TSAC_OverallCurrent,                                /* 13 bits, 0-8095, 0 to 809.5 Amps, 0.1 Amps per bit */
     TSAC_IsAmsSafe,                                     /* 1 bit, 0 means safe, 1 means errors */
-    TSAC_IsImdSafe,                                     /* 1 bit, 0 means safe, 1 means errors */
     TSAC_IsTransceiverWorking,                          /* 1 bit, 0 means safe, 1 means errors */
     TSAC_IsShuntWorking,                                /* 1 bit, 0 means safe, 1 means errors */
     TSAC_IsBms0Working,                                 /* 1 bit, 0 means safe, 1 means errors */

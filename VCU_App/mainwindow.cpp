@@ -661,17 +661,143 @@ void GeneralTab_Update(MainWindow* window)
         window->ui->General_Ams_Status_Qlabel->setText("UNSAFE");
     }
 
-    //TSAC_IsImdSafe
-    readValue = CarData_ReadValue(TSAC_IsImdSafe);
-    if(readValue == 0)
+    //Pedals_Sensors
+    QMap<QString, uint32_t> sensors;
+    sensors["Accel_Sensor1_ShortToGnd"] = CarData_ReadValue(PEDALS_Accel_Sensor1_ShortToGnd);
+    sensors["Accel_Sensor1_ShortToVcc"] = CarData_ReadValue(PEDALS_Accel_Sensor1_ShortToVcc);
+    sensors["Accel_Sensor1_OutOfRangeOutput"] = CarData_ReadValue(PEDALS_Accel_Sensor1_OutOfRangeOutput);
+    sensors["Accel_Sensor2_ShortToGnd"] = CarData_ReadValue(PEDALS_Accel_Sensor2_ShortToGnd);
+    sensors["Accel_Sensor2_ShortToVcc"] = CarData_ReadValue(PEDALS_Accel_Sensor2_ShortToVcc);
+    sensors["Accel_Sensor2_OutOfRangeOutput"] = CarData_ReadValue(PEDALS_Accel_Sensor2_OutOfRangeOutput);
+    sensors["Accel_Implausibility"] = CarData_ReadValue(PEDALS_Accel_Implausibility);
+
+    sensors["Brake_Sensor1_ShortToGnd"] = CarData_ReadValue(PEDALS_Brake_Sensor1_ShortToGnd);
+    sensors["Brake_Sensor1_ShortToVcc"] = 1;//CarData_ReadValue(PEDALS_Brake_Sensor1_ShortToVcc);
+    sensors["Brake_Sensor1_OutOfRangeOutput"] = CarData_ReadValue(PEDALS_Brake_Sensor1_OutOfRangeOutput);
+    sensors["Brake_Sensor2_ShortToGnd"] = CarData_ReadValue(PEDALS_Brake_Sensor2_ShortToGnd);
+    sensors["Brake_Sensor2_ShortToVcc"] = CarData_ReadValue(PEDALS_Brake_Sensor2_ShortToVcc);
+    sensors["Brake_Sensor2_OutOfRangeOutput"] = CarData_ReadValue(PEDALS_Brake_Sensor2_OutOfRangeOutput);
+    sensors["Brake_Implausibility"] = CarData_ReadValue(PEDALS_Brake_Implausibility);
+
+    bool fault = false;
+
+    QString tip="<table>";
+    for (auto it = sensors.cbegin(); it != sensors.cend(); ++it)
     {
-        window->ui->General_Imd_Status_Qlabel->setStyleSheet("background-color: green;");
-        window->ui->General_Imd_Status_Qlabel->setText("SAFE");
+        if(it.value())
+        {
+            tip += QString("<tr><td>%1</td><td style='color:#ff4444'>FAULT</td></tr>")
+                       .arg(it.key());
+            fault = true;
+        }
+    }
+    tip += "</table>";
+
+    if (!fault) {
+        window->ui->General_Pedals_HStatus_Qlabel->setText("SAFE");
+        window->ui->General_Pedals_HStatus_Qlabel->setStyleSheet("background-color: green;");
+    }
+    else {
+        window->ui->General_Pedals_HStatus_Qlabel->setText("FAULT");
+        window->ui->General_Pedals_HStatus_Qlabel->setStyleSheet("QLabel { background-color: red; }");
+        window->ui->General_Pedals_HStatus_Qlabel->setToolTip(tip);
+    }
+
+/*
+    QString tip="<table>";
+
+    for (auto it = sensors.cbegin(); it != sensors.cend(); ++it)
+    {
+        tip += QString("<tr><td>%1</td><td style='color:%2'>%3</td></tr>")
+                   .arg(it.key())
+                   .arg(it.value() ? "#ff4444" : "#44cc77")
+                   .arg(it.value() ? "FAULT" : "OK");
+
+        if(it.value())
+        {
+            fault = true;
+        }
+    }
+    if (!fault) {
+        window->ui->General_Pedals_HStatus_Qlabel->setText("SAFE");
+        window->ui->General_Pedals_HStatus_Qlabel->setStyleSheet("background-color: green;");
+    }
+    else {
+        window->ui->General_Pedals_HStatus_Qlabel->setText("FAULT");
+        window->ui->General_Pedals_HStatus_Qlabel->setStyleSheet("QLabel { background-color: red; }");
+    }
+    tip += "</table>";
+    window->ui->General_Pedals_HStatus_Qlabel->setToolTip(tip);
+
+*/
+    //DASHBOARD_ActivationButtonPressed
+    readValue = CarData_ReadValue(DASHBOARD_ActivationButtonPressed);
+    if(readValue == 1)
+    {
+        window->ui->General_Activation_Status_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->General_Activation_Status_Qlabel->setText("ACTIVATED");
     }
     else
     {
-        window->ui->General_Imd_Status_Qlabel->setStyleSheet("background-color: red;");
-        window->ui->General_Imd_Status_Qlabel->setText("UNSAFE");
+        window->ui->General_Activation_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->General_Activation_Status_Qlabel->setText("INACTIVE");
+    }
+    //DASHBOARD_CarReverseCommandPressed
+    readValue = CarData_ReadValue(DASHBOARD_CarReverseCommandPressed);
+    if(readValue == 1)
+    {
+        window->ui->General_Reverse_Status_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->General_Reverse_Status_Qlabel->setText("ACTIVATED");
+    }
+    else
+    {
+        window->ui->General_Reverse_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->General_Reverse_Status_Qlabel->setText("INACTIVE");
+    }
+    //DASHBOARD_IsDisplayWorking
+    readValue = CarData_ReadValue(DASHBOARD_IsDisplayWorking);
+    if(readValue == 0)
+    {
+        window->ui->General_Display_HStatus_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->General_Display_HStatus_Qlabel->setText("ACTIVATED");
+    }
+    else
+    {
+        window->ui->General_Display_HStatus_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->General_Display_HStatus_Qlabel->setText("INACTIVE");
+    }
+    //DASHBOARD_IsSegmentsDriverWorking
+    readValue = CarData_ReadValue(DASHBOARD_IsSegmentsDriverWorking);
+    if(readValue == 0)
+    {
+        window->ui->General_7seg_HStatus_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->General_7seg_HStatus_Qlabel->setText("ACTIVATED");
+    }
+    else
+    {
+        window->ui->General_7seg_HStatus_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->General_7seg_HStatus_Qlabel->setText("INACTIVED");
+    }
+    //INVERTERS_IsCarRunning
+    readValue = CarData_ReadValue(INVERTERS_IsCarRunning);
+    if(readValue == 0)
+    {
+        window->ui->General_Car_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->General_Car_Status_Qlabel->setText("STOPPED");
+    }
+    else
+    {
+        readValue = CarData_ReadValue(INVERTERS_IsCarRunning);
+        if(readValue == 0)
+        {
+            window->ui->General_Car_Status_Qlabel->setStyleSheet("background-color: green;");
+            window->ui->General_Car_Status_Qlabel->setText("FORWARD");
+        }
+        else
+        {
+            window->ui->General_Car_Status_Qlabel->setStyleSheet("background-color: green;");
+            window->ui->General_Car_Status_Qlabel->setText("REVERSE");
+        }
     }
 
 
@@ -830,23 +956,7 @@ void TsacTab_Update(MainWindow* window)
         window->ui->TSAC_Ams_Status_Qlabel->setText("UNSAFE");
     }
 
-    //TSAC_IsImdSafe
-    readValue = CarData_ReadValue(TSAC_IsImdSafe);
-    if(readValue == 0)
-    {
-        window->ui->TSAC_Imd_Status_Qlabel->setStyleSheet("background-color: green;");
-        window->ui->TSAC_Imd_Status_Qlabel->setText("SAFE");
-        window->ui->TSAC_Imd_Status_Qlabel_2->setStyleSheet("background-color: green;");
-        window->ui->TSAC_Imd_Status_Qlabel_2->setText("SAFE");
 
-    }
-    else
-    {
-        window->ui->TSAC_Imd_Status_Qlabel->setStyleSheet("background-color: red;");
-        window->ui->TSAC_Imd_Status_Qlabel->setText("UNSAFE");
-        window->ui->TSAC_Imd_Status_Qlabel_2->setStyleSheet("background-color: red;");
-        window->ui->TSAC_Imd_Status_Qlabel_2->setText("UNSAFE");
-    }
 
     //TSAC_IsTransceiverWorking
     readValue = CarData_ReadValue(TSAC_IsTransceiverWorking);
