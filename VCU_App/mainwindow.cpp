@@ -62,9 +62,42 @@ void MainWindow_Update(void)
 
 void GeneralTab_Update(MainWindow* window)
 {
+    static const char textFault[]="color:'#ff4444'>Fault";
+    static const uint8_t pedalsErrorsLength = 14U, BmsErrorsLength = 3U;
+    static const uint16_t tooltipTextIndexes_Pedals[pedalsErrorsLength] = {54, 134, 220, 300, 380, 466, 542, 622, 702, 788, 868, 948, 1034, 1110 } ,
+                            tooltipTextIndexes_Bms[BmsErrorsLength] = {35, 95, 155};
+    bool fault = false;
+    bool pedalsErrors[pedalsErrorsLength]={0} ,
+        BmsErrors[BmsErrorsLength]={0};
+    static QString tooltip_Pedals="<table>"
+        "<tr><td>Accel_Sensor1_ShortToGnd</td><td style='color:#44cc77'>OK     </td></tr>"
+        "<tr><td>Accel_Sensor1_ShortToVcc</td><td style='color:#44cc77'>OK     </td></tr>"
+        "<tr><td>Accel_Sensor1_OutOfRangeOutput</td><td style='color:#44cc77'>OK     </td></tr>"
+        "<tr><td>Accel_Sensor2_ShortToGnd</td><td style='color:#44cc77'>OK     </td></tr>"
+        "<tr><td>Accel_Sensor2_ShortToVcc</td><td style='color:#44cc77'>OK     </td></tr>"
+        "<tr><td>Accel_Sensor2_OutOfRangeOutput</td><td style='color:#44cc77'>OK     </td></tr>"
+        "<tr><td>Accel_Implausibility</td><td style='color:#44cc77'>OK     </td></tr>"
+
+        "<tr><td>Brake_Sensor1_ShortToGnd</td><td style='color:#44cc77'>OK     </td></tr>"
+        "<tr><td>Brake_Sensor1_ShortToVcc</td><td style='color:#44cc77'>OK     </td></tr>"
+        "<tr><td>Brake_Sensor1_OutOfRangeOutput</td><td style='color:#44cc77'>OK     </td></tr>"
+        "<tr><td>Brake_Sensor2_ShortToGnd</td><td style='color:#44cc77'>OK     </td></tr>"
+        "<tr><td>Brake_Sensor2_ShortToVcc</td><td style='color:#44cc77'>OK     </td></tr>"
+        "<tr><td>Brake_Sensor2_OutOfRangeOutput</td><td style='color:#44cc77'>OK     </td></tr>"
+        "<tr><td>Brake_Implausibility</td><td style='color:#44cc77'>OK     </td></tr>"
+                "</table>";
+
+    static QString tooltip_Bms="<table>"
+                            "<tr><td>Shunt</td><td style='color:#44cc77'>OK     </td></tr>"
+                            "<tr><td>BMS0</td><td style='color:#44cc77'>OK     </td></tr>"
+                            "<tr><td>BMS1</td><td style='color:#44cc77'>OK     </td></tr>"
+                            "</table>";
+
     uint32_t readValue, Value;
     char char_array[20], index = 0U;
     bool IsNegative;
+
+
     //PEDALS_AcceleratorSensor1Voltage
     readValue = (CarData_ReadValue(PEDALS_AcceleratorSensor1Voltage) * 5000U) / 16383U;//this translates the value from interval 0-16383 to interval 0-5000
     char_array[0] = '0' + readValue/1000U;
@@ -662,60 +695,32 @@ void GeneralTab_Update(MainWindow* window)
     }
 
     //Pedals_Sensors
-    QMap<QString, uint32_t> sensors;
-    sensors["Accel_Sensor1_ShortToGnd"] = CarData_ReadValue(PEDALS_Accel_Sensor1_ShortToGnd);
-    sensors["Accel_Sensor1_ShortToVcc"] = CarData_ReadValue(PEDALS_Accel_Sensor1_ShortToVcc);
-    sensors["Accel_Sensor1_OutOfRangeOutput"] = CarData_ReadValue(PEDALS_Accel_Sensor1_OutOfRangeOutput);
-    sensors["Accel_Sensor2_ShortToGnd"] = CarData_ReadValue(PEDALS_Accel_Sensor2_ShortToGnd);
-    sensors["Accel_Sensor2_ShortToVcc"] = CarData_ReadValue(PEDALS_Accel_Sensor2_ShortToVcc);
-    sensors["Accel_Sensor2_OutOfRangeOutput"] = CarData_ReadValue(PEDALS_Accel_Sensor2_OutOfRangeOutput);
-    sensors["Accel_Implausibility"] = CarData_ReadValue(PEDALS_Accel_Implausibility);
+    pedalsErrors[0] = (bool)CarData_ReadValue(PEDALS_Accel_Sensor1_ShortToGnd);//momentan primesc 0 == false == safe
+    pedalsErrors[1] = false;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor1_ShortToVcc);
+    pedalsErrors[2] = true;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor1_OutOfRangeOutput);
+    pedalsErrors[3] = true;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor2_ShortToGnd);
+    pedalsErrors[4] = true;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor2_ShortToVcc);
+    pedalsErrors[5] = true;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor2_OutOfRangeOutput);
+    pedalsErrors[6] = true;//(bool)CarData_ReadValue(PEDALS_Accel_Implausibility);
 
-    sensors["Brake_Sensor1_ShortToGnd"] = CarData_ReadValue(PEDALS_Brake_Sensor1_ShortToGnd);
-    sensors["Brake_Sensor1_ShortToVcc"] = 1;//CarData_ReadValue(PEDALS_Brake_Sensor1_ShortToVcc);
-    sensors["Brake_Sensor1_OutOfRangeOutput"] = CarData_ReadValue(PEDALS_Brake_Sensor1_OutOfRangeOutput);
-    sensors["Brake_Sensor2_ShortToGnd"] = CarData_ReadValue(PEDALS_Brake_Sensor2_ShortToGnd);
-    sensors["Brake_Sensor2_ShortToVcc"] = CarData_ReadValue(PEDALS_Brake_Sensor2_ShortToVcc);
-    sensors["Brake_Sensor2_OutOfRangeOutput"] = CarData_ReadValue(PEDALS_Brake_Sensor2_OutOfRangeOutput);
-    sensors["Brake_Implausibility"] = CarData_ReadValue(PEDALS_Brake_Implausibility);
+    pedalsErrors[7] = (bool)CarData_ReadValue(PEDALS_Brake_Sensor1_ShortToGnd);
+    pedalsErrors[8] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor1_ShortToVcc);
+    pedalsErrors[9] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor1_OutOfRangeOutput);
+    pedalsErrors[10] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor2_ShortToGnd);
+    pedalsErrors[11] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor2_ShortToVcc);
+    pedalsErrors[12] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor2_OutOfRangeOutput);
+    pedalsErrors[13] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Implausibility);
 
-    bool fault = false;
 
-    QString tip="<table>";
-    for (auto it = sensors.cbegin(); it != sensors.cend(); ++it)
+    for (uint16_t indexEroare = 0; indexEroare < pedalsErrorsLength; indexEroare++)
     {
-        if(it.value())
-        {
-            tip += QString("<tr><td>%1</td><td style='color:#ff4444'>FAULT</td></tr>")
-                       .arg(it.key());
-            fault = true;
-        }
-    }
-    tip += "</table>";
-
-    if (!fault) {
-        window->ui->General_Pedals_HStatus_Qlabel->setText("SAFE");
-        window->ui->General_Pedals_HStatus_Qlabel->setStyleSheet("background-color: green;");
-    }
-    else {
-        window->ui->General_Pedals_HStatus_Qlabel->setText("FAULT");
-        window->ui->General_Pedals_HStatus_Qlabel->setStyleSheet("QLabel { background-color: red; }");
-        window->ui->General_Pedals_HStatus_Qlabel->setToolTip(tip);
-    }
-
-/*
-    QString tip="<table>";
-
-    for (auto it = sensors.cbegin(); it != sensors.cend(); ++it)
-    {
-        tip += QString("<tr><td>%1</td><td style='color:%2'>%3</td></tr>")
-                   .arg(it.key())
-                   .arg(it.value() ? "#ff4444" : "#44cc77")
-                   .arg(it.value() ? "FAULT" : "OK");
-
-        if(it.value())
+        if(pedalsErrors[indexEroare])
         {
             fault = true;
+            for(uint16_t indexText = 0;indexText < strlen(textFault); indexText++)
+            {
+                tooltip_Pedals[tooltipTextIndexes_Pedals[indexEroare] + indexText] = textFault[indexText];
+            }
         }
     }
     if (!fault) {
@@ -726,10 +731,9 @@ void GeneralTab_Update(MainWindow* window)
         window->ui->General_Pedals_HStatus_Qlabel->setText("FAULT");
         window->ui->General_Pedals_HStatus_Qlabel->setStyleSheet("QLabel { background-color: red; }");
     }
-    tip += "</table>";
-    window->ui->General_Pedals_HStatus_Qlabel->setToolTip(tip);
+    window->ui->General_Pedals_HStatus_Qlabel->setToolTip(tooltip_Pedals);
 
-*/
+
     //DASHBOARD_ActivationButtonPressed
     readValue = CarData_ReadValue(DASHBOARD_ActivationButtonPressed);
     if(readValue == 1)
@@ -799,8 +803,30 @@ void GeneralTab_Update(MainWindow* window)
             window->ui->General_Car_Status_Qlabel->setText("REVERSE");
         }
     }
-
-
+    //General_IsBmsWorking
+    BmsErrors[0] = (bool)CarData_ReadValue(TSAC_IsShuntWorking);//momentan primesc 0 == false == safe
+    BmsErrors[1] = false;//(bool)CarData_ReadValue(TSAC_IsBms0Working);
+    BmsErrors[2] = true;//(bool)CarData_ReadValue(TSAC_IsBms1Working);
+    for (uint16_t indexEroare = 0; indexEroare < BmsErrorsLength; indexEroare++)
+    {
+        if(BmsErrors[indexEroare])
+        {
+            fault = true;
+            for(uint16_t indexText = 0;indexText < strlen(textFault); indexText++)
+            {
+                tooltip_Bms[tooltipTextIndexes_Bms[indexEroare] + indexText] = textFault[indexText];
+            }
+        }
+    }
+    if (!fault) {
+        window->ui->General_Bms_HStatus_Qlabel->setText("SAFE");
+        window->ui->General_Bms_HStatus_Qlabel->setStyleSheet("background-color: green;");
+    }
+    else {
+        window->ui->General_Bms_HStatus_Qlabel->setText("FAULT");
+        window->ui->General_Bms_HStatus_Qlabel->setStyleSheet("QLabel { background-color: red; }");
+    }
+    window->ui->General_Bms_HStatus_Qlabel->setToolTip(tooltip_Bms);
 }
 
 void TsacTab_Update(MainWindow* window)
