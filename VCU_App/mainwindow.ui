@@ -148,7 +148,7 @@
        <enum>QTabWidget::TabShape::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_general">
        <property name="palette">
@@ -23878,7 +23878,7 @@
        <attribute name="title">
         <string>TSAC</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_38" stretch="0,0,0">
+       <layout class="QHBoxLayout" name="horizontalLayout_38" stretch="2,2,4">
         <property name="spacing">
          <number>5</number>
         </property>
@@ -33827,7 +33827,7 @@
           <property name="frameShape">
            <enum>QFrame::Shape::Box</enum>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_59">
+          <layout class="QVBoxLayout" name="verticalLayout_59" stretch="0,3,0,1">
            <property name="spacing">
             <number>11</number>
            </property>
@@ -33844,8 +33844,26 @@
             <number>7</number>
            </property>
            <item>
+            <widget class="QLabel" name="label_85">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Per cell temperatures</string>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::TextFormat::PlainText</enum>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QFrame" name="Frame_Temperature">
-             <layout class="QVBoxLayout" name="verticalLayout_86" stretch="0,1">
+             <layout class="QVBoxLayout" name="verticalLayout_86" stretch="0">
               <property name="spacing">
                <number>2</number>
               </property>
@@ -33861,24 +33879,6 @@
               <property name="bottomMargin">
                <number>2</number>
               </property>
-              <item>
-               <widget class="QLabel" name="label_85">
-                <property name="font">
-                 <font>
-                  <pointsize>11</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Temperatures</string>
-                </property>
-                <property name="textFormat">
-                 <enum>Qt::TextFormat::PlainText</enum>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignmentFlag::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
               <item>
                <widget class="QFrame" name="verticalFrame">
                 <property name="palette">
@@ -34353,7 +34353,7 @@
                 <property name="autoFillBackground">
                  <bool>true</bool>
                 </property>
-                <layout class="QVBoxLayout" name="verticalLayout_57" stretch="0,0,1">
+                <layout class="QVBoxLayout" name="verticalLayout_57" stretch="0">
                  <property name="spacing">
                   <number>0</number>
                  </property>
@@ -34364,120 +34364,189 @@
                   <number>11</number>
                  </property>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_41" stretch="7,2">
-                   <item>
-                    <widget class="QLabel" name="label_84">
-                     <property name="font">
-                      <font>
-                       <pointsize>10</pointsize>
-                      </font>
-                     </property>
-                     <property name="text">
-                      <string> Temperatures</string>
-                     </property>
-                     <property name="textFormat">
-                      <enum>Qt::TextFormat::PlainText</enum>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QCheckBox" name="checkBox_2">
-                     <property name="text">
-                      <string>Simulate</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_64" stretch="1,1,3">
-                   <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_92">
-                     <item>
-                      <widget class="QLabel" name="label_88">
-                       <property name="text">
-                        <string>Selected bank avarage:</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLabel" name="label_89">
-                       <property name="text">
-                        <string>Selected bank:</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLabel" name="label_87">
-                       <property name="text">
-                        <string>Highest:</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLabel" name="label_86">
-                       <property name="text">
-                        <string>Lowest:</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                   <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_87">
-                     <item>
-                      <widget class="QLineEdit" name="lineEdit_6"/>
-                     </item>
-                     <item>
-                      <widget class="QLineEdit" name="lineEdit_4"/>
-                     </item>
-                     <item>
-                      <widget class="QLineEdit" name="lineEdit_36"/>
-                     </item>
-                     <item>
-                      <widget class="QLineEdit" name="lineEdit_5"/>
-                     </item>
-                    </layout>
-                   </item>
-                   <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_93">
-                     <item>
-                      <widget class="QSlider" name="horizontalSlider_5">
-                       <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QSlider" name="horizontalSlider_36">
-                       <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QSlider" name="horizontalSlider_4">
-                       <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QSlider" name="horizontalSlider_6">
-                       <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <widget class="QQuickWidget" name="quickWidget_2">
-                   <property name="resizeMode">
-                    <enum>QQuickWidget::ResizeMode::SizeRootObjectToView</enum>
+                  <widget class="QTableWidget" name="Cell_Temp_tableWidget">
+                   <property name="enabled">
+                    <bool>true</bool>
                    </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <kerning>true</kerning>
+                    </font>
+                   </property>
+                   <property name="contextMenuPolicy">
+                    <enum>Qt::ContextMenuPolicy::DefaultContextMenu</enum>
+                   </property>
+                   <property name="autoFillBackground">
+                    <bool>true</bool>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::Shape::Box</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Shadow::Plain</enum>
+                   </property>
+                   <property name="lineWidth">
+                    <number>1</number>
+                   </property>
+                   <property name="midLineWidth">
+                    <number>0</number>
+                   </property>
+                   <property name="verticalScrollBarPolicy">
+                    <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+                   </property>
+                   <property name="horizontalScrollBarPolicy">
+                    <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+                   </property>
+                   <property name="sizeAdjustPolicy">
+                    <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContents</enum>
+                   </property>
+                   <property name="autoScroll">
+                    <bool>false</bool>
+                   </property>
+                   <property name="showGrid">
+                    <bool>true</bool>
+                   </property>
+                   <property name="gridStyle">
+                    <enum>Qt::PenStyle::SolidLine</enum>
+                   </property>
+                   <property name="sortingEnabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="wordWrap">
+                    <bool>true</bool>
+                   </property>
+                   <property name="cornerButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                   <attribute name="horizontalHeaderCascadingSectionResizes">
+                    <bool>false</bool>
+                   </attribute>
+                   <row>
+                    <property name="text">
+                     <string>GPIO 0</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>GPIO 1</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>GPIO 2</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>GPIO 3</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>GPIO 4</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>GPIO 5</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>GPIO 6</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>GPIO 7</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>GPIO 8</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>GPIO 9</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>GPIO 10</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>GPIO 11</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>GPIO 12</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>GPIO 13</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>GPIO 14</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>GPIO 15</string>
+                    </property>
+                   </row>
+                   <column>
+                    <property name="text">
+                     <string>ADC 0</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>ADC 1</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>ADC 2</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>ADC 3</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>ADC 4</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>ADC 5</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>ADC 6</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>ADC 7</string>
+                    </property>
+                   </column>
                   </widget>
                  </item>
                 </layout>
@@ -34487,8 +34556,26 @@
             </widget>
            </item>
            <item>
+            <widget class="QLabel" name="label_90">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Per cell voltages</string>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::TextFormat::PlainText</enum>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QFrame" name="Frame_Temperature_2">
-             <layout class="QVBoxLayout" name="verticalLayout_94" stretch="0,1">
+             <layout class="QVBoxLayout" name="verticalLayout_94" stretch="0">
               <property name="spacing">
                <number>2</number>
               </property>
@@ -34504,24 +34591,6 @@
               <property name="bottomMargin">
                <number>2</number>
               </property>
-              <item>
-               <widget class="QLabel" name="label_90">
-                <property name="font">
-                 <font>
-                  <pointsize>11</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Voltages</string>
-                </property>
-                <property name="textFormat">
-                 <enum>Qt::TextFormat::PlainText</enum>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignmentFlag::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
               <item>
                <widget class="QFrame" name="verticalFrame_2">
                 <property name="palette">
@@ -34996,7 +35065,7 @@
                 <property name="autoFillBackground">
                  <bool>true</bool>
                 </property>
-                <layout class="QVBoxLayout" name="verticalLayout_58" stretch="0,0,1">
+                <layout class="QVBoxLayout" name="verticalLayout_58" stretch="0">
                  <property name="spacing">
                   <number>11</number>
                  </property>
@@ -35007,129 +35076,77 @@
                   <number>11</number>
                  </property>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_42" stretch="7,2">
-                   <item>
-                    <widget class="QLabel" name="label_91">
-                     <property name="font">
-                      <font>
-                       <pointsize>10</pointsize>
-                      </font>
-                     </property>
-                     <property name="text">
-                      <string>   Battery bank:</string>
-                     </property>
-                     <property name="textFormat">
-                      <enum>Qt::TextFormat::PlainText</enum>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QCheckBox" name="checkBox_17">
-                     <property name="layoutDirection">
-                      <enum>Qt::LayoutDirection::LeftToRight</enum>
-                     </property>
-                     <property name="text">
-                      <string>Simulate</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_65" stretch="1,1,4">
-                   <property name="spacing">
-                    <number>7</number>
+                  <widget class="QTableWidget" name="Cell_Volt_tableWidget">
+                   <property name="gridStyle">
+                    <enum>Qt::PenStyle::CustomDashLine</enum>
                    </property>
-                   <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_95">
-                     <item>
-                      <widget class="QLabel" name="label_92">
-                       <property name="text">
-                        <string>Selected:</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLabel" name="label_93">
-                       <property name="text">
-                        <string>Selected voltage:</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLabel" name="label_94">
-                       <property name="text">
-                        <string>Highest:</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLabel" name="label_95">
-                       <property name="text">
-                        <string>Lowest:</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                   <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_96">
-                     <property name="spacing">
-                      <number>3</number>
-                     </property>
-                     <item>
-                      <widget class="QLineEdit" name="lineEdit_37"/>
-                     </item>
-                     <item>
-                      <widget class="QLineEdit" name="lineEdit_38"/>
-                     </item>
-                     <item>
-                      <widget class="QLineEdit" name="lineEdit_39"/>
-                     </item>
-                     <item>
-                      <widget class="QLineEdit" name="lineEdit_40"/>
-                     </item>
-                    </layout>
-                   </item>
-                   <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_99">
-                     <item>
-                      <widget class="QSlider" name="horizontalSlider_37">
-                       <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QSlider" name="horizontalSlider_38">
-                       <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QSlider" name="horizontalSlider_39">
-                       <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QSlider" name="horizontalSlider_40">
-                       <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <widget class="QQuickWidget" name="quickWidget_17">
-                   <property name="resizeMode">
-                    <enum>QQuickWidget::ResizeMode::SizeRootObjectToView</enum>
+                   <property name="supportedDragActions">
+                    <set>Qt::DropAction::CopyAction|Qt::DropAction::MoveAction</set>
                    </property>
+                   <attribute name="horizontalHeaderCascadingSectionResizes">
+                    <bool>false</bool>
+                   </attribute>
+                   <attribute name="verticalHeaderVisible">
+                    <bool>true</bool>
+                   </attribute>
+                   <attribute name="verticalHeaderCascadingSectionResizes">
+                    <bool>false</bool>
+                   </attribute>
+                   <row>
+                    <property name="text">
+                     <string>BMS 0</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>BMS 1</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </row>
+                   <column>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </column>
+                   <item row="0" column="0">
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
                   </widget>
                  </item>
                 </layout>

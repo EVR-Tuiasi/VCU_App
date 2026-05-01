@@ -97,111 +97,6 @@ void GeneralTab_Update(MainWindow* window)
     char char_array[20], index = 0U;
     bool IsNegative;
 
-
-    //PEDALS_AcceleratorSensor1Voltage
-    readValue = (CarData_ReadValue(PEDALS_AcceleratorSensor1Voltage) * 5000U) / 16383U;//this translates the value from interval 0-16383 to interval 0-5000
-    char_array[0] = '0' + readValue/1000U;
-    char_array[1] = '.';
-    char_array[2] = '0' + (readValue/100U)%10U;
-    char_array[3] = '0' +(readValue/10U)%10U;
-    char_array[4] = '0' + readValue%10U;
-    char_array[5] = 'V';
-    char_array[6] = 0U;//needed so the "string" can be terminated
-    window->ui->Accel_Volt_S1_lineEdit->setText((const QString)QString(char_array));
-
-    //PEDALS_AcceleratorSensor2Voltage
-    readValue = (CarData_ReadValue(PEDALS_AcceleratorSensor2Voltage) * 5000U) / 16383U;//this translates the value from interval 0-16383 to interval 0-5000
-    char_array[0] = '0' + readValue/1000U;
-    char_array[1] = '.';
-    char_array[2] = '0' + (readValue/100U)%10U;
-    char_array[3] = '0' +(readValue/10U)%10U;
-    char_array[4] = '0' + readValue%10U;
-    char_array[5] = 'V';
-    char_array[6] = 0U;//needed so the "string" can be terminated
-    window->ui->Accel_Volt_S2_lineEdit->setText((const QString)QString(char_array));
-
-    //PEDALS_AcceleratorSensor1TravelPercentage
-    readValue = CarData_ReadValue(PEDALS_AcceleratorSensor1TravelPercentage);
-    index = 0U;
-    if(readValue >= 100U)
-    {
-        char_array[index++] = '0' + readValue/100U;
-    }
-    if(readValue >= 10U){
-        char_array[index++] = '0' + (readValue/10U)%10U;
-    }
-    char_array[index++] = '0' + readValue%10U;
-    char_array[index++] = '%';
-    char_array[index++] = 0;//needed so the "string" can be terminated
-    window->ui->Accel_Travel_S1_lineEdit->setText((const QString)QString(char_array));
-
-    //PEDALS_AcceleratorSensor2TravelPercentage
-    readValue = CarData_ReadValue(PEDALS_AcceleratorSensor2TravelPercentage);
-    index = 0U;
-    if(readValue >= 100U)
-    {
-        char_array[index++] = '0' + readValue/100U;
-    }
-    if(readValue >= 10U){
-        char_array[index++] = '0' + (readValue/10U)%10U;
-    }
-    char_array[index++] = '0' + readValue%10U;
-    char_array[index++] = '%';
-    char_array[index++] = 0;
-    window->ui->Accel_Travel_S2_lineEdit->setText((const QString)QString(char_array));
-
-    //PEDALS_BrakeSensor1Voltage
-    readValue = (CarData_ReadValue(PEDALS_BrakeSensor1Voltage)* 5000U) / 16383U;
-    char_array[0] = '0' + readValue/1000U;
-    char_array[1] = '.';
-    char_array[2] = '0' + (readValue/100U)%10U;
-    char_array[3] = '0' +(readValue/10U)%10U;
-    char_array[4] = '0' + readValue%10U;
-    char_array[5] = 'V';
-    char_array[6] = 0U;
-    window->ui->Brake_Volt_S1_lineEdit->setText((const QString)QString(char_array));
-
-    //PEDALS_BrakeSensor2Voltage
-    readValue = (CarData_ReadValue(PEDALS_BrakeSensor2Voltage)* 5000U) / 16383U; /* 14 bits, 0-16383, 0 to 5.00 Volts  +10U */
-    char_array[0] = '0' + readValue/1000U;
-    char_array[1] = '.';
-    char_array[2] = '0' + (readValue/100U)%10U;
-    char_array[3] = '0' +(readValue/10U)%10U;
-    char_array[4] = '0' + readValue%10U;
-    char_array[5] = 'V';
-    char_array[6] = 0U;
-    window->ui->Brake_Volt_S2_lineEdit->setText((const QString)QString(char_array));
-
-    //PEDALS_BrakeSensor1TravelPercentage
-    readValue = CarData_ReadValue(PEDALS_BrakeSensor1TravelPercentage);
-    index = 0U;
-    if(readValue >= 100U)
-    {
-        char_array[index++] = '0' + readValue/100U;
-    }
-    if(readValue >= 10U){
-        char_array[index++] = '0' + (readValue/10U)%10U;
-    }
-    char_array[index++] = '0' + readValue%10U;
-    char_array[index++] = '%';
-    char_array[index++] = 0;
-    window->ui->Brake_Travel_S1_lineEdit->setText((const QString)QString(char_array));
-
-    //PEDALS_BrakeSensor2TravelPercentage
-    readValue = CarData_ReadValue(PEDALS_BrakeSensor2TravelPercentage);
-    index = 0U;
-    if(readValue >= 100U)
-    {
-        char_array[index++] = '0' + readValue/100U;
-    }
-    if(readValue >= 10U){
-        char_array[index++] = '0' + (readValue/10U)%10U;
-    }
-    char_array[index++] = '0' + readValue%10U;
-    char_array[index++] = '%';
-    char_array[index++] = 0;
-    window->ui->Brake_Travel_S2_lineEdit->setText((const QString)QString(char_array));
-
     //TSAC_HighestCellTemperature
     readValue = CarData_ReadValue(TSAC_HighestCellTemperature);
     index = 0U;
@@ -337,6 +232,142 @@ void GeneralTab_Update(MainWindow* window)
     char_array[index++] = 'A';
     char_array[index++] = 0;
     window->ui->General_Tsac_Current_Median_lineEdit->setText((const QString)QString(char_array));
+
+
+    //PEDALS_AcceleratorSensor1Voltage
+    readValue = (CarData_ReadValue(PEDALS_AcceleratorSensor1Voltage) * 5000U) / 16383U;//this translates the value from interval 0-16383 to interval 0-5000
+    char_array[0] = '0' + readValue/1000U;
+    char_array[1] = '.';
+    char_array[2] = '0' + (readValue/100U)%10U;
+    char_array[3] = '0' +(readValue/10U)%10U;
+    char_array[4] = '0' + readValue%10U;
+    char_array[5] = 'V';
+    char_array[6] = 0U;//needed so the "string" can be terminated
+    window->ui->Accel_Volt_S1_lineEdit->setText((const QString)QString(char_array));
+
+    //PEDALS_AcceleratorSensor2Voltage
+    readValue = (CarData_ReadValue(PEDALS_AcceleratorSensor2Voltage) * 5000U) / 16383U;//this translates the value from interval 0-16383 to interval 0-5000
+    char_array[0] = '0' + readValue/1000U;
+    char_array[1] = '.';
+    char_array[2] = '0' + (readValue/100U)%10U;
+    char_array[3] = '0' +(readValue/10U)%10U;
+    char_array[4] = '0' + readValue%10U;
+    char_array[5] = 'V';
+    char_array[6] = 0U;
+    window->ui->Accel_Volt_S2_lineEdit->setText((const QString)QString(char_array));
+
+    //PEDALS_AcceleratorSensor1TravelPercentage
+    readValue = CarData_ReadValue(PEDALS_AcceleratorSensor1TravelPercentage);
+    index = 0U;
+    if(readValue >= 100U)
+    {
+        char_array[index++] = '0' + readValue/100U;
+    }
+    if(readValue >= 10U){
+        char_array[index++] = '0' + (readValue/10U)%10U;
+    }
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = '%';
+    char_array[index++] = 0;//needed so the "string" can be terminated
+    window->ui->Accel_Travel_S1_lineEdit->setText((const QString)QString(char_array));
+
+    //PEDALS_AcceleratorSensor2TravelPercentage
+    readValue = CarData_ReadValue(PEDALS_AcceleratorSensor2TravelPercentage);
+    index = 0U;
+    if(readValue >= 100U)
+    {
+        char_array[index++] = '0' + readValue/100U;
+    }
+    if(readValue >= 10U){
+        char_array[index++] = '0' + (readValue/10U)%10U;
+    }
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = '%';
+    char_array[index++] = 0;
+    window->ui->Accel_Travel_S2_lineEdit->setText((const QString)QString(char_array));
+
+    //PEDALS_BrakeSensor1Voltage
+    readValue = (CarData_ReadValue(PEDALS_BrakeSensor1Voltage)* 5000U) / 16383U;
+    char_array[0] = '0' + readValue/1000U;
+    char_array[1] = '.';
+    char_array[2] = '0' + (readValue/100U)%10U;
+    char_array[3] = '0' +(readValue/10U)%10U;
+    char_array[4] = '0' + readValue%10U;
+    char_array[5] = 'V';
+    char_array[6] = 0U;
+    window->ui->Brake_Volt_S1_lineEdit->setText((const QString)QString(char_array));
+
+    //PEDALS_BrakeSensor2Voltage
+    readValue = (CarData_ReadValue(PEDALS_BrakeSensor2Voltage)* 5000U) / 16383U; /* 14 bits, 0-16383, 0 to 5.00 Volts  +10U */
+    char_array[0] = '0' + readValue/1000U;
+    char_array[1] = '.';
+    char_array[2] = '0' + (readValue/100U)%10U;
+    char_array[3] = '0' +(readValue/10U)%10U;
+    char_array[4] = '0' + readValue%10U;
+    char_array[5] = 'V';
+    char_array[6] = 0U;
+    window->ui->Brake_Volt_S2_lineEdit->setText((const QString)QString(char_array));
+
+    //PEDALS_BrakeSensor1TravelPercentage
+    readValue = CarData_ReadValue(PEDALS_BrakeSensor1TravelPercentage);
+    index = 0U;
+    if(readValue >= 100U)
+    {
+        char_array[index++] = '0' + readValue/100U;
+    }
+    if(readValue >= 10U){
+        char_array[index++] = '0' + (readValue/10U)%10U;
+    }
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = '%';
+    char_array[index++] = 0;
+    window->ui->Brake_Travel_S1_lineEdit->setText((const QString)QString(char_array));
+
+    //PEDALS_BrakeSensor2TravelPercentage
+    readValue = CarData_ReadValue(PEDALS_BrakeSensor2TravelPercentage);
+    index = 0U;
+    if(readValue >= 100U)
+    {
+        char_array[index++] = '0' + readValue/100U;
+    }
+    if(readValue >= 10U){
+        char_array[index++] = '0' + (readValue/10U)%10U;
+    }
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = '%';
+    char_array[index++] = 0;
+    window->ui->Brake_Travel_S2_lineEdit->setText((const QString)QString(char_array));
+
+    //PEDALS_PressureSensorVoltage
+    readValue = CarData_ReadValue(PEDALS_PressureSensorVoltage);
+    index = 0U;
+    char_array[index++] = '0' + readValue/100U;
+    char_array[index++] = '.';
+    char_array[index++] = '0' + (readValue/10U)%10U;
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'V';
+    char_array[index++] = 0;
+    window->ui->Pressure_Volt_lineEdit->setText((const QString)QString(char_array));
+
+    //PEDALS_PressureSensorBars
+    readValue = CarData_ReadValue(PEDALS_PressureSensorBars);
+    index = 0U;
+    if(readValue >= 100U)
+    {
+        char_array[index++] = '0' + readValue/100U;
+    }
+    if(readValue >= 10U){
+        char_array[index++] = '0' + (readValue/10U)%10U;
+    }
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'b';
+    char_array[index++] = 'a';
+    char_array[index++] = 'r';
+    char_array[index++] = 0;
+    window->ui->Pressure_Bars_lineEdit->setText((const QString)QString(char_array));
+
 
     //INVERTERS_LeftInverterTemperature
     readValue = CarData_ReadValue(INVERTERS_LeftInverterTemperature);
@@ -651,89 +682,28 @@ void GeneralTab_Update(MainWindow* window)
     char_array[index++] = 0;
     window->ui->Inverter_Right_Feedback_lineEdit->setText((const QString)QString(char_array));
 
-    //PEDALS_PressureSensorVoltage
-    readValue = CarData_ReadValue(PEDALS_PressureSensorVoltage);
-    index = 0U;
-    char_array[index++] = '0' + readValue/100U;
-    char_array[index++] = '.';
-    char_array[index++] = '0' + (readValue/10U)%10U;
-    char_array[index++] = '0' + readValue%10U;
-    char_array[index++] = ' ';
-    char_array[index++] = 'V';
-    char_array[index++] = 0;
-    window->ui->Pressure_Volt_lineEdit->setText((const QString)QString(char_array));
-
-    //PEDALS_PressureSensorBars
-    readValue = CarData_ReadValue(PEDALS_PressureSensorBars);
-    index = 0U;
-    if(readValue >= 100U)
-    {
-        char_array[index++] = '0' + readValue/100U;
-    }
-    if(readValue >= 10U){
-        char_array[index++] = '0' + (readValue/10U)%10U;
-    }
-    char_array[index++] = '0' + readValue%10U;
-    char_array[index++] = ' ';
-    char_array[index++] = 'b';
-    char_array[index++] = 'a';
-    char_array[index++] = 'r';
-    char_array[index++] = 0;
-    window->ui->Pressure_Bars_lineEdit->setText((const QString)QString(char_array));
-
-    //TSAC_IsAmsSafe
-    readValue = CarData_ReadValue(TSAC_IsAmsSafe);
+//General tab status indicators:
+    //INVERTERS_IsCarRunning
+    readValue = CarData_ReadValue(INVERTERS_IsCarRunning);
     if(readValue == 0)
     {
-        window->ui->General_Ams_Status_Qlabel->setStyleSheet("background-color: green;");
-        window->ui->General_Ams_Status_Qlabel->setText("SAFE");
+        window->ui->General_Car_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->General_Car_Status_Qlabel->setText("STOPPED");
     }
     else
     {
-        window->ui->General_Ams_Status_Qlabel->setStyleSheet("background-color: red;");
-        window->ui->General_Ams_Status_Qlabel->setText("UNSAFE");
-    }
-
-    //Pedals_Sensors
-    pedalsErrors[0] = (bool)CarData_ReadValue(PEDALS_Accel_Sensor1_ShortToGnd);//momentan primesc 0 == false == safe
-    pedalsErrors[1] = false;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor1_ShortToVcc);
-    pedalsErrors[2] = true;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor1_OutOfRangeOutput);
-    pedalsErrors[3] = true;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor2_ShortToGnd);
-    pedalsErrors[4] = true;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor2_ShortToVcc);
-    pedalsErrors[5] = true;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor2_OutOfRangeOutput);
-    pedalsErrors[6] = true;//(bool)CarData_ReadValue(PEDALS_Accel_Implausibility);
-
-    pedalsErrors[7] = (bool)CarData_ReadValue(PEDALS_Brake_Sensor1_ShortToGnd);
-    pedalsErrors[8] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor1_ShortToVcc);
-    pedalsErrors[9] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor1_OutOfRangeOutput);
-    pedalsErrors[10] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor2_ShortToGnd);
-    pedalsErrors[11] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor2_ShortToVcc);
-    pedalsErrors[12] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor2_OutOfRangeOutput);
-    pedalsErrors[13] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Implausibility);
-
-
-    for (uint16_t indexEroare = 0; indexEroare < pedalsErrorsLength; indexEroare++)
-    {
-        if(pedalsErrors[indexEroare])
+        readValue = CarData_ReadValue(INVERTERS_IsCarRunning);
+        if(readValue == 0)
         {
-            fault = true;
-            for(uint16_t indexText = 0;indexText < strlen(textFault); indexText++)
-            {
-                tooltip_Pedals[tooltipTextIndexes_Pedals[indexEroare] + indexText] = textFault[indexText];
-            }
+            window->ui->General_Car_Status_Qlabel->setStyleSheet("background-color: green;");
+            window->ui->General_Car_Status_Qlabel->setText("FORWARD");
+        }
+        else
+        {
+            window->ui->General_Car_Status_Qlabel->setStyleSheet("background-color: green;");
+            window->ui->General_Car_Status_Qlabel->setText("REVERSE");
         }
     }
-    if (!fault) {
-        window->ui->General_Pedals_HStatus_Qlabel->setText("SAFE");
-        window->ui->General_Pedals_HStatus_Qlabel->setStyleSheet("background-color: green;");
-    }
-    else {
-        window->ui->General_Pedals_HStatus_Qlabel->setText("FAULT");
-        window->ui->General_Pedals_HStatus_Qlabel->setStyleSheet("QLabel { background-color: red; }");
-    }
-    window->ui->General_Pedals_HStatus_Qlabel->setToolTip(tooltip_Pedals);
-
-
     //DASHBOARD_ActivationButtonPressed
     readValue = CarData_ReadValue(DASHBOARD_ActivationButtonPressed);
     if(readValue == 1)
@@ -758,6 +728,19 @@ void GeneralTab_Update(MainWindow* window)
         window->ui->General_Reverse_Status_Qlabel->setStyleSheet("background-color: red;");
         window->ui->General_Reverse_Status_Qlabel->setText("INACTIVE");
     }
+    //TSAC_IsAmsSafe
+    readValue = CarData_ReadValue(TSAC_IsAmsSafe);
+    if(readValue == 0)
+    {
+        window->ui->General_Ams_Status_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->General_Ams_Status_Qlabel->setText("SAFE");
+    }
+    else
+    {
+        window->ui->General_Ams_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->General_Ams_Status_Qlabel->setText("UNSAFE");
+    }
+
     //DASHBOARD_IsDisplayWorking
     readValue = CarData_ReadValue(DASHBOARD_IsDisplayWorking);
     if(readValue == 0)
@@ -782,27 +765,45 @@ void GeneralTab_Update(MainWindow* window)
         window->ui->General_7seg_HStatus_Qlabel->setStyleSheet("background-color: red;");
         window->ui->General_7seg_HStatus_Qlabel->setText("INACTIVED");
     }
-    //INVERTERS_IsCarRunning
-    readValue = CarData_ReadValue(INVERTERS_IsCarRunning);
-    if(readValue == 0)
+
+    //Pedals_Sensors
+    pedalsErrors[0] = false;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor1_ShortToGnd);//momentan primesc 0 == false == safe
+    pedalsErrors[1] = false;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor1_ShortToVcc);
+    pedalsErrors[2] = true;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor1_OutOfRangeOutput);
+    pedalsErrors[3] = false;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor2_ShortToGnd);
+    pedalsErrors[4] = true;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor2_ShortToVcc);
+    pedalsErrors[5] = true;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor2_OutOfRangeOutput);
+    pedalsErrors[6] = true;//(bool)CarData_ReadValue(PEDALS_Accel_Implausibility);
+
+    pedalsErrors[7] = (bool)CarData_ReadValue(PEDALS_Brake_Sensor1_ShortToGnd);
+    pedalsErrors[8] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor1_ShortToVcc);
+    pedalsErrors[9] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor1_OutOfRangeOutput);
+    pedalsErrors[10] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor2_ShortToGnd);
+    pedalsErrors[11] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor2_ShortToVcc);
+    pedalsErrors[12] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor2_OutOfRangeOutput);
+    pedalsErrors[13] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Implausibility);
+
+    for (uint16_t indexEroare = 0; indexEroare < pedalsErrorsLength; indexEroare++)
     {
-        window->ui->General_Car_Status_Qlabel->setStyleSheet("background-color: red;");
-        window->ui->General_Car_Status_Qlabel->setText("STOPPED");
-    }
-    else
-    {
-        readValue = CarData_ReadValue(INVERTERS_IsCarRunning);
-        if(readValue == 0)
+        if(pedalsErrors[indexEroare])
         {
-            window->ui->General_Car_Status_Qlabel->setStyleSheet("background-color: green;");
-            window->ui->General_Car_Status_Qlabel->setText("FORWARD");
-        }
-        else
-        {
-            window->ui->General_Car_Status_Qlabel->setStyleSheet("background-color: green;");
-            window->ui->General_Car_Status_Qlabel->setText("REVERSE");
+            fault = true;
+            for(uint16_t indexText = 0;indexText < strlen(textFault); indexText++)
+            {
+                tooltip_Pedals[tooltipTextIndexes_Pedals[indexEroare] + indexText] = textFault[indexText];
+            }
         }
     }
+    if (!fault) {
+        window->ui->General_Pedals_HStatus_Qlabel->setText("SAFE");
+        window->ui->General_Pedals_HStatus_Qlabel->setStyleSheet("background-color: green;");
+    }
+    else {
+        window->ui->General_Pedals_HStatus_Qlabel->setText("FAULT");
+        window->ui->General_Pedals_HStatus_Qlabel->setStyleSheet("QLabel { background-color: red; }");
+    }
+    window->ui->General_Pedals_HStatus_Qlabel->setToolTip(tooltip_Pedals);
+
     //General_IsBmsWorking
     BmsErrors[0] = (bool)CarData_ReadValue(TSAC_IsShuntWorking);//momentan primesc 0 == false == safe
     BmsErrors[1] = false;//(bool)CarData_ReadValue(TSAC_IsBms0Working);
@@ -833,7 +834,8 @@ void TsacTab_Update(MainWindow* window)
 {
     uint32_t readValue;
     char char_array[20], index = 0U;
-    //TSAC
+
+    //TSAC_HighestCellTemperature
     readValue = CarData_ReadValue(TSAC_HighestCellTemperature);
     index = 0U;
     if(readValue >= 1000U)
@@ -982,7 +984,18 @@ void TsacTab_Update(MainWindow* window)
         window->ui->TSAC_Ams_Status_Qlabel->setText("UNSAFE");
     }
 
-
+    //TSAC_IsShuntWorking
+    readValue = CarData_ReadValue(TSAC_IsShuntWorking);
+    if(readValue == 0)
+    {
+        window->ui->TSAC_Shunt_Status_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->TSAC_Shunt_Status_Qlabel->setText("SAFE");
+    }
+    else
+    {
+        window->ui->TSAC_Shunt_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->TSAC_Shunt_Status_Qlabel->setText("UNSAFE");
+    }
 
     //TSAC_IsTransceiverWorking
     readValue = CarData_ReadValue(TSAC_IsTransceiverWorking);
@@ -995,19 +1008,6 @@ void TsacTab_Update(MainWindow* window)
     {
         window->ui->TSAC_Transceiver_Status_Qlabel->setStyleSheet("background-color: red;");
         window->ui->TSAC_Transceiver_Status_Qlabel->setText("UNSAFE");
-    }
-
-    //TSAC_IsShuntWorking
-    readValue = CarData_ReadValue(TSAC_IsShuntWorking);
-    if(readValue == 0)
-    {
-        window->ui->TSAC_Shunt_Status_Qlabel->setStyleSheet("background-color: green;");
-        window->ui->TSAC_Shunt_Status_Qlabel->setText("SAFE");
-    }
-    else
-    {
-        window->ui->TSAC_Shunt_Status_Qlabel->setStyleSheet("background-color: red;");
-        window->ui->TSAC_Shunt_Status_Qlabel->setText("UNSAFE");
     }
 
     //TSAC_IsBms0Working
@@ -1035,6 +1035,13 @@ void TsacTab_Update(MainWindow* window)
         window->ui->TSAC_BMS1_Status_Qlabel->setStyleSheet("background-color: red;");
         window->ui->TSAC_BMS1_Status_Qlabel->setText("UNSAFE");
     }
+
+    //TSAC_CellTemperatures_Table
+    window->ui->Cell_Temp_tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    window->ui->Cell_Temp_tableWidget->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    //TSAC_CellVoltages_Table
+    window->ui->Cell_Volt_tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    window->ui->Cell_Volt_tableWidget->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 }
 
 void ParametersTab_Update(MainWindow* window)
