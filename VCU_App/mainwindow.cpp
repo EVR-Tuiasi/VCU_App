@@ -63,9 +63,9 @@ void MainWindow_Update(void)
 void GeneralTab_Update(MainWindow* window)
 {
     static const char textFault[]="color:'#ff4444'>Fault";
-    static const uint8_t pedalsErrorsLength = 14U, BmsErrorsLength = 3U;
+    static const uint8_t pedalsErrorsLength = 14U, BmsErrorsLength = 4U;
     static const uint16_t tooltipTextIndexes_Pedals[pedalsErrorsLength] = {54, 134, 220, 300, 380, 466, 542, 622, 702, 788, 868, 948, 1034, 1110 } ,
-                            tooltipTextIndexes_Bms[BmsErrorsLength] = {35, 95, 155};
+                            tooltipTextIndexes_Bms[BmsErrorsLength] = {35, 95, 155, 222};
     bool fault = false;
     bool pedalsErrors[pedalsErrorsLength]={0} ,
         BmsErrors[BmsErrorsLength]={0};
@@ -91,6 +91,7 @@ void GeneralTab_Update(MainWindow* window)
                             "<tr><td>Shunt</td><td style='color:#44cc77'>OK     </td></tr>"
                             "<tr><td>BMS0</td><td style='color:#44cc77'>OK     </td></tr>"
                             "<tr><td>BMS1</td><td style='color:#44cc77'>OK     </td></tr>"
+                            "<tr><td>Transceiver</td><td style='color:#44cc77'>OK     </td></tr>"
                             "</table>";
 
     uint32_t readValue, Value;
@@ -808,6 +809,7 @@ void GeneralTab_Update(MainWindow* window)
     BmsErrors[0] = (bool)CarData_ReadValue(TSAC_IsShuntWorking);//momentan primesc 0 == false == safe
     BmsErrors[1] = false;//(bool)CarData_ReadValue(TSAC_IsBms0Working);
     BmsErrors[2] = true;//(bool)CarData_ReadValue(TSAC_IsBms1Working);
+    BmsErrors[3] = true;//(bool)CarData_ReadValue(TSAC_IsTransceiverWorking);
     for (uint16_t indexEroare = 0; indexEroare < BmsErrorsLength; indexEroare++)
     {
         if(BmsErrors[indexEroare])
@@ -989,12 +991,12 @@ void TsacTab_Update(MainWindow* window)
     if(readValue == 0)
     {
         window->ui->TSAC_Shunt_Status_Qlabel->setStyleSheet("background-color: green;");
-        window->ui->TSAC_Shunt_Status_Qlabel->setText("SAFE");
+        window->ui->TSAC_Shunt_Status_Qlabel->setText("Ok");
     }
     else
     {
         window->ui->TSAC_Shunt_Status_Qlabel->setStyleSheet("background-color: red;");
-        window->ui->TSAC_Shunt_Status_Qlabel->setText("UNSAFE");
+        window->ui->TSAC_Shunt_Status_Qlabel->setText("Error");
     }
 
     //TSAC_IsTransceiverWorking
@@ -1002,12 +1004,12 @@ void TsacTab_Update(MainWindow* window)
     if(readValue == 0)
     {
         window->ui->TSAC_Transceiver_Status_Qlabel->setStyleSheet("background-color: green;");
-        window->ui->TSAC_Transceiver_Status_Qlabel->setText("SAFE");
+        window->ui->TSAC_Transceiver_Status_Qlabel->setText("Ok");
     }
     else
     {
         window->ui->TSAC_Transceiver_Status_Qlabel->setStyleSheet("background-color: red;");
-        window->ui->TSAC_Transceiver_Status_Qlabel->setText("UNSAFE");
+        window->ui->TSAC_Transceiver_Status_Qlabel->setText("Error");
     }
 
     //TSAC_IsBms0Working
@@ -1015,12 +1017,12 @@ void TsacTab_Update(MainWindow* window)
     if(readValue == 0)
     {
         window->ui->TSAC_BMS0_Status_Qlabel->setStyleSheet("background-color: green;");
-        window->ui->TSAC_BMS0_Status_Qlabel->setText("SAFE");
+        window->ui->TSAC_BMS0_Status_Qlabel->setText("Ok");
     }
     else
     {
         window->ui->TSAC_BMS0_Status_Qlabel->setStyleSheet("background-color: red;");
-        window->ui->TSAC_BMS0_Status_Qlabel->setText("UNSAFE");
+        window->ui->TSAC_BMS0_Status_Qlabel->setText("Error");
     }
 
     //TSAC_IsBms1Working
@@ -1028,12 +1030,12 @@ void TsacTab_Update(MainWindow* window)
     if(readValue == 0)
     {
         window->ui->TSAC_BMS1_Status_Qlabel->setStyleSheet("background-color: green;");
-        window->ui->TSAC_BMS1_Status_Qlabel->setText("SAFE");
+        window->ui->TSAC_BMS1_Status_Qlabel->setText("Ok");
     }
     else
     {
         window->ui->TSAC_BMS1_Status_Qlabel->setStyleSheet("background-color: red;");
-        window->ui->TSAC_BMS1_Status_Qlabel->setText("UNSAFE");
+        window->ui->TSAC_BMS1_Status_Qlabel->setText("Error");
     }
 
     //TSAC_CellTemperatures_Table

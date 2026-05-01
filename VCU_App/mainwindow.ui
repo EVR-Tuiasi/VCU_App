@@ -33880,7 +33880,16 @@
                <number>2</number>
               </property>
               <item>
-               <widget class="QFrame" name="verticalFrame">
+               <widget class="QTableWidget" name="Cell_Temp_tableWidget">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="palette">
                  <palette>
                   <active>
@@ -34350,206 +34359,179 @@
                   </disabled>
                  </palette>
                 </property>
+                <property name="font">
+                 <font>
+                  <kerning>true</kerning>
+                 </font>
+                </property>
+                <property name="contextMenuPolicy">
+                 <enum>Qt::ContextMenuPolicy::DefaultContextMenu</enum>
+                </property>
                 <property name="autoFillBackground">
                  <bool>true</bool>
                 </property>
-                <layout class="QVBoxLayout" name="verticalLayout_57" stretch="0">
-                 <property name="spacing">
-                  <number>0</number>
+                <property name="frameShape">
+                 <enum>QFrame::Shape::Box</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Shadow::Plain</enum>
+                </property>
+                <property name="lineWidth">
+                 <number>1</number>
+                </property>
+                <property name="midLineWidth">
+                 <number>0</number>
+                </property>
+                <property name="verticalScrollBarPolicy">
+                 <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+                </property>
+                <property name="horizontalScrollBarPolicy">
+                 <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+                </property>
+                <property name="sizeAdjustPolicy">
+                 <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContents</enum>
+                </property>
+                <property name="autoScroll">
+                 <bool>false</bool>
+                </property>
+                <property name="showGrid">
+                 <bool>true</bool>
+                </property>
+                <property name="gridStyle">
+                 <enum>Qt::PenStyle::SolidLine</enum>
+                </property>
+                <property name="sortingEnabled">
+                 <bool>false</bool>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+                <property name="cornerButtonEnabled">
+                 <bool>true</bool>
+                </property>
+                <attribute name="horizontalHeaderCascadingSectionResizes">
+                 <bool>false</bool>
+                </attribute>
+                <row>
+                 <property name="text">
+                  <string>GPIO 0</string>
                  </property>
-                 <property name="topMargin">
-                  <number>11</number>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>GPIO 1</string>
                  </property>
-                 <property name="bottomMargin">
-                  <number>11</number>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>GPIO 2</string>
                  </property>
-                 <item>
-                  <widget class="QTableWidget" name="Cell_Temp_tableWidget">
-                   <property name="enabled">
-                    <bool>true</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <kerning>true</kerning>
-                    </font>
-                   </property>
-                   <property name="contextMenuPolicy">
-                    <enum>Qt::ContextMenuPolicy::DefaultContextMenu</enum>
-                   </property>
-                   <property name="autoFillBackground">
-                    <bool>true</bool>
-                   </property>
-                   <property name="frameShape">
-                    <enum>QFrame::Shape::Box</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Shadow::Plain</enum>
-                   </property>
-                   <property name="lineWidth">
-                    <number>1</number>
-                   </property>
-                   <property name="midLineWidth">
-                    <number>0</number>
-                   </property>
-                   <property name="verticalScrollBarPolicy">
-                    <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
-                   </property>
-                   <property name="horizontalScrollBarPolicy">
-                    <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
-                   </property>
-                   <property name="sizeAdjustPolicy">
-                    <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContents</enum>
-                   </property>
-                   <property name="autoScroll">
-                    <bool>false</bool>
-                   </property>
-                   <property name="showGrid">
-                    <bool>true</bool>
-                   </property>
-                   <property name="gridStyle">
-                    <enum>Qt::PenStyle::SolidLine</enum>
-                   </property>
-                   <property name="sortingEnabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="wordWrap">
-                    <bool>true</bool>
-                   </property>
-                   <property name="cornerButtonEnabled">
-                    <bool>true</bool>
-                   </property>
-                   <attribute name="horizontalHeaderCascadingSectionResizes">
-                    <bool>false</bool>
-                   </attribute>
-                   <row>
-                    <property name="text">
-                     <string>GPIO 0</string>
-                    </property>
-                   </row>
-                   <row>
-                    <property name="text">
-                     <string>GPIO 1</string>
-                    </property>
-                   </row>
-                   <row>
-                    <property name="text">
-                     <string>GPIO 2</string>
-                    </property>
-                   </row>
-                   <row>
-                    <property name="text">
-                     <string>GPIO 3</string>
-                    </property>
-                   </row>
-                   <row>
-                    <property name="text">
-                     <string>GPIO 4</string>
-                    </property>
-                   </row>
-                   <row>
-                    <property name="text">
-                     <string>GPIO 5</string>
-                    </property>
-                   </row>
-                   <row>
-                    <property name="text">
-                     <string>GPIO 6</string>
-                    </property>
-                   </row>
-                   <row>
-                    <property name="text">
-                     <string>GPIO 7</string>
-                    </property>
-                   </row>
-                   <row>
-                    <property name="text">
-                     <string>GPIO 8</string>
-                    </property>
-                   </row>
-                   <row>
-                    <property name="text">
-                     <string>GPIO 9</string>
-                    </property>
-                   </row>
-                   <row>
-                    <property name="text">
-                     <string>GPIO 10</string>
-                    </property>
-                   </row>
-                   <row>
-                    <property name="text">
-                     <string>GPIO 11</string>
-                    </property>
-                   </row>
-                   <row>
-                    <property name="text">
-                     <string>GPIO 12</string>
-                    </property>
-                   </row>
-                   <row>
-                    <property name="text">
-                     <string>GPIO 13</string>
-                    </property>
-                   </row>
-                   <row>
-                    <property name="text">
-                     <string>GPIO 14</string>
-                    </property>
-                   </row>
-                   <row>
-                    <property name="text">
-                     <string>GPIO 15</string>
-                    </property>
-                   </row>
-                   <column>
-                    <property name="text">
-                     <string>ADC 0</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>ADC 1</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>ADC 2</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>ADC 3</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>ADC 4</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>ADC 5</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>ADC 6</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>ADC 7</string>
-                    </property>
-                   </column>
-                  </widget>
-                 </item>
-                </layout>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>GPIO 3</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>GPIO 4</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>GPIO 5</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>GPIO 6</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>GPIO 7</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>GPIO 8</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>GPIO 9</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>GPIO 10</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>GPIO 11</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>GPIO 12</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>GPIO 13</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>GPIO 14</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>GPIO 15</string>
+                 </property>
+                </row>
+                <column>
+                 <property name="text">
+                  <string>ADC 0</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>ADC 1</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>ADC 2</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>ADC 3</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>ADC 4</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>ADC 5</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>ADC 6</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>ADC 7</string>
+                 </property>
+                </column>
                </widget>
               </item>
              </layout>
@@ -34592,7 +34574,7 @@
                <number>2</number>
               </property>
               <item>
-               <widget class="QFrame" name="verticalFrame_2">
+               <widget class="QTableWidget" name="Cell_Volt_tableWidget">
                 <property name="palette">
                  <palette>
                   <active>
@@ -35065,91 +35047,90 @@
                 <property name="autoFillBackground">
                  <bool>true</bool>
                 </property>
-                <layout class="QVBoxLayout" name="verticalLayout_58" stretch="0">
-                 <property name="spacing">
-                  <number>11</number>
+                <property name="frameShape">
+                 <enum>QFrame::Shape::Box</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Shadow::Plain</enum>
+                </property>
+                <property name="gridStyle">
+                 <enum>Qt::PenStyle::CustomDashLine</enum>
+                </property>
+                <property name="supportedDragActions">
+                 <set>Qt::DropAction::CopyAction|Qt::DropAction::MoveAction</set>
+                </property>
+                <attribute name="horizontalHeaderVisible">
+                 <bool>true</bool>
+                </attribute>
+                <attribute name="horizontalHeaderCascadingSectionResizes">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="verticalHeaderVisible">
+                 <bool>true</bool>
+                </attribute>
+                <attribute name="verticalHeaderCascadingSectionResizes">
+                 <bool>false</bool>
+                </attribute>
+                <row>
+                 <property name="text">
+                  <string>Bank 1</string>
                  </property>
-                 <property name="topMargin">
-                  <number>11</number>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>Bank 2</string>
                  </property>
-                 <property name="bottomMargin">
-                  <number>11</number>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>Bank 3</string>
                  </property>
-                 <item>
-                  <widget class="QTableWidget" name="Cell_Volt_tableWidget">
-                   <property name="gridStyle">
-                    <enum>Qt::PenStyle::CustomDashLine</enum>
-                   </property>
-                   <property name="supportedDragActions">
-                    <set>Qt::DropAction::CopyAction|Qt::DropAction::MoveAction</set>
-                   </property>
-                   <attribute name="horizontalHeaderCascadingSectionResizes">
-                    <bool>false</bool>
-                   </attribute>
-                   <attribute name="verticalHeaderVisible">
-                    <bool>true</bool>
-                   </attribute>
-                   <attribute name="verticalHeaderCascadingSectionResizes">
-                    <bool>false</bool>
-                   </attribute>
-                   <row>
-                    <property name="text">
-                     <string>BMS 0</string>
-                    </property>
-                   </row>
-                   <row>
-                    <property name="text">
-                     <string/>
-                    </property>
-                   </row>
-                   <row>
-                    <property name="text">
-                     <string>BMS 1</string>
-                    </property>
-                   </row>
-                   <row>
-                    <property name="text">
-                     <string/>
-                    </property>
-                   </row>
-                   <column>
-                    <property name="text">
-                     <string/>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string/>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string/>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string/>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string/>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string/>
-                    </property>
-                   </column>
-                   <item row="0" column="0">
-                    <property name="text">
-                     <string/>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                </layout>
+                </row>
+                <column>
+                 <property name="text">
+                  <string>Module 1</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Module 2</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Module 3</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Module 4</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Module 5</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Module 6</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Module 7</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Module 8</string>
+                 </property>
+                </column>
+                <item row="0" column="0">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
                </widget>
               </item>
              </layout>
