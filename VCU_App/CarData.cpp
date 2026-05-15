@@ -35,6 +35,7 @@ TsacMonitoredValues_t TsacMonitoredvalues;
 PedalsMonitoredValues_t PedalsMonitoredValues;
 InvertersMonitoredValues_t InvertersMonitoredValues;
 DashboardMonitoredValues_t DashboardMonitoredValues;
+CommunicationsMonitoredValues_t CommunicationMonitoredValues;
 
 /*==================================================================================================
 *                                      GLOBAL CONSTANTS
@@ -90,11 +91,20 @@ void CarData_SetValue(MonitoredValue_t DesiredValueType, uint32_t Value){
         else
             TsacMonitoredvalues.OverallCurrent = Value;
         break;
+    case TSAC_CellVoltageIndex:
+        if(Value>26)
+            TsacMonitoredvalues.CellVoltageIndex = 0;
+        else
+            TsacMonitoredvalues.CellVoltageIndex = Value;
+        break;
+    case TSAC_CellTemperatureIndex:
+        if(Value>127)
+            TsacMonitoredvalues.ThermistorTemperatureIndex = 0;
+        else
+            TsacMonitoredvalues.ThermistorTemperatureIndex = Value;
+        break;
     case TSAC_IsAmsSafe:
         TsacMonitoredvalues.AmsError = Value;
-        break;
-    case TSAC_IsImdSafe:
-        TsacMonitoredvalues.ImdError = Value;
         break;
     case TSAC_IsTransceiverWorking:
         TsacMonitoredvalues.TransceiverError = Value;
@@ -107,6 +117,18 @@ void CarData_SetValue(MonitoredValue_t DesiredValueType, uint32_t Value){
         break;
     case TSAC_IsBms1Working:
         TsacMonitoredvalues.Bms1Error = Value;
+        break;
+    case TSAC_IsCharging:
+        TsacMonitoredvalues.ChargerStatus = Value;
+        break;
+    case TSAC_AreThermistorsWorking:
+        TsacMonitoredvalues.ThermistorsError = Value;
+        break;
+    case TSAC_ReportedChargingCurrent:
+        TsacMonitoredvalues.ReportedChargingCurrent = Value;
+        break;
+    case TSAC_ReportedChargingVoltage:
+        TsacMonitoredvalues.ReportedChargingVoltage = Value;
         break;
     //PEDALS
     case PEDALS_AcceleratorSensor1Voltage:
@@ -294,10 +316,58 @@ void CarData_SetValue(MonitoredValue_t DesiredValueType, uint32_t Value){
     case DASHBOARD_IsSegmentsDriverWorking:
         DashboardMonitoredValues.IsSegmentsDriverWorking = Value;
         break;
+    //COMMUNICATIONS
+    case COMMUNICATIONS_IsInverterVcuSimulated:
+        CommunicationMonitoredValues.IsInverterVcuSimulated = Value;
+        break;
+    case COMMUNICATIONS_IsTsacVcuSimulated:
+        CommunicationMonitoredValues.IsTsacVcuSimulated = Value;
+        break;
+    case COMMUNICATIONS_IsDashboardVcuSimulated:
+        CommunicationMonitoredValues.IsDashboardVcuSimulated = Value;
+        break;
+    case COMMUNICATIONS_IsPedalsVcuSimulated:
+        CommunicationMonitoredValues.IsPedalsVcuSimulated = Value;
+        break;
+    case COMMUNICATIONS_ChargerCommand:
+        CommunicationMonitoredValues.ChargerCommand = Value;
+        break;
+    case COMMUNICATIONS_DesiredChargingCurrent:
+        if(Value > 320)
+            CommunicationMonitoredValues.DesiredChargingCurrent = 0;
+        else
+            CommunicationMonitoredValues.DesiredChargingCurrent = Value;
+        break;
+    case COMMUNICATIONS_DesiredChargingVoltage:
+        if(Value > 1008)
+            CommunicationMonitoredValues.DesiredChargingVoltage = 0;
+        else
+            CommunicationMonitoredValues.DesiredChargingVoltage = Value;
+        break;
+    default:
+        break;
     }
 }
 
+void CarData_SetCellVoltage(uint16_t Value, uint16_t index){
+    if(index < CELLS_NUM)
+        TsacMonitoredvalues.CellVoltage[index] = Value;
+}
+void CarData_SetCellVoltageErrors(bool Value, uint16_t index){
+    if(index < CELLS_NUM)
+        TsacMonitoredvalues.CellVoltageErrors[index] = Value;
+}
+void CarData_SetCellTemperature(uint16_t Value, uint16_t index){
+    if(index < THERMISTOR_NUM)
+        TsacMonitoredvalues.ThermistorTemperature[index] = Value;
+}
+void CarData_SetCellTemperatureErrors(bool Value, uint16_t index){
+    if(index < THERMISTOR_NUM)
+        TsacMonitoredvalues.ThermistorTemperatureErrors[index] = Value;
+}
+
 uint32_t CarData_ReadValue(MonitoredValue_t DesiredValueType){
+
     switch(DesiredValueType){
     case TSAC_MedianCellTemperature:
         return TsacMonitoredvalues.MedianCellTemperature;
@@ -315,10 +385,12 @@ uint32_t CarData_ReadValue(MonitoredValue_t DesiredValueType){
         return TsacMonitoredvalues.OverallVoltage;
     case TSAC_OverallCurrent:
         return TsacMonitoredvalues.OverallCurrent;
+    case TSAC_CellVoltageIndex:
+        return TsacMonitoredvalues.CellVoltageIndex;
+    case TSAC_CellTemperatureIndex:
+        return TsacMonitoredvalues.ThermistorTemperatureIndex;
     case TSAC_IsAmsSafe:
         return TsacMonitoredvalues.AmsError;
-    case TSAC_IsImdSafe:
-        return TsacMonitoredvalues.ImdError;
     case TSAC_IsTransceiverWorking:
         return TsacMonitoredvalues.TransceiverError;
     case TSAC_IsShuntWorking:
@@ -327,6 +399,14 @@ uint32_t CarData_ReadValue(MonitoredValue_t DesiredValueType){
         return TsacMonitoredvalues.Bms0Error;
     case TSAC_IsBms1Working:
         return TsacMonitoredvalues.Bms1Error;
+    case TSAC_IsCharging:
+        return TsacMonitoredvalues.ChargerStatus;
+    case TSAC_AreThermistorsWorking:
+        return TsacMonitoredvalues.ThermistorsError;
+    case TSAC_ReportedChargingCurrent:
+        return TsacMonitoredvalues.ReportedChargingCurrent;
+    case TSAC_ReportedChargingVoltage:
+        return TsacMonitoredvalues.ReportedChargingVoltage;
     case PEDALS_AcceleratorSensor1Voltage:
         return PedalsMonitoredValues.AcceleratorSensor1Voltage;
     case PEDALS_AcceleratorSensor2Voltage:
@@ -419,8 +499,50 @@ uint32_t CarData_ReadValue(MonitoredValue_t DesiredValueType){
         return DashboardMonitoredValues.IsDisplayWorking;
     case DASHBOARD_IsSegmentsDriverWorking:
         return DashboardMonitoredValues.IsSegmentsDriverWorking;
+    //COMMUNICATIONS
+    case COMMUNICATIONS_IsInverterVcuSimulated:
+        return CommunicationMonitoredValues.IsInverterVcuSimulated;
+    case COMMUNICATIONS_IsTsacVcuSimulated:
+        return CommunicationMonitoredValues.IsTsacVcuSimulated;
+    case COMMUNICATIONS_IsDashboardVcuSimulated:
+        return CommunicationMonitoredValues.IsDashboardVcuSimulated;
+    case COMMUNICATIONS_IsPedalsVcuSimulated:
+        return CommunicationMonitoredValues.IsPedalsVcuSimulated;
+    case COMMUNICATIONS_ChargerCommand:
+        return CommunicationMonitoredValues.ChargerCommand;
+    case COMMUNICATIONS_DesiredChargingCurrent:
+        return CommunicationMonitoredValues.DesiredChargingCurrent;
+    case COMMUNICATIONS_DesiredChargingVoltage:
+        return CommunicationMonitoredValues.DesiredChargingVoltage;
+    default:
+        return 0;
     }
     return 0;
+}
+
+uint16_t CarData_ReadCellVoltage(uint16_t index){
+    if(index < CELLS_NUM)
+        return TsacMonitoredvalues.CellVoltage[index];
+    else
+        return 0;
+}
+bool CarData_ReadCellVoltageErrors(uint16_t index){
+    if(index < CELLS_NUM)
+        return TsacMonitoredvalues.CellVoltageErrors[index];
+    else
+        return 0;
+}
+uint16_t CarData_ReadCellTemperature(uint16_t index){
+    if(index < THERMISTOR_NUM)
+        return TsacMonitoredvalues.ThermistorTemperature[index];
+    else
+        return 0;
+}
+bool CarData_ReadCellTemperatureErrors(uint16_t index){
+    if(index < THERMISTOR_NUM)
+        return TsacMonitoredvalues.ThermistorTemperatureErrors[index];
+    else
+        return 0;
 }
 
 #ifdef __cplusplus

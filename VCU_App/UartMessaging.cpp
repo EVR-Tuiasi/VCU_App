@@ -1,5 +1,6 @@
 #include <QSerialPort>
 #include <QElapsedTimer>
+#include <QDebug>
 
 #ifdef __cplusplus
 extern "C"{
@@ -50,7 +51,8 @@ extern "C"{
 static QSerialPort *serialPort = nullptr;
 static QElapsedTimer timer;
 static uint32_t timeSinceLastMessage = 0;
-static ComPortSettings_t settings = {true, 921600, "COM5"};
+static ComPortSettings_t settings = {true, 9600, "COM5"};//921600
+static bool simulateSend = true;
 
 /*==================================================================================================
 *                                   LOCAL FUNCTION PROTOTYPES
@@ -126,6 +128,10 @@ void UartMessaging_Update(void){
         serialPort = new QSerialPort();
     if(settings.shouldPortBeConnected){
         if(serialPort->isOpen()){
+            if(simulateSend){
+                if(serialPort->isWritable())
+                    sendTest();
+            }
             if(serialPort->waitForReadyRead(0)){
                 if(serialPort->bytesAvailable()>=10)
                     UartMessaging_ParseBuffer();
@@ -137,7 +143,8 @@ void UartMessaging_Update(void){
         else{
             serialPort->setPortName(settings.port);
             serialPort->setBaudRate(settings.desiredBaudRate);
-            serialPort->setReadBufferSize(100);
+            serialPort->setReadBufferSize(1000);
+            serialPort->setWriteBufferSize(1000);
             serialPort->setDataBits(QSerialPort::Data8);
             serialPort->setParity(QSerialPort::NoParity);
             if(serialPort->open(QIODevice::ReadWrite)){
@@ -189,7 +196,10 @@ static UartBufferValidity_t UartMessaging_CheckValidityOfBuffer(uint8_t buffer[1
         return BufferCrcInvalid;
     switch (readHeader) {
         case idUartAcceleratie:
-        case idUartBaterie:
+        case idUartBaterie1:
+        case idUartBaterie2:
+        case idUartBaterie3:
+        case idUartBaterie4:
         case idUartBord:
         case idUartFrana:
         case idUartInvertoare:
@@ -267,13 +277,62 @@ static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){/
             CarData_SetValue(INVERTERS_RightInverterCurrent, ((((uint16_t)data[5])<<8) | data[6]) >> 4);
             break;
 
-        case idUartBaterie:
+        case idUartBaterie1:
             //extragere date
-            CarData_SetValue(TSAC_OverallCurrent, ((((uint16_t)data[6])<<8) | data[7]) & (0x1FFF));
-            CarData_SetValue(TSAC_OverallVoltage, ((((uint16_t)data[5])<<8) | data[6]) >> 5);
-            CarData_SetValue(TSAC_HighestCellTemperature, ((((uint16_t)data[3])<<8) | data[4]) & (0x03FF));
-            CarData_SetValue(TSAC_HighestCellVoltage, (((((uint16_t)data[2])<<8) | data[3]) >> 2) & (0x03FF));
-            //More To Come:)
+            CarData_SetValue(TSAC_OverallCurrent, ((((uint16_t)data[6]) << 8) | data[7]) & (0x1FFF));
+            CarData_SetValue(TSAC_OverallVoltage, ((((uint16_t)data[5]) << 8) | data[6]) >> 5);
+            CarData_SetValue(TSAC_HighestCellTemperature, ((((uint16_t)data[3]) << 8) | data[4]) & (0x03FF));
+            CarData_SetValue(TSAC_HighestCellVoltage, (((((uint16_t)data[2]) << 8) | data[3]) >> 2) & (0x03FF));
+            CarData_SetValue(TSAC_LowestCellVoltage, (((((uint16_t)data[1]) << 8) | data[2]) >> 4) & (0x03FF));
+            CarData_SetValue(TSAC_LowestCellTemperature, (((((uint16_t)data[0]) << 8) | data[1]) >> 6) & (0x03FF));
+            break;
+
+        case idUartBaterie2:{
+            uint8_t index = (uint8_t)((data[0] << 2) | (data[1] >> 6)) & (0x1F);
+            CarData_SetValue(TSAC_CellVoltageIndex, index);
+            index = index * 5;
+            CarData_SetCellVoltageErrors(((data[0] & (1<<7)) >> 7), index + 0);
+            CarData_SetCellVoltageErrors(((data[0] & (1<<6)) >> 6), index + 1);
+            CarData_SetCellVoltageErrors(((data[0] & (1<<5)) >> 5), index + 2);
+            CarData_SetCellVoltageErrors(((data[0] & (1<<4)) >> 4), index + 3);
+            CarData_SetCellVoltageErrors(((data[0] & (1<<3)) >> 3), index + 4);
+            CarData_SetCellVoltage((((((uint16_t)data[1]) << 8) | data[2]) & (0x03FF)), index + 0);
+            CarData_SetCellVoltage(((((((uint16_t)data[3]) << 8) | data[4]) >> 6) & (0x03FF)), index + 1);
+            CarData_SetCellVoltage(((((((uint16_t)data[4]) << 8) | data[5]) >> 4) & (0x03FF)), index + 2);
+            CarData_SetCellVoltage(((((((uint16_t)data[5]) << 8) | data[6]) >> 2) & (0x03FF)), index + 3);
+            CarData_SetCellVoltage((((((uint16_t)data[6]) << 8) | data[7]) & (0x03FF)), index + 4);
+            break;
+        }
+
+        case idUartBaterie3:{
+            uint16_t index = (uint16_t)((data[0] << 4) | (data[1] >> 4)) & (0x007F);
+            CarData_SetValue(TSAC_CellTemperatureIndex, index);
+            index = index * 5;
+            CarData_SetCellTemperatureErrors(((data[0] & (1<<7)) >> 7), index + 0);
+            CarData_SetCellTemperatureErrors(((data[0] & (1<<6)) >> 6), index + 1);
+            CarData_SetCellTemperatureErrors(((data[0] & (1<<5)) >> 5), index + 2);
+            CarData_SetCellTemperatureErrors(((data[0] & (1<<4)) >> 4), index + 3);
+            CarData_SetCellTemperatureErrors(((data[0] & (1<<3)) >> 3), index + 4);
+            CarData_SetCellTemperature((((((uint16_t)data[1]) << 8) | data[2]) & (0x03FF)), index + 0);
+            CarData_SetCellTemperature(((((((uint16_t)data[3]) << 8) | data[4]) >> 6) & (0x03FF)), index + 1);
+            CarData_SetCellTemperature(((((((uint16_t)data[4]) << 8) | data[5]) >> 4) & (0x03FF)), index + 2);
+            CarData_SetCellTemperature(((((((uint16_t)data[5]) << 8) | data[6]) >> 2) & (0x03FF)), index + 3);
+            CarData_SetCellTemperature((((((uint16_t)data[6]) << 8) | data[7]) & (0x03FF)), index + 4);
+            break;
+        }
+
+        case idUartBaterie4:
+            CarData_SetValue(TSAC_MedianCellTemperature, (((((uint16_t)data[0]) << 8) | data[1]) >> 6) & (0x03FF));
+            CarData_SetValue(TSAC_MedianCellVoltage, (((((uint16_t)data[1]) << 8) | data[2]) >> 4) & (0x03FF));
+            CarData_SetValue(TSAC_IsShuntWorking, (data[2] & (1<<3)) >> 3);
+            CarData_SetValue(TSAC_IsTransceiverWorking, (data[2] & (1<<2)) >> 2);
+            CarData_SetValue(TSAC_IsBms0Working, (data[2] & (1<<1)) >> 1);
+            CarData_SetValue(TSAC_IsBms1Working, (data[2] & (1<<0)) >> 0);
+            CarData_SetValue(TSAC_AreThermistorsWorking, (data[3] & (1<<7)) >> 7);
+            CarData_SetValue(TSAC_IsAmsSafe, (data[3] & (1<<6)) >> 6);
+            CarData_SetValue(TSAC_IsCharging, (data[3] & (1<<0)) >> 0);
+            CarData_SetValue(TSAC_ReportedChargingCurrent, (((uint16_t)data[4]) << 8) | data[5]);
+            CarData_SetValue(TSAC_ReportedChargingVoltage, (((uint16_t)data[6]) << 8) | data[7]);
             break;
 
         case idUartBord:
@@ -283,8 +342,25 @@ static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){/
             CarData_SetValue(DASHBOARD_IsDisplayWorking, (data[0] & (1<<5)) >> 5);
             CarData_SetValue(DASHBOARD_IsSegmentsDriverWorking, (data[0] & (1<<4)) >> 4);
             break;
+        case idUartComunicatii:
+            CarData_SetValue(COMMUNICATIONS_IsInverterVcuSimulated, (data[0] & (1<<7)) >> 7);
+            CarData_SetValue(COMMUNICATIONS_IsTsacVcuSimulated, (data[0] & (1<<6)) >> 6);
+            CarData_SetValue(COMMUNICATIONS_IsDashboardVcuSimulated, (data[0] & (1<<5)) >> 5);
+            CarData_SetValue(COMMUNICATIONS_IsPedalsVcuSimulated, (data[0] & (1<<4)) >> 4);
+            CarData_SetValue(COMMUNICATIONS_ChargerCommand, (data[5] & (1<<3)) >> 3);
+            CarData_SetValue(COMMUNICATIONS_DesiredChargingCurrent, (((((uint16_t)data[5]) << 8) | data[6]) >> 2) & (0x01FF));
+            CarData_SetValue(COMMUNICATIONS_DesiredChargingVoltage, ((((uint16_t)data[6]) << 8) | data[7]) & (0x03FF));
+            break;
     }
 }
+
+void sendTest(){
+    while(serialPort->isWritable()){
+        qDebug()<<serialPort->write("a\n", 2)<<'\n';
+        qDebug()<<serialPort->waitForBytesWritten(10)<<'\n';
+    }
+}
+
 #ifdef __cplusplus
 }
 #endif

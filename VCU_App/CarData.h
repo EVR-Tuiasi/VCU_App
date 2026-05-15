@@ -32,16 +32,23 @@ typedef struct
     uint16_t LowestCellVoltage;                         /* 10 bits, 0-1023, 0 to 10.23 Volts, 0.01 Volts per bit */
     uint16_t OverallVoltage;                            /* 11 bits, 0-2047, 0 to 204.7 Volts, 0.1 Volts per bit */
     uint16_t OverallCurrent;                            /* 13 bits, 0-8095, 0 to 809.5 Amps, 0.1 Amps per bit */
+    uint16_t ReportedChargingCurrent;
+    uint16_t ReportedChargingVoltage;
     /* Cell voltages and temperatures*/
-    uint32_t CellVoltage[CELLS_NUM];                    /* TODO */
+    uint8_t CellVoltageIndex;
+    uint16_t CellVoltage[CELLS_NUM];                    /* TODO */
+    bool CellVoltageErrors[CELLS_NUM];
+    uint8_t ThermistorTemperatureIndex;
     uint16_t ThermistorTemperature[THERMISTOR_NUM];     /* 10 bits, 0-1023, 0 to 102.3 degrees C, 0.1 degrees C per bit */
+    bool ThermistorTemperatureErrors[THERMISTOR_NUM];
     /* Status and errors */
     bool AmsError;                                      /* 1 bit, 0 means safe, 1 means errors */
-    bool ImdError;                                      /* 1 bit, 0 means safe, 1 means errors */
     bool TransceiverError;                              /* 1 bit, 0 means safe, 1 means errors */
     bool ShuntError;                                    /* 1 bit, 0 means safe, 1 means errors */
     bool Bms0Error;                                     /* 1 bit, 0 means safe, 1 means errors */
     bool Bms1Error;                                     /* 1 bit, 0 means safe, 1 means errors */
+    bool ChargerStatus;
+    bool ThermistorsError;                               /* 1 bit, 0 means safe, 1 means errors */
 }TsacMonitoredValues_t;
 
 typedef struct
@@ -109,6 +116,16 @@ typedef struct
     bool IsSegmentsDriverWorking;                       /* 1 bit, 0 means segments driver is WORKING, 1 means segments driver is NOT WORKING */
 }DashboardMonitoredValues_t;
 
+typedef struct{
+    uint16_t DesiredChargingCurrent;
+    uint16_t DesiredChargingVoltage;
+    bool IsInverterVcuSimulated;
+    bool IsTsacVcuSimulated;
+    bool IsDashboardVcuSimulated;
+    bool IsPedalsVcuSimulated;
+    bool ChargerCommand;
+}CommunicationsMonitoredValues_t;
+
 typedef enum{
     /* TSAC */
     TSAC_MedianCellTemperature,                         /* 10 bits, 0-1023, 0 to 102.3 degrees C, 0.1 degrees C per bit */
@@ -119,12 +136,21 @@ typedef enum{
     TSAC_LowestCellVoltage,                             /* 10 bits, 0-1023, 0 to 10.23 Volts, 0.01 Volts per bit */
     TSAC_OverallVoltage,                                /* 11 bits, 0-2047, 0 to 204.7 Volts, 0.1 Volts per bit */
     TSAC_OverallCurrent,                                /* 13 bits, 0-8095, 0 to 809.5 Amps, 0.1 Amps per bit */
+    TSAC_CellVoltageIndex,
+    TSAC_CellVoltage,
+    TSAC_CellVoltageError,
+    TSAC_CellTemperatureIndex,
+    TSAC_CellTemperature,
+    TSAC_CellTemperatureError,
     TSAC_IsAmsSafe,                                     /* 1 bit, 0 means safe, 1 means errors */
-    TSAC_IsImdSafe,                                     /* 1 bit, 0 means safe, 1 means errors */
     TSAC_IsTransceiverWorking,                          /* 1 bit, 0 means safe, 1 means errors */
     TSAC_IsShuntWorking,                                /* 1 bit, 0 means safe, 1 means errors */
     TSAC_IsBms0Working,                                 /* 1 bit, 0 means safe, 1 means errors */
     TSAC_IsBms1Working,                                 /* 1 bit, 0 means safe, 1 means errors */
+    TSAC_IsCharging,
+    TSAC_AreThermistorsWorking,
+    TSAC_ReportedChargingCurrent,
+    TSAC_ReportedChargingVoltage,
     /* PEDALS */
     PEDALS_AcceleratorSensor1Voltage,                   /* 14 bits, 0-16383, 0 to 5.000 Volts */
     PEDALS_AcceleratorSensor2Voltage,                   /* 14 bits, 0-16383, 0 to 5.000 Volts */
@@ -173,7 +199,15 @@ typedef enum{
     DASHBOARD_ActivationButtonPressed,                  /* 1 bit, 0 means button is NOT ACTIVATED, 1 means button is ACTIVATED */
     DASHBOARD_CarReverseCommandPressed,                 /* 1 bit, 0 means reverse command is NOT ACTIVATED, 1 means reverse command is ACTIVATED */
     DASHBOARD_IsDisplayWorking,                         /* 1 bit, 0 means display is WORKING, 1 means display is NOT WORKING */
-    DASHBOARD_IsSegmentsDriverWorking                   /* 1 bit, 0 means segments driver is WORKING, 1 means segments driver is NOT WORKING */
+    DASHBOARD_IsSegmentsDriverWorking,                   /* 1 bit, 0 means segments driver is WORKING, 1 means segments driver is NOT WORKING */
+    /* COMMUNICATIONS */
+    COMMUNICATIONS_IsInverterVcuSimulated,
+    COMMUNICATIONS_IsTsacVcuSimulated,
+    COMMUNICATIONS_IsDashboardVcuSimulated,
+    COMMUNICATIONS_IsPedalsVcuSimulated,
+    COMMUNICATIONS_ChargerCommand,
+    COMMUNICATIONS_DesiredChargingCurrent,
+    COMMUNICATIONS_DesiredChargingVoltage,
 }MonitoredValue_t;
 
 /*==================================================================================================
@@ -215,7 +249,15 @@ typedef enum{
 *                                       GLOBAL FUNCTIONS
 ==================================================================================================*/
 void CarData_SetValue(MonitoredValue_t DesiredValueType, uint32_t Value);
+void CarData_SetCellVoltage(uint16_t Value, uint16_t index);
+void CarData_SetCellVoltageErrors(bool Value, uint16_t index);
+void CarData_SetCellTemperature(uint16_t Value, uint16_t index);
+void CarData_SetCellTemperatureErrors(bool Value, uint16_t index);
 uint32_t CarData_ReadValue(MonitoredValue_t DesiredValueType);
+uint16_t CanMessaging_ReadCellVoltage(uint16_t index);
+bool CanMessaging_ReadCellVoltageErrors(uint16_t index);
+uint16_t CanMessaging_ReadCellTemperature(uint16_t index);
+bool CanMessaging_ReadCellTemperatureErrors(uint16_t index);
 
 #ifdef __cplusplus
 }
