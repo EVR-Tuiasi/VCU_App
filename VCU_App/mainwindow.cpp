@@ -5,6 +5,7 @@
 #include<QDebug>
 
 #include "CarData.h"
+#include <QSerialPortInfo>
 
 static MainWindow* window;
 
@@ -26,6 +27,20 @@ MainWindow::MainWindow(QWidget *parent)
     timer->setTimerType(Qt::PreciseTimer);
     timer->setInterval(20);
     timer->start();
+
+    const QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
+    if (ports.isEmpty())
+    {
+        ui->COM_Port->setEnabled(false);
+    }
+    else
+    {
+        ui->COM_Port->setEnabled(true);
+        for (int index = 0; index < ports.size(); ++index)
+        {
+            ui->COM_Port->addItem(ports[index].portName());
+        }
+    }
 }
 
 MainWindow::~MainWindow()
