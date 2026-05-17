@@ -31,6 +31,7 @@ typedef enum{
     idUartBaterie2 = 0x15,
     idUartBaterie3 = 0x16,
     idUartBaterie4 = 0x17,
+    idUartBaterie5 = 0x19,
     idUartComunicatii = 0x18,
 }idUart_t;
 

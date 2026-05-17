@@ -91,18 +91,6 @@ void CarData_SetValue(MonitoredValue_t DesiredValueType, uint32_t Value){
         else
             TsacMonitoredvalues.OverallCurrent = Value;
         break;
-    case TSAC_CellVoltageIndex:
-        if(Value>26)
-            TsacMonitoredvalues.CellVoltageIndex = 0;
-        else
-            TsacMonitoredvalues.CellVoltageIndex = Value;
-        break;
-    case TSAC_CellTemperatureIndex:
-        if(Value>127)
-            TsacMonitoredvalues.ThermistorTemperatureIndex = 0;
-        else
-            TsacMonitoredvalues.ThermistorTemperatureIndex = Value;
-        break;
     case TSAC_IsAmsSafe:
         TsacMonitoredvalues.AmsError = Value;
         break;
@@ -218,6 +206,21 @@ void CarData_SetValue(MonitoredValue_t DesiredValueType, uint32_t Value){
     case PEDALS_Brake_Implausibility:
         PedalsMonitoredValues.Brake_Implausibility = Value;
         break;
+    case TSAC_ChargerCommand:
+        TsacMonitoredvalues.ChargerCommand = Value;
+        break;
+    case TSAC_DesiredChargingCurrent:
+        if(Value > 320)
+            TsacMonitoredvalues.DesiredChargingCurrent = 0;
+        else
+            TsacMonitoredvalues.DesiredChargingCurrent = Value;
+        break;
+    case TSAC_DesiredChargingVoltage:
+        if(Value > 1008)
+            TsacMonitoredvalues.DesiredChargingVoltage = 0;
+        else
+            TsacMonitoredvalues.DesiredChargingVoltage = Value;
+        break;
     //INVERTERS
     case INVERTERS_LeftInverterTemperature:
         InvertersMonitoredValues.LeftInverterTemperature = Value;
@@ -329,21 +332,6 @@ void CarData_SetValue(MonitoredValue_t DesiredValueType, uint32_t Value){
     case COMMUNICATIONS_IsPedalsVcuSimulated:
         CommunicationMonitoredValues.IsPedalsVcuSimulated = Value;
         break;
-    case COMMUNICATIONS_ChargerCommand:
-        CommunicationMonitoredValues.ChargerCommand = Value;
-        break;
-    case COMMUNICATIONS_DesiredChargingCurrent:
-        if(Value > 320)
-            CommunicationMonitoredValues.DesiredChargingCurrent = 0;
-        else
-            CommunicationMonitoredValues.DesiredChargingCurrent = Value;
-        break;
-    case COMMUNICATIONS_DesiredChargingVoltage:
-        if(Value > 1008)
-            CommunicationMonitoredValues.DesiredChargingVoltage = 0;
-        else
-            CommunicationMonitoredValues.DesiredChargingVoltage = Value;
-        break;
     default:
         break;
     }
@@ -385,10 +373,6 @@ uint32_t CarData_ReadValue(MonitoredValue_t DesiredValueType){
         return TsacMonitoredvalues.OverallVoltage;
     case TSAC_OverallCurrent:
         return TsacMonitoredvalues.OverallCurrent;
-    case TSAC_CellVoltageIndex:
-        return TsacMonitoredvalues.CellVoltageIndex;
-    case TSAC_CellTemperatureIndex:
-        return TsacMonitoredvalues.ThermistorTemperatureIndex;
     case TSAC_IsAmsSafe:
         return TsacMonitoredvalues.AmsError;
     case TSAC_IsTransceiverWorking:
@@ -407,6 +391,12 @@ uint32_t CarData_ReadValue(MonitoredValue_t DesiredValueType){
         return TsacMonitoredvalues.ReportedChargingCurrent;
     case TSAC_ReportedChargingVoltage:
         return TsacMonitoredvalues.ReportedChargingVoltage;
+    case TSAC_ChargerCommand:
+        return TsacMonitoredvalues.ChargerCommand;
+    case TSAC_DesiredChargingCurrent:
+        return TsacMonitoredvalues.DesiredChargingCurrent;
+    case TSAC_DesiredChargingVoltage:
+        return TsacMonitoredvalues.DesiredChargingVoltage;
     case PEDALS_AcceleratorSensor1Voltage:
         return PedalsMonitoredValues.AcceleratorSensor1Voltage;
     case PEDALS_AcceleratorSensor2Voltage:
@@ -508,12 +498,6 @@ uint32_t CarData_ReadValue(MonitoredValue_t DesiredValueType){
         return CommunicationMonitoredValues.IsDashboardVcuSimulated;
     case COMMUNICATIONS_IsPedalsVcuSimulated:
         return CommunicationMonitoredValues.IsPedalsVcuSimulated;
-    case COMMUNICATIONS_ChargerCommand:
-        return CommunicationMonitoredValues.ChargerCommand;
-    case COMMUNICATIONS_DesiredChargingCurrent:
-        return CommunicationMonitoredValues.DesiredChargingCurrent;
-    case COMMUNICATIONS_DesiredChargingVoltage:
-        return CommunicationMonitoredValues.DesiredChargingVoltage;
     default:
         return 0;
     }

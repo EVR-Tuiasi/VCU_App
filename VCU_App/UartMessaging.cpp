@@ -200,6 +200,7 @@ static UartBufferValidity_t UartMessaging_CheckValidityOfBuffer(uint8_t buffer[1
         case idUartBaterie2:
         case idUartBaterie3:
         case idUartBaterie4:
+        case idUartBaterie5:
         case idUartBord:
         case idUartFrana:
         case idUartInvertoare:
@@ -335,6 +336,12 @@ static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){/
             CarData_SetValue(TSAC_ReportedChargingVoltage, (((uint16_t)data[6]) << 8) | data[7]);
             break;
 
+        case idUartBaterie5:
+            CarData_SetValue(TSAC_ChargerCommand, (data[0] & (1<<7)) >> 7);
+            CarData_SetValue(TSAC_DesiredChargingCurrent, (((((uint16_t)data[5]) << 8) | data[6]) >> 2) & (0x01FF));
+            CarData_SetValue(TSAC_DesiredChargingVoltage, ((((uint16_t)data[6]) << 8) | data[7]) & (0x03FF));
+            break;
+
         case idUartBord:
             //extragere date
             CarData_SetValue(DASHBOARD_ActivationButtonPressed, (data[0] & (1<<7)) >> 7);
@@ -347,9 +354,6 @@ static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){/
             CarData_SetValue(COMMUNICATIONS_IsTsacVcuSimulated, (data[0] & (1<<6)) >> 6);
             CarData_SetValue(COMMUNICATIONS_IsDashboardVcuSimulated, (data[0] & (1<<5)) >> 5);
             CarData_SetValue(COMMUNICATIONS_IsPedalsVcuSimulated, (data[0] & (1<<4)) >> 4);
-            CarData_SetValue(COMMUNICATIONS_ChargerCommand, (data[5] & (1<<3)) >> 3);
-            CarData_SetValue(COMMUNICATIONS_DesiredChargingCurrent, (((((uint16_t)data[5]) << 8) | data[6]) >> 2) & (0x01FF));
-            CarData_SetValue(COMMUNICATIONS_DesiredChargingVoltage, ((((uint16_t)data[6]) << 8) | data[7]) & (0x03FF));
             break;
     }
 }

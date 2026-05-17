@@ -41,6 +41,9 @@ typedef struct
     uint8_t ThermistorTemperatureIndex;
     uint16_t ThermistorTemperature[THERMISTOR_NUM];     /* 10 bits, 0-1023, 0 to 102.3 degrees C, 0.1 degrees C per bit */
     bool ThermistorTemperatureErrors[THERMISTOR_NUM];
+    bool ChargerCommand;
+    uint16_t DesiredChargingCurrent;
+    uint16_t DesiredChargingVoltage;
     /* Status and errors */
     bool AmsError;                                      /* 1 bit, 0 means safe, 1 means errors */
     bool TransceiverError;                              /* 1 bit, 0 means safe, 1 means errors */
@@ -117,13 +120,10 @@ typedef struct
 }DashboardMonitoredValues_t;
 
 typedef struct{
-    uint16_t DesiredChargingCurrent;
-    uint16_t DesiredChargingVoltage;
     bool IsInverterVcuSimulated;
     bool IsTsacVcuSimulated;
     bool IsDashboardVcuSimulated;
     bool IsPedalsVcuSimulated;
-    bool ChargerCommand;
 }CommunicationsMonitoredValues_t;
 
 typedef enum{
@@ -151,6 +151,9 @@ typedef enum{
     TSAC_AreThermistorsWorking,
     TSAC_ReportedChargingCurrent,
     TSAC_ReportedChargingVoltage,
+    TSAC_ChargerCommand,
+    TSAC_DesiredChargingCurrent,
+    TSAC_DesiredChargingVoltage,
     /* PEDALS */
     PEDALS_AcceleratorSensor1Voltage,                   /* 14 bits, 0-16383, 0 to 5.000 Volts */
     PEDALS_AcceleratorSensor2Voltage,                   /* 14 bits, 0-16383, 0 to 5.000 Volts */
@@ -205,9 +208,6 @@ typedef enum{
     COMMUNICATIONS_IsTsacVcuSimulated,
     COMMUNICATIONS_IsDashboardVcuSimulated,
     COMMUNICATIONS_IsPedalsVcuSimulated,
-    COMMUNICATIONS_ChargerCommand,
-    COMMUNICATIONS_DesiredChargingCurrent,
-    COMMUNICATIONS_DesiredChargingVoltage,
 }MonitoredValue_t;
 
 /*==================================================================================================
