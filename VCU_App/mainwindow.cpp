@@ -5,9 +5,12 @@
 #include<QDebug>
 
 #include "CarData.h"
+#include "UartMessaging.h"
 #include <QSerialPortInfo>
 
 static MainWindow* window;
+static const uint32_t BaudRate_array[11]={9600, 19200, 28800, 38400, 57600, 76800, 115200, 230400, 460800, 576000, 921600};
+
 
 void MainWindow_Create(){
     window = new MainWindow();
@@ -29,19 +32,42 @@ MainWindow::MainWindow(QWidget *parent)
     timer->start();
 
     const QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
+    ui->Com_Port->clear();
     if (ports.isEmpty())
     {
-        ui->COM_Port->setEnabled(false);
+        ui->Com_Port->setEnabled(false);
     }
     else
     {
-        ui->COM_Port->setEnabled(true);
+        ui->Com_Port->setEnabled(true);
         for (int index = 0; index < ports.size(); ++index)
         {
-            ui->COM_Port->addItem(ports[index].portName());
+            ui->Com_Port->addItem(ports[index].portName());
         }
     }
+
+    ui->comboBox_BaudRate->setCurrentIndex(10);
+    ui->connectButton->setCheckable(true);
+    ui->connectButton->setText("Connect");
+
+
+
 }
+void MainWindow::on_comboBox_BaudRate_currentIndexChanged(int BaudRate_index)
+{
+    UartMessaging_SetBaudRate(BaudRate_array[BaudRate_index]);
+   // qDebug()<<"Main: val.shouldPortBeConencted:"<<BaudRate_array[BaudRate_index];
+}
+
+void MainWindow::on_connectButton_toggled(bool connected)
+{
+    UartMessaging_SetConnection(connected);
+    if(connected)
+        ui->connectButton->setText("Connected");
+    else
+        ui->connectButton->setText("Connect");
+}
+
 
 MainWindow::~MainWindow()
 {
@@ -1070,4 +1096,12 @@ void DebugTab_Update(MainWindow* window)
 {
     //TODO
 }
+
+/*
+    TO DO:
+1.lista simulare
+4.grafuri
+5.bms interfata
+
+*/
 

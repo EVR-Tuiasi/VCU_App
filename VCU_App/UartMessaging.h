@@ -77,7 +77,8 @@ static UartBufferValidity_t UartMessaging_CheckValidityOfBuffer(uint8_t buffer[1
 static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]);//this should parse the data from the buffer and update the global structure holding all values with the received ones.
 static uint8_t calculateCRC(uint8_t buffer[10]);
 static void UartMessaging_ParseBuffer(void);
-
+void UartMessaging_SetConnection(bool connected);
+void UartMessaging_SetBaudRate(int BaudRate);
 /*==================================================================================================
 *                                       GLOBAL FUNCTIONS
 ==================================================================================================*/

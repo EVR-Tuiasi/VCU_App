@@ -3,7 +3,6 @@
 
 #include <QApplication>
 #include <QThread>
-
 static const bool simulateUart = false; // --- IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ---
 //TRUE: values will be generated randomly by the data acquisition thread to test the user interface.
 //FALSE: value will be read from the COM port
@@ -71,7 +70,7 @@ void SimulatedData_Update(void)
     static bool Brake_Sensor1_ShortToGnd = false, Brake_Sensor1_ShortToVcc = false, Brake_Sensor1_OutOfRangeOutput = false, Brake_Sensor2_ShortToGnd = false, Brake_Sensor2_ShortToVcc = false, Brake_Sensor2_OutOfRangeOutput = false, Brake_Implausibility = false;
     static bool ActivationButtonPressed = false, CarReverseCommandPressed = false, IsDisplayWorking = false, IsSegmentsDriverWorking = false;
     static bool IsCarInReverse = false, IsCarRunning = false;
-/*
+
     static uint32_t debounce = 100U;
     if(debounce-- == 0)
     {
@@ -82,7 +81,6 @@ void SimulatedData_Update(void)
         Bms1Error = !Bms1Error;
         debounce = 100U;
     }
-*/
     //STEP 1: incrementing the values
     AcceleratorSensor1Voltage += 10U;//increment by whatever value desired
     AcceleratorSensor2Voltage += 10U;
