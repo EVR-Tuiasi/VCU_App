@@ -1,3 +1,4 @@
+#include <Qdebug>
 #ifdef __cplusplus
 extern "C"{
 #endif
@@ -338,6 +339,7 @@ void CarData_SetValue(MonitoredValue_t DesiredValueType, uint32_t Value){
 }
 
 void CarData_SetCellVoltage(uint16_t Value, uint16_t index){
+    //qDebug()<<"Index: "<<index<<" CellVoltage: "<<Value;
     if(index < CELLS_NUM)
         TsacMonitoredvalues.CellVoltage[index] = Value;
 }
@@ -346,6 +348,7 @@ void CarData_SetCellVoltageErrors(bool Value, uint16_t index){
         TsacMonitoredvalues.CellVoltageErrors[index] = Value;
 }
 void CarData_SetCellTemperature(uint16_t Value, uint16_t index){
+    qDebug()<<"Index: "<<index<<" CellTemperature: "<<Value;
     if(index < THERMISTOR_NUM)
         TsacMonitoredvalues.ThermistorTemperature[index] = Value;
 }

@@ -134,9 +134,9 @@ void UartMessaging_SetBaudRate(int BaudRate)
 void UartMessaging_Update(void){
     if(!serialPort)
         serialPort = new QSerialPort();
-    qDebug()<<"PORT COM:"<<serialPort->portName();
+    /*qDebug()<<"PORT COM:"<<serialPort->portName();
     qDebug()<<"Uart: val.shouldPortBeConencted:"<<settings.desiredBaudRate;
-    qDebug()<<"Uart: val.shouldPortBeConencted:"<<settings.shouldPortBeConnected;
+    qDebug()<<"Uart: val.shouldPortBeConencted:"<<settings.shouldPortBeConnected;*/
     if(settings.shouldPortBeConnected){
         if(serialPort->isOpen()){
             if(simulateSend){
@@ -227,6 +227,7 @@ static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){/
     uint8_t data[8];
     for(int i=1;i<=8;i++)
         data[i-1] = buffer[i];
+    qDebug()<<data[0]<<"\n";
     switch(id){
         case idUartFrana:
             //extragere date
@@ -300,7 +301,7 @@ static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){/
             break;
 
         case idUartBaterie2:{
-            uint8_t index = (uint8_t)((data[0] << 2) | (data[1] >> 6)) & (0x1F);
+            uint8_t index = (uint8_t)((data[0]) | (data[1] >> 6)) & (0x1F);
             CarData_SetValue(TSAC_CellVoltageIndex, index);
             index = index * 5;
             CarData_SetCellVoltageErrors(((data[0] & (1<<7)) >> 7), index + 0);
@@ -317,7 +318,7 @@ static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){/
         }
 
         case idUartBaterie3:{
-            uint16_t index = (uint16_t)((data[0] << 4) | (data[1] >> 4)) & (0x007F);
+            uint16_t index = (uint16_t)((data[0] << 2) | (data[1] >> 4)) & (0x007F);
             CarData_SetValue(TSAC_CellTemperatureIndex, index);
             index = index * 5;
             CarData_SetCellTemperatureErrors(((data[0] & (1<<7)) >> 7), index + 0);
