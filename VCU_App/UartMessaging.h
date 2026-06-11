@@ -84,6 +84,8 @@ static uint8_t calculateCRC(uint8_t buffer[10]);
 static void UartMessaging_ParseBuffer(void);
 static void sendTest();
 
+void UartMessaging_SetConnection(bool connected);
+void UartMessaging_SetBaudRate(int BaudRate);
 /*==================================================================================================
 *                                       GLOBAL FUNCTIONS
 ==================================================================================================*/

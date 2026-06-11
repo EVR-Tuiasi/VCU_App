@@ -83,7 +83,7 @@ typedef struct
     bool Brake_Sensor2_ShortToGnd;                      /* 1 bit, 0 means safe, 1 means errors */
     bool Brake_Sensor2_ShortToVcc;                      /* 1 bit, 0 means safe, 1 means errors */
     bool Brake_Sensor2_OutOfRangeOutput;                /* 1 bit, 0 means safe, 1 means errors */
-    bool Brake_Implausibility;                          /* 1 bit, 0 means safe, 1 means errors */
+    bool Brake_Implausibility;                          /* 1 bit, 0 means safe, 1 means errors */  
 }PedalsMonitoredValues_t;
 
 typedef struct

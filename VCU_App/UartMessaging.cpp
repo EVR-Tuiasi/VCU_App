@@ -1,6 +1,7 @@
 #include <QSerialPort>
 #include <QElapsedTimer>
 #include <QDebug>
+#include <Qdebug>
 
 #ifdef __cplusplus
 extern "C"{
@@ -51,7 +52,7 @@ extern "C"{
 static QSerialPort *serialPort = nullptr;
 static QElapsedTimer timer;
 static uint32_t timeSinceLastMessage = 0;
-static ComPortSettings_t settings = {true, 9600, "COM5"};//921600
+static ComPortSettings_t settings = {false, 921600, "COM5"};
 static bool simulateSend = true;
 
 /*==================================================================================================
@@ -122,10 +123,19 @@ static uint8_t calculateCRC(uint8_t buffer[10]) /* This was slightly modified bu
 /*==================================================================================================
 *                                       GLOBAL FUNCTIONS
 ==================================================================================================*/
+void UartMessaging_SetConnection(bool connected) {
+    settings.shouldPortBeConnected = connected;
+}
+void UartMessaging_SetBaudRate(int BaudRate)
+{
+    settings.desiredBaudRate=BaudRate;
+}
 
 void UartMessaging_Update(void){
     if(!serialPort)
         serialPort = new QSerialPort();
+    qDebug()<<"Uart: val.shouldPortBeConencted:"<<settings.desiredBaudRate;
+    qDebug()<<"Uart: val.shouldPortBeConencted:"<<settings.shouldPortBeConnected;
     if(settings.shouldPortBeConnected){
         if(serialPort->isOpen()){
             if(simulateSend){

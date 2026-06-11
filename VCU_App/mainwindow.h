@@ -19,6 +19,9 @@ public:
     ~MainWindow();
     Ui::MainWindow *ui;
     QTimer* timer;
+private slots:
+    void on_connectButton_toggled(bool connected);
+    void on_comboBox_BaudRate_currentIndexChanged(int index);
 };
 
 void MainWindow_Create(void);
