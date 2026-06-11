@@ -27,7 +27,12 @@ typedef enum{
     idUartBord = 0x13,
     idUartAcceleratie = 0x30,
     idUartFrana = 0x31,
-    idUartBaterie = 0x14
+    idUartBaterie1 = 0x14,
+    idUartBaterie2 = 0x15,
+    idUartBaterie3 = 0x16,
+    idUartBaterie4 = 0x17,
+    idUartBaterie5 = 0x19,
+    idUartComunicatii = 0x18,
 }idUart_t;
 
 typedef enum{
@@ -39,7 +44,7 @@ typedef enum{
 typedef struct{
     bool shouldPortBeConnected;
     uint32_t desiredBaudRate;
-    char port[5];
+    char port[6];
 }ComPortSettings_t;
 /*==================================================================================================
 *                                       LOCAL MACROS
@@ -77,6 +82,8 @@ static UartBufferValidity_t UartMessaging_CheckValidityOfBuffer(uint8_t buffer[1
 static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]);//this should parse the data from the buffer and update the global structure holding all values with the received ones.
 static uint8_t calculateCRC(uint8_t buffer[10]);
 static void UartMessaging_ParseBuffer(void);
+static void sendTest();
+
 void UartMessaging_SetConnection(bool connected);
 void UartMessaging_SetBaudRate(int BaudRate);
 /*==================================================================================================
