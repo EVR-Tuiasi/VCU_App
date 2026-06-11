@@ -52,8 +52,8 @@ extern "C"{
 static QSerialPort *serialPort = nullptr;
 static QElapsedTimer timer;
 static uint32_t timeSinceLastMessage = 0;
-static ComPortSettings_t settings = {false, 921600, "COM5"};
-static bool simulateSend = true;
+static ComPortSettings_t settings = {false, 921600, "COM3"};
+static bool simulateSend = false;
 
 /*==================================================================================================
 *                                   LOCAL FUNCTION PROTOTYPES
@@ -134,6 +134,7 @@ void UartMessaging_SetBaudRate(int BaudRate)
 void UartMessaging_Update(void){
     if(!serialPort)
         serialPort = new QSerialPort();
+    qDebug()<<"PORT COM:"<<serialPort->portName();
     qDebug()<<"Uart: val.shouldPortBeConencted:"<<settings.desiredBaudRate;
     qDebug()<<"Uart: val.shouldPortBeConencted:"<<settings.shouldPortBeConnected;
     if(settings.shouldPortBeConnected){

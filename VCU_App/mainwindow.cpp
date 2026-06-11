@@ -63,7 +63,10 @@ void MainWindow::on_connectButton_toggled(bool connected)
 {
     UartMessaging_SetConnection(connected);
     if(connected)
+    {
         ui->connectButton->setText("Connected");
+
+    }
     else
         ui->connectButton->setText("Connect");
 }
@@ -809,21 +812,21 @@ void GeneralTab_Update(MainWindow* window)
     }
 
     //Pedals_Sensors
-    pedalsErrors[0] = false;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor1_ShortToGnd);//momentan primesc 0 == false == safe
-    pedalsErrors[1] = false;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor1_ShortToVcc);
-    pedalsErrors[2] = true;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor1_OutOfRangeOutput);
-    pedalsErrors[3] = false;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor2_ShortToGnd);
-    pedalsErrors[4] = true;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor2_ShortToVcc);
-    pedalsErrors[5] = true;//(bool)CarData_ReadValue(PEDALS_Accel_Sensor2_OutOfRangeOutput);
-    pedalsErrors[6] = true;//(bool)CarData_ReadValue(PEDALS_Accel_Implausibility);
+    pedalsErrors[0] = (bool)CarData_ReadValue(PEDALS_Accel_Sensor1_ShortToGnd);//momentan primesc 0 == false == safe
+    pedalsErrors[1] = (bool)CarData_ReadValue(PEDALS_Accel_Sensor1_ShortToVcc);
+    pedalsErrors[2] = (bool)CarData_ReadValue(PEDALS_Accel_Sensor1_OutOfRangeOutput);
+    pedalsErrors[3] = (bool)CarData_ReadValue(PEDALS_Accel_Sensor2_ShortToGnd);
+    pedalsErrors[4] = (bool)CarData_ReadValue(PEDALS_Accel_Sensor2_ShortToVcc);
+    pedalsErrors[5] = (bool)CarData_ReadValue(PEDALS_Accel_Sensor2_OutOfRangeOutput);
+    pedalsErrors[6] = (bool)CarData_ReadValue(PEDALS_Accel_Implausibility);
 
     pedalsErrors[7] = (bool)CarData_ReadValue(PEDALS_Brake_Sensor1_ShortToGnd);
-    pedalsErrors[8] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor1_ShortToVcc);
-    pedalsErrors[9] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor1_OutOfRangeOutput);
-    pedalsErrors[10] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor2_ShortToGnd);
-    pedalsErrors[11] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor2_ShortToVcc);
-    pedalsErrors[12] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Sensor2_OutOfRangeOutput);
-    pedalsErrors[13] = true;//(bool)CarData_ReadValue(PEDALS_Brake_Implausibility);
+    pedalsErrors[8] = (bool)CarData_ReadValue(PEDALS_Brake_Sensor1_ShortToVcc);
+    pedalsErrors[9] = (bool)CarData_ReadValue(PEDALS_Brake_Sensor1_OutOfRangeOutput);
+    pedalsErrors[10] = (bool)CarData_ReadValue(PEDALS_Brake_Sensor2_ShortToGnd);
+    pedalsErrors[11] = (bool)CarData_ReadValue(PEDALS_Brake_Sensor2_ShortToVcc);
+    pedalsErrors[12] = (bool)CarData_ReadValue(PEDALS_Brake_Sensor2_OutOfRangeOutput);
+    pedalsErrors[13] = (bool)CarData_ReadValue(PEDALS_Brake_Implausibility);
 
     for (uint16_t indexEroare = 0; indexEroare < pedalsErrorsLength; indexEroare++)
     {
@@ -848,9 +851,9 @@ void GeneralTab_Update(MainWindow* window)
 
     //General_IsBmsWorking
     BmsErrors[0] = (bool)CarData_ReadValue(TSAC_IsShuntWorking);//momentan primesc 0 == false == safe
-    BmsErrors[1] = false;//(bool)CarData_ReadValue(TSAC_IsBms0Working);
-    BmsErrors[2] = true;//(bool)CarData_ReadValue(TSAC_IsBms1Working);
-    BmsErrors[3] = true;//(bool)CarData_ReadValue(TSAC_IsTransceiverWorking);
+    BmsErrors[1] = (bool)CarData_ReadValue(TSAC_IsBms0Working);
+    BmsErrors[2] = (bool)CarData_ReadValue(TSAC_IsBms1Working);
+    BmsErrors[3] = (bool)CarData_ReadValue(TSAC_IsTransceiverWorking);
     for (uint16_t indexEroare = 0; indexEroare < BmsErrorsLength; indexEroare++)
     {
         if(BmsErrors[indexEroare])
