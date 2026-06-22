@@ -3,7 +3,7 @@
 
 #include <QApplication>
 #include <QThread>
-static const bool simulateUart = false; // --- IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ---
+static const bool simulateUart = true; // --- IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ---
 //TRUE: values will be generated randomly by the data acquisition thread to test the user interface.
 //FALSE: value will be read from the COM port
 static bool shouldDataAcquisitionThreadRun = true;
@@ -60,26 +60,94 @@ void SimulatedData_Update(void)
     //TSAC
     static uint16_t MedianCellTemperature = 0U, HighestCellTemperature = 0U, LowestCellTemperature = 0U, MedianCellVoltage = 0U, HighestCellVoltage = 0U, LowestCellVoltage = 0U, OverallVoltage = 0U, OverallCurrent = 0U;
     static uint8_t LeftInverterTemperature = 40U, LeftMotorTemperature = 30U, RightInverterTemperature = 40U, RightMotorTemperature = 30U;
+
+    static uint8_t CellVoltageIndex=0U, ThermistorTemperatureIndex=0U;
+    static uint16_t CellVoltage[CELLS_NUM]={0}, ThermistorTemperature[THERMISTOR_NUM]={0}, DesiredChargingCurrent=0U, DesiredChargingVoltage=0U;
     //INVERTERS
     static uint16_t LeftInverterInputVoltage = 0U, LeftInverterCurrent = 0U, RightInverterInputVoltage = 0U, RightInverterCurrent = 0U, LeftMotorRpm = 0U, RightMotorRpm = 0U;
     static uint8_t LeftMotorSpeedKmh = 0U, LeftInverterThrottle = 0U, LeftInverterThrottleFeedback = 0U, RightMotorSpeedKmh = 0U, RightInverterSentThrottle = 0U, RightInverterThrottleFeedback = 0U;
-
     //Status indicators:
     static bool AmsError = false, TransceiverError = false, ShuntError = false, Bms0Error = false, Bms1Error = false;
     static bool Accel_Sensor1_ShortToGnd = false, Accel_Sensor1_ShortToVcc = false, Accel_Sensor1_OutOfRangeOutput = false, Accel_Sensor2_ShortToGnd = false, Accel_Sensor2_ShortToVcc = false, Accel_Sensor2_OutOfRangeOutput = false, Accel_Implausibility = false;
     static bool Brake_Sensor1_ShortToGnd = false, Brake_Sensor1_ShortToVcc = false, Brake_Sensor1_OutOfRangeOutput = false, Brake_Sensor2_ShortToGnd = false, Brake_Sensor2_ShortToVcc = false, Brake_Sensor2_OutOfRangeOutput = false, Brake_Implausibility = false;
     static bool ActivationButtonPressed = false, CarReverseCommandPressed = false, IsDisplayWorking = false, IsSegmentsDriverWorking = false;
     static bool IsCarInReverse = false, IsCarRunning = false;
+    static bool CellVoltageErrors[CELLS_NUM]={false}, ThermistorTemperatureErrors[THERMISTOR_NUM]={false}, ChargerCommand=false, ChargerStatus = false, ThermistorsError = false;
+    static uint32_t debounce = 100U, debounce1 = 200U;
 
-    static uint32_t debounce = 100U;
     if(debounce-- == 0)
     {
         AmsError = !AmsError;
         TransceiverError = !TransceiverError;
         ShuntError = !ShuntError;
         Bms0Error = !Bms0Error;
-        Bms1Error = !Bms1Error;
+
+        Accel_Sensor1_ShortToGnd = !Accel_Sensor1_ShortToGnd;
+        Accel_Sensor1_ShortToVcc = !Accel_Sensor1_ShortToVcc;
+        Accel_Sensor1_OutOfRangeOutput = !Accel_Sensor1_OutOfRangeOutput;
+        Accel_Sensor2_ShortToGnd = !Accel_Sensor2_ShortToGnd;
+        Accel_Sensor2_ShortToVcc = !Accel_Sensor2_ShortToVcc;
+        Accel_Sensor2_OutOfRangeOutput = !Accel_Sensor2_OutOfRangeOutput;
+        Accel_Implausibility = !Accel_Implausibility;
+
+        Brake_Sensor1_ShortToGnd = !Brake_Sensor1_ShortToGnd;
+        Brake_Sensor1_ShortToVcc = !Brake_Sensor1_ShortToVcc;
+        Brake_Sensor1_OutOfRangeOutput = !Brake_Sensor1_OutOfRangeOutput;
+        Brake_Sensor2_ShortToGnd = !Brake_Sensor2_ShortToGnd;
+        Brake_Sensor2_ShortToVcc = !Brake_Sensor2_ShortToVcc;
+        Brake_Sensor2_OutOfRangeOutput = !Brake_Sensor2_OutOfRangeOutput;
+        Brake_Implausibility = !Brake_Implausibility;
+
+        ActivationButtonPressed = !ActivationButtonPressed;
+        CarReverseCommandPressed = !CarReverseCommandPressed;
+        IsDisplayWorking = !IsDisplayWorking;
+        IsSegmentsDriverWorking = !IsSegmentsDriverWorking;
+
+        IsCarInReverse = !IsCarInReverse;
+        IsCarRunning = !IsCarRunning;
+
+        ChargerCommand = !ChargerCommand;
+        ChargerStatus = !ChargerStatus;
+        ThermistorsError = !ThermistorsError;
+
         debounce = 100U;
+    }
+    if(debounce1-- == 0)
+    {
+        Bms1Error = !Bms1Error;
+
+        debounce1 = 200U;
+    }
+
+    for (int i = 0; i < CELLS_NUM; i++)
+    {
+        // STEP 1: increment
+        CellVoltage[i] += 5U;
+
+        // STEP 2: bounds check
+        if (CellVoltage[i] > 5000U)  // max 5000mV
+            CellVoltage[i] = 0U;
+
+        // STEP 3: simulează eroare când tensiunea e în afara ferestrei normale
+        CellVoltageErrors[i] = (CellVoltage[i] < 2500U || CellVoltage[i] > 4200U);//bool
+
+        // STEP 4: set values
+        CarData_SetCellVoltage(CellVoltage[i], i);
+        CarData_SetCellVoltageErrors(CellVoltageErrors[i], i);
+
+    }
+    for (int i = 0; i < THERMISTOR_NUM; i++)
+    {
+        // STEP 1:
+        ThermistorTemperature[i] += 2U;
+         // STEP 2:
+        if (ThermistorTemperature[i] > 1023U)  // max 102.3
+            ThermistorTemperature[i] = 0U;
+        // STEP 3:
+        ThermistorTemperatureErrors[i] = (ThermistorTemperature[i] > 600U);//bool >60grade
+        // STEP 4: set values
+        CarData_SetCellTemperature(ThermistorTemperature[i], i);
+        CarData_SetCellTemperatureErrors(ThermistorTemperatureErrors[i], i);
     }
     //STEP 1: incrementing the values
     AcceleratorSensor1Voltage += 10U;//increment by whatever value desired
@@ -118,6 +186,11 @@ void SimulatedData_Update(void)
     RightMotorSpeedKmh += 1U;
     RightInverterSentThrottle += 1U;
     RightInverterThrottleFeedback += 1U;
+
+    CellVoltageIndex += 1U;
+    ThermistorTemperatureIndex += 1U;
+    DesiredChargingCurrent += 1U;
+    DesiredChargingVoltage += 1U;
 
     //STEP 2: checking if the values are valid
     if(AcceleratorSensor1Voltage > 16383U)
@@ -258,7 +331,22 @@ void SimulatedData_Update(void)
         RightInverterThrottleFeedback -= 256U;
     }
 
-
+    if(CellVoltageIndex >CELLS_NUM)
+    {
+        CellVoltageIndex = 0U;
+    }
+    if(ThermistorTemperatureIndex > THERMISTOR_NUM)
+    {
+        ThermistorTemperatureIndex = 0U;
+    }
+    if(DesiredChargingCurrent > 320U)
+    {
+        DesiredChargingCurrent -= 321U;
+    }
+    if(DesiredChargingVoltage > 1008U)
+    {
+        DesiredChargingVoltage -= 1009U;
+    }
 
     //STEP 3: setting the new values
     CarData_SetValue(PEDALS_AcceleratorSensor1Voltage, AcceleratorSensor1Voltage);
@@ -297,6 +385,12 @@ void SimulatedData_Update(void)
     CarData_SetValue(TSAC_LowestCellVoltage, LowestCellVoltage);
     CarData_SetValue(TSAC_OverallVoltage, OverallVoltage);
     CarData_SetValue(TSAC_OverallCurrent, OverallCurrent);
+
+    CarData_SetValue(TSAC_CellVoltageIndex, CellVoltageIndex);
+    CarData_SetValue(TSAC_CellTemperatureIndex, ThermistorTemperatureIndex);
+    CarData_SetValue(TSAC_DesiredChargingCurrent, DesiredChargingCurrent);
+    CarData_SetValue(TSAC_DesiredChargingVoltage, DesiredChargingVoltage);
+
 
     //status indicators:
     CarData_SetValue(TSAC_IsAmsSafe, AmsError);

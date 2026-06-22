@@ -227,7 +227,7 @@ static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){/
     uint8_t data[8];
     for(int i=1;i<=8;i++)
         data[i-1] = buffer[i];
-    qDebug()<<data[0]<<"\n";
+    //qDebug()<<data[0]<<"\n";
     switch(id){
         case idUartFrana:
             //extragere date
@@ -372,8 +372,8 @@ static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){/
 
 void sendTest(){
     while(serialPort->isWritable()){
-        qDebug()<<serialPort->write("a\n", 2)<<'\n';
-        qDebug()<<serialPort->waitForBytesWritten(10)<<'\n';
+        //qDebug()<<serialPort->write("a\n", 2)<<'\n';
+        //qDebug()<<serialPort->waitForBytesWritten(10)<<'\n';
     }
 }
 

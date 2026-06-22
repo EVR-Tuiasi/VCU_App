@@ -10,7 +10,8 @@
 
 static MainWindow* window;
 static const uint32_t BaudRate_array[11]={9600, 19200, 28800, 38400, 57600, 76800, 115200, 230400, 460800, 576000, 921600};
-
+static const int TEMP_ROWS = 16, VOLT_ROWS = 3;
+static const int TEMP_COLS = 8, VOLT_COLS = 8;
 
 void MainWindow_Create(){
     window = new MainWindow();
@@ -30,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
     timer->setTimerType(Qt::PreciseTimer);
     timer->setInterval(20);
     timer->start();
-
+    //COM PORT
     const QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
     ui->Com_Port->clear();
     if (ports.isEmpty())
@@ -46,10 +47,23 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
+    //BAUDRATE and CONNECTBUTTON
     ui->comboBox_BaudRate->setCurrentIndex(10);
     ui->connectButton->setCheckable(true);
     ui->connectButton->setText("Connect");
 
+    //CELL_TEMP and CELL_VOLT
+    ui->Cell_Temp_tableWidget->setRowCount(TEMP_ROWS);
+    ui->Cell_Temp_tableWidget->setColumnCount(TEMP_COLS);
+    for (int row_index = 0; row_index < TEMP_ROWS; row_index++)
+        for (int col_index = 0; col_index < TEMP_COLS; col_index++)
+            ui->Cell_Temp_tableWidget->setItem(row_index, col_index, new QTableWidgetItem("--"));
+
+    ui->Cell_Volt_tableWidget->setRowCount(VOLT_ROWS);
+    ui->Cell_Volt_tableWidget->setColumnCount(VOLT_COLS);
+    for (int row_index = 0; row_index < VOLT_ROWS; row_index++)
+        for (int col_index = 0; col_index < VOLT_COLS; col_index++)
+            ui->Cell_Volt_tableWidget->setItem(row_index, col_index, new QTableWidgetItem("--"));
 
 
 }
@@ -64,7 +78,7 @@ void MainWindow::on_connectButton_toggled(bool connected)
     UartMessaging_SetConnection(connected);
     if(connected)
     {
-        ui->connectButton->setText("Connected");
+        ui->connectButton->setText("Disconnect");
 
     }
     else
@@ -106,7 +120,7 @@ void MainWindow_Update(void)
 
 void GeneralTab_Update(MainWindow* window)
 {
-    static const char textFault[]="color:'#ff4444'>Fault";
+    static const char textFault[] = "color:'#ff4444'>Fault", textSafe[] = "color:'#44cc77'>OK    ";
     static const uint8_t pedalsErrorsLength = 14U, BmsErrorsLength = 4U;
     static const uint16_t tooltipTextIndexes_Pedals[pedalsErrorsLength] = {54, 134, 220, 300, 380, 466, 542, 622, 702, 788, 868, 948, 1034, 1110 } ,
                             tooltipTextIndexes_Bms[BmsErrorsLength] = {35, 95, 155, 222};
@@ -838,6 +852,13 @@ void GeneralTab_Update(MainWindow* window)
                 tooltip_Pedals[tooltipTextIndexes_Pedals[indexEroare] + indexText] = textFault[indexText];
             }
         }
+        else
+        {
+            for(uint16_t indexText = 0;indexText < strlen(textSafe); indexText++)
+            {
+                tooltip_Pedals[tooltipTextIndexes_Pedals[indexEroare] + indexText] = textSafe[indexText];
+            }
+        }
     }
     if (!fault) {
         window->ui->General_Pedals_HStatus_Qlabel->setText("SAFE");
@@ -862,6 +883,13 @@ void GeneralTab_Update(MainWindow* window)
             for(uint16_t indexText = 0;indexText < strlen(textFault); indexText++)
             {
                 tooltip_Bms[tooltipTextIndexes_Bms[indexEroare] + indexText] = textFault[indexText];
+            }
+        }
+        else
+        {
+            for(uint16_t indexText = 0;indexText < strlen(textSafe); indexText++)
+            {
+                tooltip_Bms[tooltipTextIndexes_Bms[indexEroare] + indexText] = textSafe[indexText];
             }
         }
     }
@@ -1085,9 +1113,68 @@ void TsacTab_Update(MainWindow* window)
     //TSAC_CellTemperatures_Table
     window->ui->Cell_Temp_tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     window->ui->Cell_Temp_tableWidget->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    for (int row_index = 0; row_index < TEMP_ROWS; row_index++)
+    {
+        for (int col_index = 0; col_index < TEMP_COLS; col_index++)
+        {
+            int idx = row_index * TEMP_COLS + col_index;
+            readValue = CarData_ReadCellTemperature(idx);
+
+            index = 0U;
+            if(readValue >= 1000U)
+            {
+                char_array[index++] = '0' + readValue/1000U;
+            }
+            if(readValue >= 100U){
+                char_array[index++] = '0' + (readValue/100U)%10U;
+            }
+            char_array[index++] = '0' + (readValue/10U)%10U;
+            char_array[index++] = '.';
+            char_array[index++] = '0' + readValue%10U;
+            char_array[index++] = ' ';
+            char_array[index++] = 'C';
+            char_array[index++] = 0;
+            window->ui->Cell_Temp_tableWidget->item(row_index, col_index)->setText(QString(char_array));
+        }
+    }
     //TSAC_CellVoltages_Table
     window->ui->Cell_Volt_tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     window->ui->Cell_Volt_tableWidget->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    for (int row_index = 0; row_index < VOLT_ROWS; row_index++)
+    {
+        for (int col_index = 0; col_index < VOLT_COLS; col_index++)
+        {
+            int idx = row_index * VOLT_COLS + col_index;
+            readValue = CarData_ReadCellTemperatureErrors(idx);
+            if(readValue == true)
+            {
+                window->ui->Cell_Volt_tableWidget->item(row_index, col_index)->setBackground(QColor("#ff4444"));
+                window->ui->Cell_Volt_tableWidget->item(row_index, col_index)->setText(QString("Error"));
+            }
+            else
+            {
+                window->ui->Cell_Volt_tableWidget->item(row_index, col_index)->setBackground(Qt::transparent);
+                readValue = CarData_ReadCellTemperature(idx);
+                index = 0U;
+                if(readValue >= 1000U)
+                {
+                    char_array[index++] = '0' + (readValue/1000U);
+                }
+                char_array[index++] = '0' + (readValue/100U)%10U;
+                char_array[index++] = '.';
+                char_array[index++] = '0' + (readValue/10U)%10U;
+                char_array[index++] = '0' + readValue%10U;
+                char_array[index++] = ' ';
+                char_array[index++] = 'V';
+                char_array[index++] = 0;
+                window->ui->Cell_Volt_tableWidget->item(row_index, col_index)->setText(QString(char_array));
+            }
+
+        }
+    }
+
 }
 
 void ParametersTab_Update(MainWindow* window)

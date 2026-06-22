@@ -86,6 +86,7 @@ static void sendTest();
 
 void UartMessaging_SetConnection(bool connected);
 void UartMessaging_SetBaudRate(int BaudRate);
+void UartMessaging_SetPortName(const char &port);
 /*==================================================================================================
 *                                       GLOBAL FUNCTIONS
 ==================================================================================================*/

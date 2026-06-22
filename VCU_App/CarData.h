@@ -18,8 +18,8 @@ extern "C"{
 /*==================================================================================================
 *                          LOCAL TYPEDEFS (STRUCTURES, UNIONS, ENUMS)
 ==================================================================================================*/
-#define CELLS_NUM 400
-#define THERMISTOR_NUM 100
+#define CELLS_NUM 24
+#define THERMISTOR_NUM 128
 
 typedef struct
 {
@@ -253,6 +253,12 @@ void CarData_SetCellVoltage(uint16_t Value, uint16_t index);
 void CarData_SetCellVoltageErrors(bool Value, uint16_t index);
 void CarData_SetCellTemperature(uint16_t Value, uint16_t index);
 void CarData_SetCellTemperatureErrors(bool Value, uint16_t index);
+
+uint16_t CarData_ReadCellVoltage(uint16_t index);
+bool CarData_ReadCellVoltageErrors(uint16_t index);
+uint16_t CarData_ReadCellTemperature(uint16_t index);
+bool CarData_ReadCellTemperatureErrors(uint16_t index);
+
 uint32_t CarData_ReadValue(MonitoredValue_t DesiredValueType);
 uint16_t CanMessaging_ReadCellVoltage(uint16_t index);
 bool CanMessaging_ReadCellVoltageErrors(uint16_t index);
