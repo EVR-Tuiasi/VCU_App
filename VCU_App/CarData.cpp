@@ -348,7 +348,7 @@ void CarData_SetCellVoltageErrors(bool Value, uint16_t index){
         TsacMonitoredvalues.CellVoltageErrors[index] = Value;
 }
 void CarData_SetCellTemperature(uint16_t Value, uint16_t index){
-    //qDebug()<<"Index: "<<index<<" CellTemperature: "<<Value;
+    qDebug()<<"Index: "<<index<<" CellTemperature: "<<Value;
     if(index < THERMISTOR_NUM)
         TsacMonitoredvalues.ThermistorTemperature[index] = Value;
 }

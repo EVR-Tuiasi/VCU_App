@@ -225,9 +225,10 @@ static UartBufferValidity_t UartMessaging_CheckValidityOfBuffer(uint8_t buffer[1
 static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){//this should parse the data from the buffer and update the global structure holding all values with the received ones.
     uint8_t id = buffer[0];
     uint8_t data[8];
-    for(int i=1;i<=8;i++)
+    for(int i=1;i<=8;i++){
         data[i-1] = buffer[i];
-    //qDebug()<<data[0]<<"\n";
+    }
+    //qDebug()<<id<<" "<<data[0]<<" "<<data[1]<<" "<<data[2]<<" "<<data[3]<<" "<<data[4]<<" "<<data[5]<<" "<<data[6]<<" "<<data[7];
     switch(id){
         case idUartFrana:
             //extragere date
@@ -301,8 +302,7 @@ static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){/
             break;
 
         case idUartBaterie2:{
-            uint8_t index = (uint8_t)((data[0]) | (data[1] >> 6)) & (0x1F);
-            CarData_SetValue(TSAC_CellVoltageIndex, index);
+            uint8_t index = ((uint8_t)(data[0])) & (0x07);
             index = index * 5;
             CarData_SetCellVoltageErrors(((data[0] & (1<<7)) >> 7), index + 0);
             CarData_SetCellVoltageErrors(((data[0] & (1<<6)) >> 6), index + 1);
@@ -318,8 +318,7 @@ static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){/
         }
 
         case idUartBaterie3:{
-            uint16_t index = (uint16_t)((data[0] << 2) | (data[1] >> 4)) & (0x007F);
-            CarData_SetValue(TSAC_CellTemperatureIndex, index);
+            uint16_t index = (uint16_t)((data[0] << 2) | (data[1] >> 6)) & (0x001F);
             index = index * 5;
             CarData_SetCellTemperatureErrors(((data[0] & (1<<7)) >> 7), index + 0);
             CarData_SetCellTemperatureErrors(((data[0] & (1<<6)) >> 6), index + 1);
