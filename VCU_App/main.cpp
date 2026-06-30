@@ -24,7 +24,7 @@ void UartThread(bool AppDoesNotBuildWithoutThis)
     while(shouldDataAcquisitionThreadRun)
     {
         UartMessaging_Update(); //call the function that handles reading the actual uart data from the configured COM port
-        QThread::msleep(10); //10ms of sleep should get us around 100 updates per second for the data. Change value if needed
+        //QThread::msleep(10); //10ms of sleep should get us around 100 updates per second for the data. Change value if needed
     }
 }
 

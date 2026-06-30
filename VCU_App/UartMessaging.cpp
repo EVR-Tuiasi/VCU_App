@@ -52,7 +52,7 @@ extern "C"{
 static QSerialPort *serialPort = nullptr;
 static QElapsedTimer timer;
 static uint32_t timeSinceLastMessage = 0;
-static ComPortSettings_t settings = {false, 921600, "COM3"};
+static ComPortSettings_t settings = {false, 921600, "COM4"};
 static bool simulateSend = false;
 
 /*==================================================================================================
