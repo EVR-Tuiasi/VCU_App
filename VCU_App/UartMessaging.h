@@ -21,21 +21,6 @@ extern "C"{
 ==================================================================================================*/
 
 typedef enum{
-    idUartInvertorStanga = 0x10,
-    idUartInvertorDreapta = 0x11,
-    idUartInvertoare = 0x12,
-    idUartBord = 0x13,
-    idUartAcceleratie = 0x30,
-    idUartFrana = 0x31,
-    idUartBaterie1 = 0x14,
-    idUartBaterie2 = 0x15,
-    idUartBaterie3 = 0x16,
-    idUartBaterie4 = 0x17,
-    idUartBaterie5 = 0x19,
-    idUartComunicatii = 0x18,
-}idUart_t;
-
-typedef enum{
     BufferCrcInvalid,
     BufferHeaderInvalid,
     BufferValid
@@ -78,6 +63,9 @@ typedef struct{
 /*==================================================================================================
 *                                       LOCAL FUNCTIONS
 ==================================================================================================*/
+#define ReadUartDataFromAddress(xMonitoredValue_t_Address) (xMonitoredValue_t_Address)->valueUart
+#define WriteUartDataAtAddress(data, xMonitoredValue_t_Address) (xMonitoredValue_t_Address)->valueUart = (data)
+
 static UartBufferValidity_t UartMessaging_CheckValidityOfBuffer(uint8_t buffer[10]); //this should check if the provided buffer has a valid CRC and header type.
 static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]);//this should parse the data from the buffer and update the global structure holding all values with the received ones.
 static uint8_t calculateCRC(uint8_t buffer[10]);
@@ -90,6 +78,9 @@ void UartMessaging_SetPortName(const char &port);
 /*==================================================================================================
 *                                       GLOBAL FUNCTIONS
 ==================================================================================================*/
+
+#define ReadUartDataFromAddress(xMonitoredValue_t_Address) (xMonitoredValue_t_Address)->valueUart
+#define WriteUartDataAtAddress(data, xMonitoredValue_t_Address) (xMonitoredValue_t_Address)->valueUart = (data)
 
 void UartMessaging_Update(void);    //the main uart function that is called inside the data acquisition thread
 
