@@ -231,77 +231,77 @@ static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){/
     }
     buffer_merged = (((uint64_t)data[0]) << 56) + (((uint64_t)data[1]) << 48) + (((uint64_t)data[2]) << 40) + (((uint64_t)data[3]) << 32) + (((uint64_t)data[4]) << 24) + (((uint64_t)data[5]) << 16) + (((uint64_t)data[6]) << 8) + (uint64_t)data[7];
 
-    //qDebug()<<id<<" "<<data[0]<<" "<<data[1]<<" "<<data[2]<<" "<<data[3]<<" "<<data[4]<<" "<<data[5]<<" "<<data[6]<<" "<<data[7];
+    //qDebug()<<" "<<data[0]<<" "<<data[1]<<" "<<data[2]<<" "<<data[3]<<" "<<data[4]<<" "<<data[5]<<" "<<data[6]<<" "<<data[7];
     switch(id){
         case ID_UART_FRANA:
             //extragere date
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.BrakeSensor1Voltage);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.BrakeSensor2Voltage);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.BrakeSensor1TravelPercentage);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.BrakeSensor2TravelPercentage);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.PressureSensorBars);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Implausibility);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Sensor1_OutOfRangeOutput);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Sensor1_ShortToVcc);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Sensor1_ShortToGnd);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Sensor2_OutOfRangeOutput);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Sensor2_ShortToVcc);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Sensor2_ShortToGnd);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.BrakeSensor1Voltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.BrakeSensor2Voltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.BrakeSensor1TravelPercentage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.BrakeSensor2TravelPercentage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.PressureSensorBars);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Implausibility);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Sensor1_OutOfRangeOutput);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Sensor1_ShortToVcc);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Sensor1_ShortToGnd);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Sensor2_OutOfRangeOutput);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Sensor2_ShortToVcc);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Sensor2_ShortToGnd);
 			break;
 
         case ID_UART_ACCELERATIE:
             //extragere date
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor1Voltage);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor2Voltage);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor1TravelPercentage);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor2TravelPercentage);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.PressureSensorVoltage);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Implausibility);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor1_OutOfRangeOutput);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor1_ShortToVcc);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor1_ShortToGnd);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor2_OutOfRangeOutput);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor2_ShortToVcc);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor2_ShortToGnd);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor1Voltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor2Voltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor1TravelPercentage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor2TravelPercentage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.PressureSensorVoltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Implausibility);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor1_OutOfRangeOutput);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor1_ShortToVcc);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor1_ShortToGnd);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor2_OutOfRangeOutput);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor2_ShortToVcc);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor2_ShortToGnd);
 			break;
 
         case ID_UART_INVERTOR_STANGA:
             //extragere date
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftMotorTemperature);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftInverterTemperature);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftInverterThrottle);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftMotorSpeedKmh);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftInverterThrottleFeedback);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftInverterInputVoltage);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftMotorRpm);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftMotorTemperature);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftInverterTemperature);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftInverterThrottle);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftMotorSpeedKmh);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftInverterThrottleFeedback);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftInverterInputVoltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftMotorRpm);
 			break;
 
         case ID_UART_INVERTOR_DREAPTA:
             //extragere date
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightMotorTemperature);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightInverterTemperature);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightInverterThrottle);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightMotorSpeedKmh);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightInverterThrottleFeedback);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightInverterInputVoltage);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightMotorRpm);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightMotorTemperature);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightInverterTemperature);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightInverterThrottle);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightMotorSpeedKmh);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightInverterThrottleFeedback);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightInverterInputVoltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightMotorRpm);
 			break;
 
         case ID_UART_INVERTOARE:
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.IsCarRunning);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.IsCarInReverse);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftInverterCurrent);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightInverterCurrent);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.IsCarRunning);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.IsCarInReverse);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftInverterCurrent);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightInverterCurrent);
 			break;
 
         case ID_UART_BATERIE:
             //extragere date
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.OverallCurrent);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.OverallVoltage);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.HighestCellTemperature);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.HighestCellVoltage);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.LowestCellVoltage);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.LowestCellTemperature);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.OverallCurrent);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.OverallVoltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.HighestCellTemperature);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.HighestCellVoltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.LowestCellVoltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.LowestCellTemperature);
 			break;
 
         case ID_UART_BATERIE_TENSIUNI_CELULE:{
@@ -337,36 +337,36 @@ static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){/
         }
 
         case ID_UART_BATERIE_2:
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.MedianCellTemperature);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.MedianCellVoltage);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.ShuntError);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.TransceiverError);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.Bms0Error);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.Bms1Error);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.ThermistorsError);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.AmsError);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.DesiredChargingCurrent);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.DesiredChargingVoltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.MedianCellTemperature);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.MedianCellVoltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.ShuntError);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.TransceiverError);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.Bms0Error);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.Bms1Error);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.ThermistorsError);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.AmsError);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.DesiredChargingCurrent);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.DesiredChargingVoltage);
 			break;
 
         case ID_UART_BATERIE_CHARGER:
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.ReportedChargingCurrent);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.ReportedChargingVolts);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.ChargerCommand);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.ReportedChargingCurrent);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.ReportedChargingVolts);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.ChargerCommand);
 			break;
 
         case ID_UART_BORD:
             //extragere date
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.DashboardMonitoredValues.ActivationButtonPressed);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.DashboardMonitoredValues.CarReverseCommandPressed);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.DashboardMonitoredValues.IsDisplayWorking);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.DashboardMonitoredValues.IsSegmentsDriverWorking);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.DashboardMonitoredValues.ActivationButtonPressed);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.DashboardMonitoredValues.CarReverseCommandPressed);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.DashboardMonitoredValues.IsDisplayWorking);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.DashboardMonitoredValues.IsSegmentsDriverWorking);
 			break;
         case ID_UART_COMUNICATII:
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.IsDashboardVCUSimulated);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.IsInvertersVCUSimulated);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.IsPedalsVCUSimulated);
-			WriteUartDataAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.IsTsacVCUSimulated);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.IsDashboardVCUSimulated);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.IsInvertersVCUSimulated);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.IsPedalsVCUSimulated);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.IsTsacVCUSimulated);
 			break;
     }
 }

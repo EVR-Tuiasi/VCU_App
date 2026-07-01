@@ -242,7 +242,7 @@ extern MonitoredValues_t MonitoredValues;
 ==================================================================================================*/
 /*Takes a uint64_t argument and any xMonitoredValue_t type of argument.*/
 #define WriteUartDataFromRawBufferAtAddress(rawBufferU64, xMonitoredValue_t_Address) \
-                                                                                                 (xMonitoredValue_t_Address)->valueUart = ((rawBufferU64) >> (xMonitoredValue_t_Address)->shift) & (~(0xFFFFFFFFFFFFFFFF << (xMonitoredValue_t_Address)->nrOfBits))
+    (xMonitoredValue_t_Address)->valueUart = ((rawBufferU64) >> (xMonitoredValue_t_Address)->shift) & (~(0xFFFFFFFFFFFFFFFF << (xMonitoredValue_t_Address)->nrOfBits))
 
 void UartMessaging_SetCellVoltage(uint16_t Value, uint16_t index);
 void UartMessaging_SetCellVoltageErrors(bool Value, uint16_t index);
