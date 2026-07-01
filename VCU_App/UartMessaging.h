@@ -63,8 +63,7 @@ typedef struct{
 /*==================================================================================================
 *                                       LOCAL FUNCTIONS
 ==================================================================================================*/
-#define ReadUartDataFromAddress(xMonitoredValue_t_Address) (xMonitoredValue_t_Address)->valueUart
-#define WriteUartDataAtAddress(data, xMonitoredValue_t_Address) (xMonitoredValue_t_Address)->valueUart = (data)
+
 
 static UartBufferValidity_t UartMessaging_CheckValidityOfBuffer(uint8_t buffer[10]); //this should check if the provided buffer has a valid CRC and header type.
 static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]);//this should parse the data from the buffer and update the global structure holding all values with the received ones.
@@ -80,7 +79,7 @@ void UartMessaging_SetPortName(const char &port);
 ==================================================================================================*/
 
 #define ReadUartDataFromAddress(xMonitoredValue_t_Address) (xMonitoredValue_t_Address)->valueUart
-#define WriteUartDataAtAddress(data, xMonitoredValue_t_Address) (xMonitoredValue_t_Address)->valueUart = (data)
+#define WriteUartDataAtAddress(data, xMonitoredValue_t_Address) (xMonitoredValue_t_Address)->valueUart = ((data) <= (xMonitoredValue_t_Address)->maxValue) ? (data) : ((xMonitoredValue_t_Address)->maxValue)
 
 void UartMessaging_Update(void);    //the main uart function that is called inside the data acquisition thread
 

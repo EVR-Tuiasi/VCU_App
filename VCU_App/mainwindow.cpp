@@ -708,12 +708,11 @@ void GeneralTab_Update(MainWindow* window)
 
     //INVERTERS_RightInverterSentThrottle
     readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.RightInverterThrottle)*2;
-    Value=readValue*2;
     index = 0U;
-    char_array[index++] = '0' + (Value/100U)%10U;
+    char_array[index++] = '0' + (readValue/100U)%10U;
     char_array[index++] = '.';
-    char_array[index++] = '0' + (Value/10U)%10U;
-    char_array[index++] = '0' + Value%10U;
+    char_array[index++] = '0' + (readValue/10U)%10U;
+    char_array[index++] = '0' + readValue%10U;
     char_array[index++] = ' ';
     char_array[index++] = 'V';
     char_array[index++] = 0;

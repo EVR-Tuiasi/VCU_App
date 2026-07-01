@@ -296,12 +296,14 @@ static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){/
 
         case ID_UART_BATERIE:
             //extragere date
+            //qDebug()<<" "<<data[0]<<" "<<data[1]<<" "<<data[2]<<" "<<data[3]<<" "<<data[4]<<" "<<data[5]<<" "<<data[6]<<" "<<data[7];
             WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.OverallCurrent);
             WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.OverallVoltage);
             WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.HighestCellTemperature);
             WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.HighestCellVoltage);
             WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.LowestCellVoltage);
             WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.LowestCellTemperature);
+            //qDebug()<<MonitoredValues.TsacMonitoredValues.OverallCurrent.valueUart;
 			break;
 
         case ID_UART_BATERIE_TENSIUNI_CELULE:{

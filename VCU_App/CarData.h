@@ -18,8 +18,8 @@ extern "C"{
 /*==================================================================================================
 *                          LOCAL TYPEDEFS (STRUCTURES, UNIONS, ENUMS)
 ==================================================================================================*/
-#define CELLS_NUM 24
-#define THERMISTOR_NUM 128
+#define CELLS_NUM 24U
+#define THERMISTOR_NUM 128U
 #define CELLS_LINES 5U
 #define THERMISTORS_LINES 26U
 
@@ -59,6 +59,7 @@ typedef struct{
     uint8_t valueUart;
     const uint8_t nrOfBits;
     const uint8_t shift;
+    const uint8_t maxValue;
 }U8MonitoredValue_t;
 
 typedef struct{
@@ -66,6 +67,7 @@ typedef struct{
     uint16_t valueUart;
     const uint8_t nrOfBits;
     const uint8_t shift;
+    const uint16_t maxValue;
 }U16MonitoredValue_t;
 
 typedef struct{
@@ -73,6 +75,7 @@ typedef struct{
     uint32_t valueUart;
     const uint8_t nrOfBits;
     const uint8_t shift;
+    const uint32_t maxValue;
 }U32MonitoredValue_t;
 
 typedef struct{
@@ -80,6 +83,7 @@ typedef struct{
     uint64_t valueUart;
     const uint8_t nrOfBits;
     const uint8_t shift;
+    const uint64_t maxValue;
 }U64MonitoredValue_t;
 
 typedef struct{
@@ -87,6 +91,7 @@ typedef struct{
     bool valueUart;
     const uint8_t nrOfBits;
     const uint8_t shift;
+    const bool maxValue;
 }BoolMonitoredValue_t;
 
 typedef struct{
@@ -242,7 +247,9 @@ extern MonitoredValues_t MonitoredValues;
 ==================================================================================================*/
 /*Takes a uint64_t argument and any xMonitoredValue_t type of argument.*/
 #define WriteUartDataFromRawBufferAtAddress(rawBufferU64, xMonitoredValue_t_Address) \
-    (xMonitoredValue_t_Address)->valueUart = ((rawBufferU64) >> (xMonitoredValue_t_Address)->shift) & (~(0xFFFFFFFFFFFFFFFF << (xMonitoredValue_t_Address)->nrOfBits))
+(xMonitoredValue_t_Address)->valueUart = ((((rawBufferU64) >> (xMonitoredValue_t_Address)->shift) & (~(0xFFFFFFFFFFFFFFFF << (xMonitoredValue_t_Address)->nrOfBits))) <= ((xMonitoredValue_t_Address)->maxValue)) ? \
+        (((rawBufferU64) >> (xMonitoredValue_t_Address)->shift) & (~(0xFFFFFFFFFFFFFFFF << (xMonitoredValue_t_Address)->nrOfBits))) : \
+        ((xMonitoredValue_t_Address)->maxValue)
 
 void UartMessaging_SetCellVoltage(uint16_t Value, uint16_t index);
 void UartMessaging_SetCellVoltageErrors(bool Value, uint16_t index);
