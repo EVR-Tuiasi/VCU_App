@@ -157,7 +157,7 @@ void GeneralTab_Update(MainWindow* window)
     bool IsNegative;
 
     //TSAC_HighestCellTemperature
-    readValue = CarData_ReadValue(TSAC_HighestCellTemperature);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.HighestCellTemperature);
     index = 0U;
     if(readValue >= 1000U)
     {
@@ -175,7 +175,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->General_Tsac_Temp_Highest_lineEdit->setText((const QString)QString(char_array));
 
     //TSAC_MedianCellTemperature
-    readValue = CarData_ReadValue(TSAC_MedianCellTemperature);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.MedianCellTemperature);
     index = 0U;
     if(readValue >= 1000U)
     {
@@ -193,7 +193,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->General_Tsac_Temp_Median_lineEdit->setText((const QString)QString(char_array));
 
     //TSAC_LowestCellTemperature
-    readValue = CarData_ReadValue(TSAC_LowestCellTemperature);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.LowestCellTemperature);
     index = 0U;
     if(readValue >= 1000U)
     {
@@ -211,7 +211,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->General_Tsac_Temp_Lowest_lineEdit->setText((const QString)QString(char_array));
 
     //TSAC_HighestCellVoltage
-    readValue = CarData_ReadValue(TSAC_HighestCellVoltage);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.HighestCellVoltage);
     index = 0U;
     if(readValue >= 1000U){
         char_array[index++] = '0' + (readValue/1000U);
@@ -226,7 +226,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->General_Tsac_Volt_Highest_lineEdit->setText((const QString)QString(char_array));
 
     //TSAC_MedianCellVoltage
-    readValue = CarData_ReadValue(TSAC_MedianCellVoltage);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.MedianCellVoltage);
     index = 0U;
     if(readValue >= 1000U){
         char_array[index++] = '0' + (readValue/1000U);
@@ -241,7 +241,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->General_Tsac_Volt_Median_lineEdit->setText((const QString)QString(char_array));
 
     //TSAC_LowestCellVoltage
-    readValue = CarData_ReadValue(TSAC_LowestCellVoltage);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.LowestCellVoltage);
     index = 0U;
     if(readValue >= 1000U){
         char_array[index++] = '0' + (readValue/1000U);
@@ -257,7 +257,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->General_Tsac_Volt_Lowest_lineEdit->setText((const QString)QString(char_array));
 
     //TSAC_OverallVoltage
-    readValue = CarData_ReadValue(TSAC_OverallVoltage);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.OverallVoltage);
     index = 0U;
     if(readValue >= 1000U)
     {
@@ -275,7 +275,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->General_Tsac_V_Median_lineEdit->setText((const QString)QString(char_array));
 
     //TSAC_OverallCurrent
-    readValue = CarData_ReadValue(TSAC_OverallCurrent);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.OverallCurrent);
     index = 0U;
     if(readValue >= 1000U)
     {
@@ -294,7 +294,7 @@ void GeneralTab_Update(MainWindow* window)
 
 
     //PEDALS_AcceleratorSensor1Voltage
-    readValue = (CarData_ReadValue(PEDALS_AcceleratorSensor1Voltage) * 5000U) / 16383U;//this translates the value from interval 0-16383 to interval 0-5000
+    readValue = (ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.AcceleratorSensor1Voltage) * 5000U / 16383U);//this translates the value from interval 0-16383 to interval 0-5000
     char_array[0] = '0' + readValue/1000U;
     char_array[1] = '.';
     char_array[2] = '0' + (readValue/100U)%10U;
@@ -305,7 +305,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Accel_Volt_S1_lineEdit->setText((const QString)QString(char_array));
 
     //PEDALS_AcceleratorSensor2Voltage
-    readValue = (CarData_ReadValue(PEDALS_AcceleratorSensor2Voltage) * 5000U) / 16383U;//this translates the value from interval 0-16383 to interval 0-5000
+    readValue = (ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.AcceleratorSensor2Voltage) * 5000U / 16383U);//this translates the value from interval 0-16383 to interval 0-5000
     char_array[0] = '0' + readValue/1000U;
     char_array[1] = '.';
     char_array[2] = '0' + (readValue/100U)%10U;
@@ -316,7 +316,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Accel_Volt_S2_lineEdit->setText((const QString)QString(char_array));
 
     //PEDALS_AcceleratorSensor1TravelPercentage
-    readValue = CarData_ReadValue(PEDALS_AcceleratorSensor1TravelPercentage);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.AcceleratorSensor1TravelPercentage);
     index = 0U;
     if(readValue >= 100U)
     {
@@ -331,7 +331,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Accel_Travel_S1_lineEdit->setText((const QString)QString(char_array));
 
     //PEDALS_AcceleratorSensor2TravelPercentage
-    readValue = CarData_ReadValue(PEDALS_AcceleratorSensor2TravelPercentage);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.AcceleratorSensor2TravelPercentage);
     index = 0U;
     if(readValue >= 100U)
     {
@@ -346,7 +346,8 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Accel_Travel_S2_lineEdit->setText((const QString)QString(char_array));
 
     //PEDALS_BrakeSensor1Voltage
-    readValue = (CarData_ReadValue(PEDALS_BrakeSensor1Voltage)* 5000U) / 16383U;
+    readValue = ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.BrakeSensor1Voltage) * 5000U / 16383U;
+
     char_array[0] = '0' + readValue/1000U;
     char_array[1] = '.';
     char_array[2] = '0' + (readValue/100U)%10U;
@@ -357,7 +358,8 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Brake_Volt_S1_lineEdit->setText((const QString)QString(char_array));
 
     //PEDALS_BrakeSensor2Voltage
-    readValue = (CarData_ReadValue(PEDALS_BrakeSensor2Voltage)* 5000U) / 16383U; /* 14 bits, 0-16383, 0 to 5.00 Volts  +10U */
+    readValue = ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.BrakeSensor2Voltage) * 5000U / 16383U;/* 14 bits, 0-16383, 0 to 5.00 Volts  +10U */
+
     char_array[0] = '0' + readValue/1000U;
     char_array[1] = '.';
     char_array[2] = '0' + (readValue/100U)%10U;
@@ -368,7 +370,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Brake_Volt_S2_lineEdit->setText((const QString)QString(char_array));
 
     //PEDALS_BrakeSensor1TravelPercentage
-    readValue = CarData_ReadValue(PEDALS_BrakeSensor1TravelPercentage);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.BrakeSensor1TravelPercentage);
     index = 0U;
     if(readValue >= 100U)
     {
@@ -383,7 +385,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Brake_Travel_S1_lineEdit->setText((const QString)QString(char_array));
 
     //PEDALS_BrakeSensor2TravelPercentage
-    readValue = CarData_ReadValue(PEDALS_BrakeSensor2TravelPercentage);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.BrakeSensor2TravelPercentage);
     index = 0U;
     if(readValue >= 100U)
     {
@@ -398,7 +400,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Brake_Travel_S2_lineEdit->setText((const QString)QString(char_array));
 
     //PEDALS_PressureSensorVoltage
-    readValue = CarData_ReadValue(PEDALS_PressureSensorVoltage);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.PressureSensorVoltage);
     index = 0U;
     char_array[index++] = '0' + readValue/100U;
     char_array[index++] = '.';
@@ -410,7 +412,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Pressure_Volt_lineEdit->setText((const QString)QString(char_array));
 
     //PEDALS_PressureSensorBars
-    readValue = CarData_ReadValue(PEDALS_PressureSensorBars);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.PressureSensorBars);
     index = 0U;
     if(readValue >= 100U)
     {
@@ -429,7 +431,7 @@ void GeneralTab_Update(MainWindow* window)
 
 
     //INVERTERS_LeftInverterTemperature
-    readValue = CarData_ReadValue(INVERTERS_LeftInverterTemperature);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.LeftInverterTemperature);
     index = 0U;
     IsNegative = false;
     if(readValue < 40U)
@@ -457,7 +459,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Inverter_Left_Temp_lineEdit->setText((const QString)QString(char_array));
 
     //INVERTERS_RightInverterTemperature
-    readValue = CarData_ReadValue(INVERTERS_RightInverterTemperature);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.RightInverterTemperature);
     index = 0U;
     IsNegative = false;
     if(readValue < 40U)
@@ -485,7 +487,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Inverter_Right_Temp_lineEdit->setText((const QString)QString(char_array));
 
     //INVERTERS_LeftMotorTemperature
-    readValue = CarData_ReadValue(INVERTERS_LeftMotorTemperature);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.LeftMotorTemperature);
     index = 0U;
     IsNegative = false;
     if(readValue < 30U)
@@ -513,7 +515,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Inverter_Left_Motor_lineEdit->setText((const QString)QString(char_array));
 
     //INVERTERS_RightMotorTemperature
-    readValue = CarData_ReadValue(INVERTERS_RightMotorTemperature);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.RightMotorTemperature);
     index = 0U;
     IsNegative = false;
     if(readValue < 30U)
@@ -541,7 +543,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Inverter_Right_Motor_lineEdit->setText((const QString)QString(char_array));
 
     //INVERTERS_LeftInverterInputVoltage
-    readValue = CarData_ReadValue(INVERTERS_LeftInverterInputVoltage);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.LeftInverterInputVoltage);
     index = 0U;
     if(readValue >= 1000U)
     {
@@ -559,7 +561,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Inverter_Left_InV_lineEdit->setText((const QString)QString(char_array));
 
     //INVERTERS_RightInverterInputVoltage
-    readValue = CarData_ReadValue(INVERTERS_RightInverterInputVoltage);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.RightInverterInputVoltage);
     index = 0U;
     if(readValue >= 1000U)
     {
@@ -577,7 +579,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Inverter_Right_InV_lineEdit->setText((const QString)QString(char_array));
 
     //INVERTERS_LeftInverterCurrent
-    readValue = CarData_ReadValue(INVERTERS_LeftInverterCurrent);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.LeftInverterCurrent);
     index = 0U;
     if(readValue >= 1000U)
     {
@@ -595,7 +597,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Inverter_Left_Current_lineEdit->setText((const QString)QString(char_array));
 
     //INVERTERS_RightInverterCurrent
-    readValue = CarData_ReadValue(INVERTERS_RightInverterCurrent);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.RightInverterCurrent);
     index = 0U;
     if(readValue >= 1000U)
     {
@@ -613,7 +615,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Inverter_Right_Current_lineEdit->setText((const QString)QString(char_array));
 
     //INVERTERS_LeftMotorRpm
-    readValue = CarData_ReadValue(INVERTERS_LeftMotorRpm);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.LeftMotorRpm);
     index = 0U;
     if(readValue >= 1000U)
     {
@@ -634,7 +636,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Inverter_Left_Motor_Rpm_lineEdit->setText((const QString)QString(char_array));
 
     //INVERTERS_RightMotorRpm
-    readValue = CarData_ReadValue(INVERTERS_RightMotorRpm);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.RightMotorRpm);
     index = 0U;
     if(readValue >= 1000U)
     {
@@ -655,7 +657,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Inverter_Right_Motor_Rpm_lineEdit->setText((const QString)QString(char_array));
 
     //INVERTERS_LeftMotorSpeedKmh
-    readValue = CarData_ReadValue(INVERTERS_LeftMotorSpeedKmh);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.LeftMotorSpeedKmh);
     index = 0U;
     if(readValue >= 100U){
         char_array[index++] = '0' + (readValue/100U)%10U;
@@ -674,7 +676,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Inverter_Left_Motor_Speed_lineEdit->setText((const QString)QString(char_array));
 
     //INVERTERS_RightMotorSpeedKmh
-    readValue = CarData_ReadValue(INVERTERS_RightMotorSpeedKmh);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.RightMotorSpeedKmh);
     index = 0U;
     if(readValue >= 100U){
         char_array[index++] = '0' + (readValue/100U)%10U;
@@ -693,7 +695,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Inverter_Right_Motor_Speed_lineEdit->setText((const QString)QString(char_array));
 
     //INVERTERS_LeftInverterThrottle
-    readValue = CarData_ReadValue(INVERTERS_LeftInverterThrottle)*2;
+    readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.LeftInverterThrottle)*2;
     index = 0U;
     char_array[index++] = '0' + (readValue/100U)%10U;
     char_array[index++] = '.';
@@ -705,20 +707,19 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Inverter_Left_Throttle_lineEdit->setText((const QString)QString(char_array));
 
     //INVERTERS_RightInverterSentThrottle
-    readValue = CarData_ReadValue(INVERTERS_RightInverterSentThrottle);
-    Value=readValue*2;
+    readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.RightInverterThrottle)*2;
     index = 0U;
-    char_array[index++] = '0' + (Value/100U)%10U;
+    char_array[index++] = '0' + (readValue/100U)%10U;
     char_array[index++] = '.';
-    char_array[index++] = '0' + (Value/10U)%10U;
-    char_array[index++] = '0' + Value%10U;
+    char_array[index++] = '0' + (readValue/10U)%10U;
+    char_array[index++] = '0' + readValue%10U;
     char_array[index++] = ' ';
     char_array[index++] = 'V';
     char_array[index++] = 0;
     window->ui->Inverter_Right_Throttle_lineEdit->setText((const QString)QString(char_array));
 
     //INVERTERS_LeftInverterThrottleFeedback
-    readValue = CarData_ReadValue(INVERTERS_LeftInverterThrottleFeedback)*2;
+    readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.LeftInverterThrottleFeedback)*2;
     index = 0U;
     char_array[index++] = '0' + (readValue/100U)%10U;
     char_array[index++] = '.';
@@ -730,7 +731,7 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->Inverter_Left_Feedback_lineEdit->setText((const QString)QString(char_array));
 
     //INVERTERS_RightInverterThrottleFeedback
-    readValue = CarData_ReadValue(INVERTERS_RightInverterThrottleFeedback)*2;
+    readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.RightInverterThrottleFeedback)*2;
     index = 0U;
     char_array[index++] = '0' + (readValue/100U)%10U;
     char_array[index++] = '.';
@@ -743,7 +744,7 @@ void GeneralTab_Update(MainWindow* window)
 
 //General tab status indicators:
     //INVERTERS_IsCarRunning
-    readValue = CarData_ReadValue(INVERTERS_IsCarRunning);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.IsCarRunning);
     if(readValue == 0)
     {
         window->ui->General_Car_Status_Qlabel->setStyleSheet("background-color: red;");
@@ -751,7 +752,7 @@ void GeneralTab_Update(MainWindow* window)
     }
     else
     {
-        readValue = CarData_ReadValue(INVERTERS_IsCarRunning);
+        readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.IsCarRunning);
         if(readValue == 0)
         {
             window->ui->General_Car_Status_Qlabel->setStyleSheet("background-color: green;");
@@ -764,7 +765,7 @@ void GeneralTab_Update(MainWindow* window)
         }
     }
     //DASHBOARD_ActivationButtonPressed
-    readValue = CarData_ReadValue(DASHBOARD_ActivationButtonPressed);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.DashboardMonitoredValues.ActivationButtonPressed);
     if(readValue == 1)
     {
         window->ui->General_Activation_Status_Qlabel->setStyleSheet("background-color: green;");
@@ -776,7 +777,7 @@ void GeneralTab_Update(MainWindow* window)
         window->ui->General_Activation_Status_Qlabel->setText("INACTIVE");
     }
     //DASHBOARD_CarReverseCommandPressed
-    readValue = CarData_ReadValue(DASHBOARD_CarReverseCommandPressed);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.DashboardMonitoredValues.CarReverseCommandPressed);
     if(readValue == 1)
     {
         window->ui->General_Reverse_Status_Qlabel->setStyleSheet("background-color: green;");
@@ -788,7 +789,7 @@ void GeneralTab_Update(MainWindow* window)
         window->ui->General_Reverse_Status_Qlabel->setText("INACTIVE");
     }
     //TSAC_IsAmsSafe
-    readValue = CarData_ReadValue(TSAC_IsAmsSafe);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.AmsError);
     if(readValue == 0)
     {
         window->ui->General_Ams_Status_Qlabel->setStyleSheet("background-color: green;");
@@ -801,7 +802,7 @@ void GeneralTab_Update(MainWindow* window)
     }
 
     //DASHBOARD_IsDisplayWorking
-    readValue = CarData_ReadValue(DASHBOARD_IsDisplayWorking);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.DashboardMonitoredValues.IsDisplayWorking);
     if(readValue == 0)
     {
         window->ui->General_Display_HStatus_Qlabel->setStyleSheet("background-color: green;");
@@ -813,7 +814,7 @@ void GeneralTab_Update(MainWindow* window)
         window->ui->General_Display_HStatus_Qlabel->setText("INACTIVE");
     }
     //DASHBOARD_IsSegmentsDriverWorking
-    readValue = CarData_ReadValue(DASHBOARD_IsSegmentsDriverWorking);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.DashboardMonitoredValues.IsSegmentsDriverWorking);
     if(readValue == 0)
     {
         window->ui->General_7seg_HStatus_Qlabel->setStyleSheet("background-color: green;");
@@ -826,21 +827,21 @@ void GeneralTab_Update(MainWindow* window)
     }
 
     //Pedals_Sensors
-    pedalsErrors[0] = (bool)CarData_ReadValue(PEDALS_Accel_Sensor1_ShortToGnd);//momentan primesc 0 == false == safe
-    pedalsErrors[1] = (bool)CarData_ReadValue(PEDALS_Accel_Sensor1_ShortToVcc);
-    pedalsErrors[2] = (bool)CarData_ReadValue(PEDALS_Accel_Sensor1_OutOfRangeOutput);
-    pedalsErrors[3] = (bool)CarData_ReadValue(PEDALS_Accel_Sensor2_ShortToGnd);
-    pedalsErrors[4] = (bool)CarData_ReadValue(PEDALS_Accel_Sensor2_ShortToVcc);
-    pedalsErrors[5] = (bool)CarData_ReadValue(PEDALS_Accel_Sensor2_OutOfRangeOutput);
-    pedalsErrors[6] = (bool)CarData_ReadValue(PEDALS_Accel_Implausibility);
+    pedalsErrors[0] = (bool)ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.Accel_Sensor1_ShortToGnd);
+    pedalsErrors[1] = (bool)ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.Accel_Sensor1_ShortToVcc);
+    pedalsErrors[2] = (bool)ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.Accel_Sensor1_OutOfRangeOutput);
+    pedalsErrors[3] = (bool)ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.Accel_Sensor2_ShortToGnd);
+    pedalsErrors[4] = (bool)ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.Accel_Sensor2_ShortToVcc);
+    pedalsErrors[5] = (bool)ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.Accel_Sensor2_OutOfRangeOutput);
+    pedalsErrors[6] = (bool)ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.Accel_Implausibility);
 
-    pedalsErrors[7] = (bool)CarData_ReadValue(PEDALS_Brake_Sensor1_ShortToGnd);
-    pedalsErrors[8] = (bool)CarData_ReadValue(PEDALS_Brake_Sensor1_ShortToVcc);
-    pedalsErrors[9] = (bool)CarData_ReadValue(PEDALS_Brake_Sensor1_OutOfRangeOutput);
-    pedalsErrors[10] = (bool)CarData_ReadValue(PEDALS_Brake_Sensor2_ShortToGnd);
-    pedalsErrors[11] = (bool)CarData_ReadValue(PEDALS_Brake_Sensor2_ShortToVcc);
-    pedalsErrors[12] = (bool)CarData_ReadValue(PEDALS_Brake_Sensor2_OutOfRangeOutput);
-    pedalsErrors[13] = (bool)CarData_ReadValue(PEDALS_Brake_Implausibility);
+    pedalsErrors[7] =  (bool)ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.Brake_Sensor1_ShortToGnd);
+    pedalsErrors[8] =  (bool)ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.Brake_Sensor1_ShortToVcc);
+    pedalsErrors[9] =  (bool)ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.Brake_Sensor1_OutOfRangeOutput);
+    pedalsErrors[10] = (bool)ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.Brake_Sensor2_ShortToGnd);
+    pedalsErrors[11] = (bool)ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.Brake_Sensor2_ShortToVcc);
+    pedalsErrors[12] = (bool)ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.Brake_Sensor2_OutOfRangeOutput);
+    pedalsErrors[13] = (bool)ReadUartDataFromAddress(&MonitoredValues.PedalsMonitoredValues.Brake_Implausibility);
 
     for (uint16_t indexEroare = 0; indexEroare < pedalsErrorsLength; indexEroare++)
     {
@@ -871,10 +872,10 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->General_Pedals_HStatus_Qlabel->setToolTip(tooltip_Pedals);
 
     //General_IsBmsWorking
-    BmsErrors[0] = (bool)CarData_ReadValue(TSAC_IsShuntWorking);//momentan primesc 0 == false == safe
-    BmsErrors[1] = (bool)CarData_ReadValue(TSAC_IsBms0Working);
-    BmsErrors[2] = (bool)CarData_ReadValue(TSAC_IsBms1Working);
-    BmsErrors[3] = (bool)CarData_ReadValue(TSAC_IsTransceiverWorking);
+    BmsErrors[0] = (bool)ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.ShuntError);
+    BmsErrors[1] = (bool)ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.Bms0Error);
+    BmsErrors[2] = (bool)ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.Bms1Error);
+    BmsErrors[3] = (bool)ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.TransceiverError);
     for (uint16_t indexEroare = 0; indexEroare < BmsErrorsLength; indexEroare++)
     {
         if(BmsErrors[indexEroare])
@@ -910,7 +911,7 @@ void TsacTab_Update(MainWindow* window)
     char char_array[20], index = 0U;
 
     //TSAC_HighestCellTemperature
-    readValue = CarData_ReadValue(TSAC_HighestCellTemperature);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.HighestCellTemperature);
     index = 0U;
     if(readValue >= 1000U)
     {
@@ -928,7 +929,7 @@ void TsacTab_Update(MainWindow* window)
     window->ui->Tsac_Temp_Highest_lineEdit->setText((const QString)QString(char_array));
 
     //TSAC_MedianCellTemperature
-    readValue = CarData_ReadValue(TSAC_MedianCellTemperature);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.MedianCellTemperature);
     index = 0U;
     if(readValue >= 1000U)
     {
@@ -946,7 +947,7 @@ void TsacTab_Update(MainWindow* window)
     window->ui->Tsac_Temp_Median_lineEdit->setText((const QString)QString(char_array));
 
     //TSAC_LowestCellTemperature
-    readValue = CarData_ReadValue(TSAC_LowestCellTemperature);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.LowestCellTemperature);
     index = 0U;
     if(readValue >= 1000U)
     {
@@ -964,7 +965,7 @@ void TsacTab_Update(MainWindow* window)
     window->ui->Tsac_Temp_Lowest_lineEdit->setText((const QString)QString(char_array));
 
     //TSAC_HighestCellVoltage
-    readValue = CarData_ReadValue(TSAC_HighestCellVoltage);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.HighestCellVoltage);
     index = 0U;
     if(readValue >= 1000U){
         char_array[index++] = '0' + (readValue/1000U);
@@ -979,7 +980,7 @@ void TsacTab_Update(MainWindow* window)
     window->ui->Tsac_Volt_Highest_lineEdit->setText((const QString)QString(char_array));
 
     //TSAC_MedianCellVoltage
-    readValue = CarData_ReadValue(TSAC_MedianCellVoltage);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.MedianCellVoltage);
     index = 0U;
     if(readValue >= 1000U){
         char_array[index++] = '0' + (readValue/1000U);
@@ -994,7 +995,7 @@ void TsacTab_Update(MainWindow* window)
     window->ui->Tsac_Volt_Median_lineEdit->setText((const QString)QString(char_array));
 
     //TSAC_LowestCellVoltage
-    readValue = CarData_ReadValue(TSAC_LowestCellVoltage);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.LowestCellVoltage);
     index = 0U;
     if(readValue >= 1000U){
         char_array[index++] = '0' + (readValue/1000U);
@@ -1009,7 +1010,7 @@ void TsacTab_Update(MainWindow* window)
     window->ui->Tsac_Volt_Lowest_lineEdit->setText((const QString)QString(char_array));
 
     //TSAC_OverallVoltage
-    readValue = CarData_ReadValue(TSAC_OverallVoltage);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.OverallVoltage);
     index = 0U;
     if(readValue >= 1000U)
     {
@@ -1027,7 +1028,7 @@ void TsacTab_Update(MainWindow* window)
     window->ui->Tsac_V_Median_lineEdit->setText((const QString)QString(char_array));
 
     //TSAC_OverallCurrent
-    readValue = CarData_ReadValue(TSAC_OverallCurrent);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.OverallCurrent);
     index = 0U;
     if(readValue >= 1000U)
     {
@@ -1046,7 +1047,7 @@ void TsacTab_Update(MainWindow* window)
 
 
     //TSAC_IsAmsSafe
-    readValue = CarData_ReadValue(TSAC_IsAmsSafe);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.AmsError);
     if(readValue == 0)
     {
         window->ui->TSAC_Ams_Status_Qlabel->setStyleSheet("background-color: green;");
@@ -1059,7 +1060,7 @@ void TsacTab_Update(MainWindow* window)
     }
 
     //TSAC_IsShuntWorking
-    readValue = CarData_ReadValue(TSAC_IsShuntWorking);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.ShuntError);
     if(readValue == 0)
     {
         window->ui->TSAC_Shunt_Status_Qlabel->setStyleSheet("background-color: green;");
@@ -1072,7 +1073,7 @@ void TsacTab_Update(MainWindow* window)
     }
 
     //TSAC_IsTransceiverWorking
-    readValue = CarData_ReadValue(TSAC_IsTransceiverWorking);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.TransceiverError);
     if(readValue == 0)
     {
         window->ui->TSAC_Transceiver_Status_Qlabel->setStyleSheet("background-color: green;");
@@ -1085,7 +1086,7 @@ void TsacTab_Update(MainWindow* window)
     }
 
     //TSAC_IsBms0Working
-    readValue = CarData_ReadValue(TSAC_IsBms0Working);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.Bms0Error);
     if(readValue == 0)
     {
         window->ui->TSAC_BMS0_Status_Qlabel->setStyleSheet("background-color: green;");
@@ -1098,7 +1099,7 @@ void TsacTab_Update(MainWindow* window)
     }
 
     //TSAC_IsBms1Working
-    readValue = CarData_ReadValue(TSAC_IsBms1Working);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.Bms1Error);
     if(readValue == 0)
     {
         window->ui->TSAC_BMS1_Status_Qlabel->setStyleSheet("background-color: green;");
@@ -1119,7 +1120,7 @@ void TsacTab_Update(MainWindow* window)
         for (int col_index = 0; col_index < TEMP_COLS; col_index++)
         {
             int idx = row_index * TEMP_COLS + col_index;
-            readValue = CarData_ReadCellTemperature(idx);
+            readValue = UartMessaging_ReadCellTemperature(idx);
 
             index = 0U;
             if(readValue >= 1000U)
@@ -1147,7 +1148,7 @@ void TsacTab_Update(MainWindow* window)
         for (int col_index = 0; col_index < VOLT_COLS; col_index++)
         {
             int idx = row_index * VOLT_COLS + col_index;
-            readValue = CarData_ReadCellTemperatureErrors(idx);
+            readValue = UartMessaging_ReadCellTemperatureErrors(idx);
             if(readValue == true)
             {
                 window->ui->Cell_Volt_tableWidget->item(row_index, col_index)->setBackground(QColor("#ff4444"));
@@ -1156,7 +1157,7 @@ void TsacTab_Update(MainWindow* window)
             else
             {
                 window->ui->Cell_Volt_tableWidget->item(row_index, col_index)->setBackground(Qt::transparent);
-                readValue = CarData_ReadCellTemperature(idx);
+                readValue = UartMessaging_ReadCellTemperature(idx);
                 index = 0U;
                 if(readValue >= 1000U)
                 {

@@ -48,11 +48,11 @@ extern "C"{
 /*==================================================================================================
 *                                      GLOBAL VARIABLES
 ==================================================================================================*/
-
+extern MonitoredValues_t MonitoredValues;
 static QSerialPort *serialPort = nullptr;
 static QElapsedTimer timer;
 static uint32_t timeSinceLastMessage = 0;
-static ComPortSettings_t settings = {false, 921600, "COM3"};
+static ComPortSettings_t settings = {false, 921600, "COM4"};
 static bool simulateSend = false;
 
 /*==================================================================================================
@@ -206,167 +206,170 @@ static UartBufferValidity_t UartMessaging_CheckValidityOfBuffer(uint8_t buffer[1
     if(readCRC!=calculatedCRC)
         return BufferCrcInvalid;
     switch (readHeader) {
-        case idUartAcceleratie:
-        case idUartBaterie1:
-        case idUartBaterie2:
-        case idUartBaterie3:
-        case idUartBaterie4:
-        case idUartBaterie5:
-        case idUartBord:
-        case idUartFrana:
-        case idUartInvertoare:
-        case idUartInvertorStanga:
-        case idUartInvertorDreapta:
+        case ID_UART_ACCELERATIE:
+        case ID_UART_BATERIE:
+        case ID_UART_BATERIE_TENSIUNI_CELULE:
+        case ID_UART_BATERIE_TEMPERATURI_CELULE:
+        case ID_UART_BATERIE_2:
+        case ID_UART_BATERIE_CHARGER:
+        case ID_UART_BORD:
+        case ID_UART_FRANA:
+        case ID_UART_INVERTOARE:
+        case ID_UART_INVERTOR_STANGA:
+        case ID_UART_INVERTOR_DREAPTA:
             return BufferValid;
         default:
             return BufferHeaderInvalid;
     }
 }
 static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){//this should parse the data from the buffer and update the global structure holding all values with the received ones.
-    uint8_t id = buffer[0];
+    uint64_t buffer_merged;
+        uint8_t id = buffer[0];
     uint8_t data[8];
-    for(int i=1;i<=8;i++)
+    for(int i=1;i<=8;i++){
         data[i-1] = buffer[i];
-    //qDebug()<<data[0]<<"\n";
+    }
+    buffer_merged = (((uint64_t)data[0]) << 56) + (((uint64_t)data[1]) << 48) + (((uint64_t)data[2]) << 40) + (((uint64_t)data[3]) << 32) + (((uint64_t)data[4]) << 24) + (((uint64_t)data[5]) << 16) + (((uint64_t)data[6]) << 8) + (uint64_t)data[7];
+
+    //qDebug()<<" "<<data[0]<<" "<<data[1]<<" "<<data[2]<<" "<<data[3]<<" "<<data[4]<<" "<<data[5]<<" "<<data[6]<<" "<<data[7];
     switch(id){
-        case idUartFrana:
+        case ID_UART_FRANA:
             //extragere date
-            CarData_SetValue(PEDALS_BrakeSensor1Voltage, ((((uint16_t)data[6])<<8) | data[7]) & (0x3FFF));
-            CarData_SetValue(PEDALS_BrakeSensor2Voltage, ((((((uint16_t)data[4])<<8) | data[5]) & (0x0FFF)) << 2) | (data[6]>>6));
-            CarData_SetValue(PEDALS_BrakeSensor1TravelPercentage, (((uint8_t)(data[3]<<4)) | (data[4]>>4)) & (0x7F));
-            CarData_SetValue(PEDALS_BrakeSensor2TravelPercentage, (((uint8_t)(data[2]<<5)) | (data[3]>>3)) & (0x7F));
-            CarData_SetValue(PEDALS_PressureSensorBars, ((uint8_t)(data[1]<<6)) | (data[2]>>2));
-            CarData_SetValue(PEDALS_Brake_Implausibility, (data[0] & (1<<1)) >> 1);
-            CarData_SetValue(PEDALS_Brake_Sensor1_OutOfRangeOutput, (data[0] & (1<<5)) >> 5);
-            CarData_SetValue(PEDALS_Brake_Sensor1_ShortToVcc, (data[0] & (1<<6)) >> 6);
-            CarData_SetValue(PEDALS_Brake_Sensor1_ShortToGnd, (data[0] & (1<<7)) >> 7);
-            CarData_SetValue(PEDALS_Brake_Sensor2_OutOfRangeOutput, (data[0] & (1<<2)) >> 2);
-            CarData_SetValue(PEDALS_Brake_Sensor2_ShortToVcc, (data[0] & (1<<3)) >> 3);
-            CarData_SetValue(PEDALS_Brake_Sensor2_ShortToGnd, (data[0] & (1<<4)) >> 4);
-            break;
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.BrakeSensor1Voltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.BrakeSensor2Voltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.BrakeSensor1TravelPercentage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.BrakeSensor2TravelPercentage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.PressureSensorBars);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Implausibility);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Sensor1_OutOfRangeOutput);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Sensor1_ShortToVcc);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Sensor1_ShortToGnd);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Sensor2_OutOfRangeOutput);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Sensor2_ShortToVcc);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Brake_Sensor2_ShortToGnd);
+			break;
 
-        case idUartAcceleratie:
+        case ID_UART_ACCELERATIE:
             //extragere date
-            CarData_SetValue(PEDALS_AcceleratorSensor1Voltage, ((((uint16_t)data[6])<<8) | data[7]) & (0x3FFF));
-            CarData_SetValue(PEDALS_AcceleratorSensor2Voltage, ((((((uint16_t)data[4])<<8) | data[5]) & (0x0FFF)) << 2) | (data[6]>>6));
-            CarData_SetValue(PEDALS_AcceleratorSensor1TravelPercentage, (((uint8_t)(data[3]<<4)) | (data[4]>>4)) & (0x7F));
-            CarData_SetValue(PEDALS_AcceleratorSensor2TravelPercentage, (((uint8_t)(data[2]<<5)) | (data[3]>>3)) & (0x7F));
-            CarData_SetValue(PEDALS_PressureSensorVoltage, ((((uint16_t)data[1]<<6)) | (data[2]>>2)) & (0x01FF));
-            CarData_SetValue(PEDALS_Accel_Implausibility, (data[0] & (1<<1)) >> 1);
-            CarData_SetValue(PEDALS_Accel_Sensor1_OutOfRangeOutput, (data[0] & (1<<5)) >> 5);
-            CarData_SetValue(PEDALS_Accel_Sensor1_ShortToVcc, (data[0] & (1<<6)) >> 6);
-            CarData_SetValue(PEDALS_Accel_Sensor1_ShortToGnd, (data[0] & (1<<7)) >> 7);
-            CarData_SetValue(PEDALS_Accel_Sensor2_OutOfRangeOutput, (data[0] & (1<<2)) >> 2);
-            CarData_SetValue(PEDALS_Accel_Sensor2_ShortToVcc, (data[0] & (1<<3)) >> 3);
-            CarData_SetValue(PEDALS_Accel_Sensor2_ShortToGnd, (data[0] & (1<<4)) >>4);
-            break;
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor1Voltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor2Voltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor1TravelPercentage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor2TravelPercentage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.PressureSensorVoltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Implausibility);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor1_OutOfRangeOutput);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor1_ShortToVcc);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor1_ShortToGnd);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor2_OutOfRangeOutput);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor2_ShortToVcc);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor2_ShortToGnd);
+			break;
 
-        case idUartInvertorStanga:
+        case ID_UART_INVERTOR_STANGA:
             //extragere date
-            CarData_SetValue(INVERTERS_LeftMotorTemperature, data[7]);
-            CarData_SetValue(INVERTERS_LeftInverterTemperature, data[6]);
-            CarData_SetValue(INVERTERS_LeftInverterThrottle, data[5]);
-            CarData_SetValue(INVERTERS_LeftMotorSpeedKmh, data[4]);
-            CarData_SetValue(INVERTERS_LeftInverterThrottleFeedback, data[3]);
-            CarData_SetValue(INVERTERS_LeftInverterInputVoltage, ((((uint16_t)data[1])<<8) | data[2]) & (0x07FF));
-            CarData_SetValue(INVERTERS_LeftMotorRpm, ((((uint16_t)data[0])<<8) | data[1]) >> 3);
-            break;
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftMotorTemperature);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftInverterTemperature);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftInverterThrottle);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftMotorSpeedKmh);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftInverterThrottleFeedback);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftInverterInputVoltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftMotorRpm);
+			break;
 
-        case idUartInvertorDreapta:
+        case ID_UART_INVERTOR_DREAPTA:
             //extragere date
-            CarData_SetValue(INVERTERS_RightMotorTemperature, data[7]);
-            CarData_SetValue(INVERTERS_RightInverterTemperature, data[6]);
-            CarData_SetValue(INVERTERS_RightInverterSentThrottle, data[5]);
-            CarData_SetValue(INVERTERS_RightMotorSpeedKmh, data[4]);
-            CarData_SetValue(INVERTERS_RightInverterThrottleFeedback, data[3]);
-            CarData_SetValue(INVERTERS_RightInverterInputVoltage, ((((uint16_t)data[1])<<8) | data[2]) & (0x7FF));
-            CarData_SetValue(INVERTERS_RightMotorRpm, ((((uint16_t)data[0])<<8) | data[1]) >> 3);
-            break;
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightMotorTemperature);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightInverterTemperature);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightInverterThrottle);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightMotorSpeedKmh);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightInverterThrottleFeedback);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightInverterInputVoltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightMotorRpm);
+			break;
 
-        case idUartInvertoare:
-            CarData_SetValue(INVERTERS_IsCarRunning, (data[0] & (1<<7)) >> 7);
-            CarData_SetValue(INVERTERS_IsCarInReverse, (data[0] & (1<<6)) >> 6);
-            CarData_SetValue(INVERTERS_LeftInverterCurrent, ((((uint16_t)data[6])<<8) | data[7]) & (0x0FFF));
-            CarData_SetValue(INVERTERS_RightInverterCurrent, ((((uint16_t)data[5])<<8) | data[6]) >> 4);
-            break;
+        case ID_UART_INVERTOARE:
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.IsCarRunning);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.IsCarInReverse);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftInverterCurrent);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightInverterCurrent);
+			break;
 
-        case idUartBaterie1:
+        case ID_UART_BATERIE:
             //extragere date
-            CarData_SetValue(TSAC_OverallCurrent, ((((uint16_t)data[6]) << 8) | data[7]) & (0x1FFF));
-            CarData_SetValue(TSAC_OverallVoltage, ((((uint16_t)data[5]) << 8) | data[6]) >> 5);
-            CarData_SetValue(TSAC_HighestCellTemperature, ((((uint16_t)data[3]) << 8) | data[4]) & (0x03FF));
-            CarData_SetValue(TSAC_HighestCellVoltage, (((((uint16_t)data[2]) << 8) | data[3]) >> 2) & (0x03FF));
-            CarData_SetValue(TSAC_LowestCellVoltage, (((((uint16_t)data[1]) << 8) | data[2]) >> 4) & (0x03FF));
-            CarData_SetValue(TSAC_LowestCellTemperature, (((((uint16_t)data[0]) << 8) | data[1]) >> 6) & (0x03FF));
-            break;
+            //qDebug()<<" "<<data[0]<<" "<<data[1]<<" "<<data[2]<<" "<<data[3]<<" "<<data[4]<<" "<<data[5]<<" "<<data[6]<<" "<<data[7];
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.OverallCurrent);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.OverallVoltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.HighestCellTemperature);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.HighestCellVoltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.LowestCellVoltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.LowestCellTemperature);
+            //qDebug()<<MonitoredValues.TsacMonitoredValues.OverallCurrent.valueUart;
+			break;
 
-        case idUartBaterie2:{
-            uint8_t index = (uint8_t)((data[0]) | (data[1] >> 6)) & (0x1F);
-            CarData_SetValue(TSAC_CellVoltageIndex, index);
+        case ID_UART_BATERIE_TENSIUNI_CELULE:{
+            uint8_t index = ((uint8_t)(data[0])) & (0x07);
             index = index * 5;
-            CarData_SetCellVoltageErrors(((data[0] & (1<<7)) >> 7), index + 0);
-            CarData_SetCellVoltageErrors(((data[0] & (1<<6)) >> 6), index + 1);
-            CarData_SetCellVoltageErrors(((data[0] & (1<<5)) >> 5), index + 2);
-            CarData_SetCellVoltageErrors(((data[0] & (1<<4)) >> 4), index + 3);
-            CarData_SetCellVoltageErrors(((data[0] & (1<<3)) >> 3), index + 4);
-            CarData_SetCellVoltage((((((uint16_t)data[1]) << 8) | data[2]) & (0x03FF)), index + 0);
-            CarData_SetCellVoltage(((((((uint16_t)data[3]) << 8) | data[4]) >> 6) & (0x03FF)), index + 1);
-            CarData_SetCellVoltage(((((((uint16_t)data[4]) << 8) | data[5]) >> 4) & (0x03FF)), index + 2);
-            CarData_SetCellVoltage(((((((uint16_t)data[5]) << 8) | data[6]) >> 2) & (0x03FF)), index + 3);
-            CarData_SetCellVoltage((((((uint16_t)data[6]) << 8) | data[7]) & (0x03FF)), index + 4);
+            UartMessaging_SetCellVoltageErrors(((data[0] & (1<<7)) >> 7), index + 0);
+            UartMessaging_SetCellVoltageErrors(((data[0] & (1<<6)) >> 6), index + 1);
+            UartMessaging_SetCellVoltageErrors(((data[0] & (1<<5)) >> 5), index + 2);
+            UartMessaging_SetCellVoltageErrors(((data[0] & (1<<4)) >> 4), index + 3);
+            UartMessaging_SetCellVoltageErrors(((data[0] & (1<<3)) >> 3), index + 4);
+            UartMessaging_SetCellVoltage((((((uint16_t)data[1]) << 8) | data[2]) & (0x03FF)), index + 0);
+            UartMessaging_SetCellVoltage(((((((uint16_t)data[3]) << 8) | data[4]) >> 6) & (0x03FF)), index + 1);
+            UartMessaging_SetCellVoltage(((((((uint16_t)data[4]) << 8) | data[5]) >> 4) & (0x03FF)), index + 2);
+            UartMessaging_SetCellVoltage(((((((uint16_t)data[5]) << 8) | data[6]) >> 2) & (0x03FF)), index + 3);
+            UartMessaging_SetCellVoltage((((((uint16_t)data[6]) << 8) | data[7]) & (0x03FF)), index + 4);
             break;
         }
 
-        case idUartBaterie3:{
-            uint16_t index = (uint16_t)((data[0] << 2) | (data[1] >> 4)) & (0x007F);
-            CarData_SetValue(TSAC_CellTemperatureIndex, index);
+        case ID_UART_BATERIE_TEMPERATURI_CELULE:{
+            uint16_t index = (uint16_t)((data[0] << 2) | (data[1] >> 6)) & (0x001F);
             index = index * 5;
-            CarData_SetCellTemperatureErrors(((data[0] & (1<<7)) >> 7), index + 0);
-            CarData_SetCellTemperatureErrors(((data[0] & (1<<6)) >> 6), index + 1);
-            CarData_SetCellTemperatureErrors(((data[0] & (1<<5)) >> 5), index + 2);
-            CarData_SetCellTemperatureErrors(((data[0] & (1<<4)) >> 4), index + 3);
-            CarData_SetCellTemperatureErrors(((data[0] & (1<<3)) >> 3), index + 4);
-            CarData_SetCellTemperature((((((uint16_t)data[1]) << 8) | data[2]) & (0x03FF)), index + 0);
-            CarData_SetCellTemperature(((((((uint16_t)data[3]) << 8) | data[4]) >> 6) & (0x03FF)), index + 1);
-            CarData_SetCellTemperature(((((((uint16_t)data[4]) << 8) | data[5]) >> 4) & (0x03FF)), index + 2);
-            CarData_SetCellTemperature(((((((uint16_t)data[5]) << 8) | data[6]) >> 2) & (0x03FF)), index + 3);
-            CarData_SetCellTemperature((((((uint16_t)data[6]) << 8) | data[7]) & (0x03FF)), index + 4);
+            UartMessaging_SetCellTemperatureErrors(((data[0] & (1<<7)) >> 7), index + 0);
+            UartMessaging_SetCellTemperatureErrors(((data[0] & (1<<6)) >> 6), index + 1);
+            UartMessaging_SetCellTemperatureErrors(((data[0] & (1<<5)) >> 5), index + 2);
+            UartMessaging_SetCellTemperatureErrors(((data[0] & (1<<4)) >> 4), index + 3);
+            UartMessaging_SetCellTemperatureErrors(((data[0] & (1<<3)) >> 3), index + 4);
+            UartMessaging_SetCellTemperature((((((uint16_t)data[1]) << 8) | data[2]) & (0x03FF)), index + 0);
+            UartMessaging_SetCellTemperature(((((((uint16_t)data[3]) << 8) | data[4]) >> 6) & (0x03FF)), index + 1);
+            UartMessaging_SetCellTemperature(((((((uint16_t)data[4]) << 8) | data[5]) >> 4) & (0x03FF)), index + 2);
+            UartMessaging_SetCellTemperature(((((((uint16_t)data[5]) << 8) | data[6]) >> 2) & (0x03FF)), index + 3);
+            UartMessaging_SetCellTemperature((((((uint16_t)data[6]) << 8) | data[7]) & (0x03FF)), index + 4);
             break;
         }
 
-        case idUartBaterie4:
-            CarData_SetValue(TSAC_MedianCellTemperature, (((((uint16_t)data[0]) << 8) | data[1]) >> 6) & (0x03FF));
-            CarData_SetValue(TSAC_MedianCellVoltage, (((((uint16_t)data[1]) << 8) | data[2]) >> 4) & (0x03FF));
-            CarData_SetValue(TSAC_IsShuntWorking, (data[2] & (1<<3)) >> 3);
-            CarData_SetValue(TSAC_IsTransceiverWorking, (data[2] & (1<<2)) >> 2);
-            CarData_SetValue(TSAC_IsBms0Working, (data[2] & (1<<1)) >> 1);
-            CarData_SetValue(TSAC_IsBms1Working, (data[2] & (1<<0)) >> 0);
-            CarData_SetValue(TSAC_AreThermistorsWorking, (data[3] & (1<<7)) >> 7);
-            CarData_SetValue(TSAC_IsAmsSafe, (data[3] & (1<<6)) >> 6);
-            CarData_SetValue(TSAC_IsCharging, (data[3] & (1<<0)) >> 0);
-            CarData_SetValue(TSAC_ReportedChargingCurrent, (((uint16_t)data[4]) << 8) | data[5]);
-            CarData_SetValue(TSAC_ReportedChargingVoltage, (((uint16_t)data[6]) << 8) | data[7]);
-            break;
+        case ID_UART_BATERIE_2:
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.MedianCellTemperature);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.MedianCellVoltage);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.ShuntError);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.TransceiverError);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.Bms0Error);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.Bms1Error);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.ThermistorsError);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.AmsError);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.DesiredChargingCurrent);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.DesiredChargingVoltage);
+			break;
 
-        case idUartBaterie5:
-            CarData_SetValue(TSAC_ChargerCommand, (data[0] & (1<<7)) >> 7);
-            CarData_SetValue(TSAC_DesiredChargingCurrent, (((((uint16_t)data[5]) << 8) | data[6]) >> 2) & (0x01FF));
-            CarData_SetValue(TSAC_DesiredChargingVoltage, ((((uint16_t)data[6]) << 8) | data[7]) & (0x03FF));
-            break;
+        case ID_UART_BATERIE_CHARGER:
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.ReportedChargingCurrent);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.ReportedChargingVolts);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.TsacMonitoredValues.ChargerCommand);
+			break;
 
-        case idUartBord:
+        case ID_UART_BORD:
             //extragere date
-            CarData_SetValue(DASHBOARD_ActivationButtonPressed, (data[0] & (1<<7)) >> 7);
-            CarData_SetValue(DASHBOARD_CarReverseCommandPressed, (data[0] & (1<<6)) >> 6);
-            CarData_SetValue(DASHBOARD_IsDisplayWorking, (data[0] & (1<<5)) >> 5);
-            CarData_SetValue(DASHBOARD_IsSegmentsDriverWorking, (data[0] & (1<<4)) >> 4);
-            break;
-        case idUartComunicatii:
-            CarData_SetValue(COMMUNICATIONS_IsInverterVcuSimulated, (data[0] & (1<<7)) >> 7);
-            CarData_SetValue(COMMUNICATIONS_IsTsacVcuSimulated, (data[0] & (1<<6)) >> 6);
-            CarData_SetValue(COMMUNICATIONS_IsDashboardVcuSimulated, (data[0] & (1<<5)) >> 5);
-            CarData_SetValue(COMMUNICATIONS_IsPedalsVcuSimulated, (data[0] & (1<<4)) >> 4);
-            break;
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.DashboardMonitoredValues.ActivationButtonPressed);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.DashboardMonitoredValues.CarReverseCommandPressed);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.DashboardMonitoredValues.IsDisplayWorking);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.DashboardMonitoredValues.IsSegmentsDriverWorking);
+			break;
+        case ID_UART_COMUNICATII:
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.IsDashboardVCUSimulated);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.IsInvertersVCUSimulated);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.IsPedalsVCUSimulated);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.IsTsacVCUSimulated);
+			break;
     }
 }
 

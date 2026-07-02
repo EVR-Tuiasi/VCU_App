@@ -32,11 +32,514 @@ extern "C"{
 /*==================================================================================================
 *                                      LOCAL VARIABLES
 ==================================================================================================*/
-TsacMonitoredValues_t TsacMonitoredvalues;
-PedalsMonitoredValues_t PedalsMonitoredValues;
-InvertersMonitoredValues_t InvertersMonitoredValues;
-DashboardMonitoredValues_t DashboardMonitoredValues;
-CommunicationsMonitoredValues_t CommunicationMonitoredValues;
+MonitoredValues_t MonitoredValues ={
+    {/* START TsacMonitoredValues */
+        {/* MedianCellTemperature */
+            0,	   /* value */
+            0,	   /* value */
+            10U,   /* nrOfBits */
+            54U,   /* shift */
+            1023U  /* maxValue */
+        },
+        {/* HighestCellTemperature */
+            0,	   /* value */
+            0,	   /* value */
+            10U,   /* nrOfBits */
+            24U,   /* shift */
+            1023U  /* maxValue */
+        },
+        {/* LowestCellTemperature */
+            0,	   /* value */
+            0,	   /* value */
+            10U,   /* nrOfBits */
+            54U,   /* shift */
+            1023U  /* maxValue */
+        },
+        {/* MedianCellVoltage */
+            0,	   /* value */
+            0,	   /* value */
+            10U,   /* nrOfBits */
+            44U,   /* shift */
+            1023U  /* maxValue */
+        },
+        {/* HighestCellVoltage */
+            0,	   /* value */
+            0,	   /* value */
+            10U,   /* nrOfBits */
+            34U,   /* shift */
+            1023U  /* maxValue */
+        },
+        {/* LowestCellVoltage */
+            0,	   /* value */
+            0,	   /* value */
+            10U,   /* nrOfBits */
+            44U,   /* shift */
+            1023U  /* maxValue */
+        },
+        {/* OverallVoltage */
+            0,	   /* value */
+            0,	   /* value */
+            11,	   /* nrOfBits */
+            13U,   /* shift */
+            2047U  /* maxValue */
+        },
+        {/* OverallCurrent */
+            0,	   /* value */
+            0,	   /* value */
+            13U,   /* nrOfBits */
+            0U,    /* shift */
+            8095U  /* maxValue */
+        },
+        {/* CellVoltage */
+            {0}    /* zero-initializing array */
+        },
+        {/* ThermistorTemperature */
+            {0}	   /* zero-initializing array */
+        },
+        {/* AmsError */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            38U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* TransceiverError */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            42U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* ShuntError */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            43U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* Bms0Error */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            41U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* Bms1Error */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            40U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* ThermistorsError */
+            0,	   /* value */
+            0,	   /* value */
+            1U,    /* nrOfBits */
+            39U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* ChargerStatus */
+            0,	   /* value */
+            0,	   /* value */
+            1U,    /* nrOfBits */
+            32U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* ReportedChargingCurrent */
+            0,	   /* value */
+            0,	   /* value */
+            16U,   /* nrOfBits */
+            16U,   /* shift */
+            65535U /* maxValue */
+        },
+        {/* ReportedChargingVolts */
+            0,	   /* value */
+            0,	   /* value */
+            16U,   /* nrOfBits */
+            0U,	   /* shift */
+            65535U /* maxValue */
+        },
+        {/* ChargerCommand */
+            0,	   /* value */
+            0,	   /* value */
+            1U,    /* nrOfBits */
+            63U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* DesiredChargingCurrent */
+            0,	   /* value */
+            0,	   /* value */
+            9U,    /* nrOfBits */
+            10U,   /* shift */
+            320U   /* maxValue */
+        },
+        {/* DesiredChargingVoltage */
+            0,	   /* value */
+            0,	   /* value */
+            10U,   /* nrOfBits */
+            0U,	   /* shift */
+            1008U  /* maxValue */
+        }
+    },/* END TsacMonitoredValues */
+    {/* START PedalsMonitoredValues*/
+        {/* AcceleratorSensor1Voltage */
+            0,	   /* value */
+            0,	   /* value */
+            14U,   /* nrOfBits */
+            0U,	   /* shift */
+            16383U /* maxValue */
+        },
+        {/* AcceleratorSensor2Voltage */
+            0,	   /* value */
+            0,	   /* value */
+            14U,   /* nrOfBits */
+            14U,   /* shift */
+            16383U /* maxValue */
+        },
+        {/* AcceleratorSensor1TravelPercentage */
+            0,	   /* value */
+            0,	   /* value */
+            7U,	   /* nrOfBits */
+            28U,   /* shift */
+            100U   /* maxValue */
+        },
+        {/* AcceleratorSensor2TravelPercentage */
+            0,	   /* value */
+            0,	   /* value */
+            7U,	   /* nrOfBits */
+            35U,   /* shift */
+            100U   /* maxValue */
+        },
+        {/* BrakeSensor1Voltage */
+            0,	   /* value */
+            0,	   /* value */
+            14U,   /* nrOfBits */
+            0U,	   /* shift */
+            16383U /* maxValue */
+        },
+        {/* BrakeSensor2Voltage */
+            0,	   /* value */
+            0,	   /* value */
+            14U,   /* nrOfBits */
+            14U,   /* shift */
+            16383U /* maxValue */
+        },
+        {/* BrakeSensor1TravelPercentage */
+            0,	   /* value */
+            0,	   /* value */
+            7U,	   /* nrOfBits */
+            28U,   /* shift */
+            100U   /* maxValue */
+        },
+        {/* BrakeSensor2TravelPercentage */
+            0,	   /* value */
+            0,	   /* value */
+            7U,	   /* nrOfBits */
+            35U,   /* shift */
+            100U   /* maxValue */
+        },
+        {/* PressureSensorVoltage */
+            0,	   /* value */
+            0,	   /* value */
+            9U,	   /* nrOfBits */
+            42U,   /* shift */
+            500U   /* maxValue */
+        },
+        {/* PressureSensorBars */
+            0,	   /* value */
+            0,	   /* value */
+            8U,	   /* nrOfBits */
+            42U,   /* shift */
+            255U   /* maxValue */
+        },
+        {/* Accel_Sensor1_ShortToGnd */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            63U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* Accel_Sensor1_ShortToVcc */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            62U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* Accel_Sensor1_OutOfRangeOutput */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            61U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* Accel_Sensor2_ShortToGnd */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            60U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* Accel_Sensor2_ShortToVcc */
+            0,     /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            59U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* Accel_Sensor2_OutOfRangeOutput */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            58U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* Accel_Implausibility */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            57U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* Brake_Sensor1_ShortToGnd */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            63U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* Brake_Sensor1_ShortToVcc */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            62U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* Brake_Sensor1_OutOfRangeOutput */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            61U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* Brake_Sensor2_ShortToGnd */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            60U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* Brake_Sensor2_ShortToVcc */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            59U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* Brake_Sensor2_OutOfRangeOutput */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            58U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* Brake_Implausibility */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            57U,   /* shift */
+            1U     /* maxValue */
+        }
+    },/* END PedalsMonitoredValues*/
+    {/* START InvertersMonitoredValues */
+        {/* LeftInverterTemperature */
+            0,	   /* value */
+            0,	   /* value */
+            8U,	   /* nrOfBits */
+            8U,	   /* shift */
+            255U   /* maxValue */
+        },
+        {/* LeftMotorTemperature */
+            0,	   /* value */
+            0,	   /* value */
+            8U,	   /* nrOfBits */
+            0U,	   /* shift */
+            255U   /* maxValue */
+        },
+        {/* LeftInverterInputVoltage */
+            0,	   /* value */
+            0,	   /* value */
+            11U,   /* nrOfBits */
+            40U,   /* shift */
+            1800U  /* maxValue */
+        },
+        {/* LeftInverterCurrent */
+            0,	   /* value */
+            0,	   /* value */
+            12U,   /* nrOfBits */
+            0U,	   /* shift */
+            4000U  /* maxValue */
+        },
+        {/* LeftMotorRpm */
+            0,	   /* value */
+            0,	   /* value */
+            13U,   /* nrOfBits */
+            51U,   /* shift */
+            6000U  /* maxValue */
+        },
+        {/* LeftMotorSpeedKmh */
+            0,	   /* value */
+            0,	   /* value */
+            8U,	   /* nrOfBits */
+            24U,   /* shift */
+            255U   /* maxValue */
+        },
+        {/* LeftInverterThrottle */
+            0,	   /* value */
+            0,	   /* value */
+            8U,	   /* nrOfBits */
+            16U,   /* shift */
+            250U   /* maxValue */
+        },
+        {/* LeftInverterThrottleFeedback */
+            0,	   /* value */
+            0,	   /* value */
+            8U,	   /* nrOfBits */
+            32U,   /* shift */
+            250U   /* maxValue */
+        },
+        {/* RightInverterTemperature */
+            0,	   /* value */
+            0,	   /* value */
+            8U,	   /* nrOfBits */
+            8U,	   /* shift */
+            255U   /* maxValue */
+        },
+        {/* RightMotorTemperature */
+            0,	   /* value */
+            0,	   /* value */
+            8U,	   /* nrOfBits */
+            0U,	   /* shift */
+            255U   /* maxValue */
+        },
+        {/* RightInverterInputVoltage */
+            0,	   /* value */
+            0,	   /* value */
+            11U,   /* nrOfBits */
+            40U,   /* shift */
+            1800U  /* maxValue */
+        },
+        {/* RightInverterCurrent */
+            0,	   /* value */
+            0,	   /* value */
+            12U,   /* nrOfBits */
+            12U,   /* shift */
+            4000U  /* maxValue */
+        },
+        {/* RightMotorRpm */
+            0,	   /* value */
+            0,	   /* value */
+            13U,   /* nrOfBits */
+            51U,   /* shift */
+            6000U  /* maxValue */
+        },
+        {/* RightMotorSpeedKmh */
+            0,	   /* value */
+            0,	   /* value */
+            8U,	   /* nrOfBits */
+            24U,   /* shift */
+            255U   /* maxValue */
+        },
+        {/* RightInverterThrottle */
+            0,	   /* value */
+            0,	   /* value */
+            8U,	   /* nrOfBits */
+            16U,   /* shift */
+            250U   /* maxValue */
+        },
+        {/* RightInverterThrottleFeedback */
+            0,	   /* value */
+            0,	   /* value */
+            8U,	   /* nrOfBits */
+            32U,   /* shift */
+            250U   /* maxValue */
+        },
+        {/* IsCarInReverse */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            62U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* IsCarRunning */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            63U,   /* shift */
+            1U     /* maxValue */
+        }
+    },/* END InvertersMonitoredValues */
+    {/* START DashboardMonitoredValues */
+        {/* ActivationButtonPressed */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            63U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* CarReverseCommandPressed */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            62U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* IsDisplayWorking */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            61U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* IsSegmentsDriverWorking */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            60U,   /* shift */
+            1U     /* maxValue */
+        }
+    },/* END DashboardMonitoredValues */
+    {/* START CommunicationsMonitoredValues */
+        {/* IsInvertersVCUSimulated */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            63U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* IsTsacVCUSimulated */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            62U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* IsDashboardVCUSimulated */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            61U,   /* shift */
+            1U     /* maxValue */
+        },
+        {/* IsPedalsVCUSimulated */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            60U,   /* shift */
+            1U     /* maxValue */
+        }
+    }/* END CommunicationsMonitoredValues */
+};
 
 /*==================================================================================================
 *                                      GLOBAL CONSTANTS
@@ -62,474 +565,64 @@ CommunicationsMonitoredValues_t CommunicationMonitoredValues;
 *                                       GLOBAL FUNCTIONS
 ==================================================================================================*/
 
-void CarData_SetValue(MonitoredValue_t DesiredValueType, uint32_t Value){
-    switch(DesiredValueType){
-    //TSAC
-    case TSAC_MedianCellTemperature:
-        TsacMonitoredvalues.MedianCellTemperature = Value;
-        break;
-    case TSAC_HighestCellTemperature:
-        TsacMonitoredvalues.HighestCellTemperature = Value;
-        break;
-    case TSAC_LowestCellTemperature:
-        TsacMonitoredvalues.LowestCellTemperature = Value;
-        break;
-    case TSAC_MedianCellVoltage:
-        TsacMonitoredvalues.MedianCellVoltage = Value;
-        break;
-    case TSAC_HighestCellVoltage:
-        TsacMonitoredvalues.HighestCellVoltage = Value;
-        break;
-    case TSAC_LowestCellVoltage:
-        TsacMonitoredvalues.LowestCellVoltage = Value;
-        break;
-    case TSAC_OverallVoltage:
-        TsacMonitoredvalues.OverallVoltage = Value;
-        break;
-    case TSAC_OverallCurrent:
-        if(Value>8095)
-            TsacMonitoredvalues.OverallCurrent = 0;
+uint16_t UartMessaging_ReadCellVoltage(uint16_t index){
+	//NU SCOATE IF-URILE: SUNT DE SIGURANTA
+	if(index < CELLS_NUM)
+		return MonitoredValues.TsacMonitoredValues.CellVoltage[index].valueUart;
+	else
+        return 0;
+}
+bool UartMessaging_ReadCellVoltageErrors(uint16_t index){
+	//NU SCOATE IF-URILE: SUNT DE SIGURANTA
+	if(index < CELLS_NUM)
+		return MonitoredValues.TsacMonitoredValues.CellVoltage[index].errorUart;
+	else
+		return 0;
+}
+uint16_t UartMessaging_ReadCellTemperature(uint16_t index){
+	//NU SCOATE IF-URILE: SUNT DE SIGURANTA
+    if(index < THERMISTOR_NUM)
+		return MonitoredValues.TsacMonitoredValues.ThermistorTemperature[index].valueUart;
+	else
+        return 0;
+}
+bool UartMessaging_ReadCellTemperatureErrors(uint16_t index){
+	//NU SCOATE IF-URILE: SUNT DE SIGURANTA
+    if(index < THERMISTOR_NUM)
+		return MonitoredValues.TsacMonitoredValues.ThermistorTemperature[index].errorUart;
+	else
+		return 0;
+}
+
+void UartMessaging_SetCellVoltage(uint16_t Value, uint16_t index){
+    //NU SCOATE IF-URILE: SUNT DE SIGURANTA
+    if(index < CELLS_NUM){
+        if(Value <= 1023)
+            MonitoredValues.TsacMonitoredValues.CellVoltage[index].valueUart = Value;
         else
-            TsacMonitoredvalues.OverallCurrent = Value;
-        break;
-    case TSAC_IsAmsSafe:
-        TsacMonitoredvalues.AmsError = Value;
-        break;
-    case TSAC_IsTransceiverWorking:
-        TsacMonitoredvalues.TransceiverError = Value;
-        break;
-    case TSAC_IsShuntWorking:
-        TsacMonitoredvalues.ShuntError = Value;
-        break;
-    case TSAC_IsBms0Working:
-        TsacMonitoredvalues.Bms0Error = Value;
-        break;
-    case TSAC_IsBms1Working:
-        TsacMonitoredvalues.Bms1Error = Value;
-        break;
-    case TSAC_IsCharging:
-        TsacMonitoredvalues.ChargerStatus = Value;
-        break;
-    case TSAC_AreThermistorsWorking:
-        TsacMonitoredvalues.ThermistorsError = Value;
-        break;
-    case TSAC_ReportedChargingCurrent:
-        TsacMonitoredvalues.ReportedChargingCurrent = Value;
-        break;
-    case TSAC_ReportedChargingVoltage:
-        TsacMonitoredvalues.ReportedChargingVoltage = Value;
-        break;
-    //PEDALS
-    case PEDALS_AcceleratorSensor1Voltage:
-        PedalsMonitoredValues.AcceleratorSensor1Voltage = Value;
-        break;
-    case PEDALS_AcceleratorSensor2Voltage:
-        PedalsMonitoredValues.AcceleratorSensor2Voltage = Value;
-        break;
-    case PEDALS_AcceleratorSensor1TravelPercentage:
-        if(Value>100)
-            PedalsMonitoredValues.AcceleratorSensor1TravelPercentage = 0;
-        else
-            PedalsMonitoredValues.AcceleratorSensor1TravelPercentage = Value;
-        break;
-    case PEDALS_AcceleratorSensor2TravelPercentage:
-        if(Value>100)
-            PedalsMonitoredValues.AcceleratorSensor2TravelPercentage = 0;
-        else
-            PedalsMonitoredValues.AcceleratorSensor2TravelPercentage = Value;
-        break;
-    case PEDALS_BrakeSensor1Voltage:
-        PedalsMonitoredValues.BrakeSensor1Voltage = Value;
-        break;
-    case PEDALS_BrakeSensor2Voltage:
-        PedalsMonitoredValues.BrakeSensor2Voltage = Value;
-        break;
-    case PEDALS_BrakeSensor1TravelPercentage:
-        if(Value>100)
-            PedalsMonitoredValues.BrakeSensor1TravelPercentage = 0;
-        else
-            PedalsMonitoredValues.BrakeSensor1TravelPercentage = Value;
-        break;
-    case PEDALS_BrakeSensor2TravelPercentage:
-        if(Value>100)
-            PedalsMonitoredValues.BrakeSensor2TravelPercentage = 0;
-        else
-            PedalsMonitoredValues.BrakeSensor2TravelPercentage = Value;
-        break;
-    case PEDALS_PressureSensorVoltage:
-        if(Value>500)
-            PedalsMonitoredValues.PressureSensorVoltage = 0;
-        else
-            PedalsMonitoredValues.PressureSensorVoltage = Value;
-        break;
-    case PEDALS_PressureSensorBars:
-        PedalsMonitoredValues.PressureSensorBars = Value;
-        break;
-    case PEDALS_Accel_Sensor1_ShortToGnd:
-        PedalsMonitoredValues.Accel_Sensor1_ShortToGnd = Value;
-        break;
-    case PEDALS_Accel_Sensor1_ShortToVcc:
-        PedalsMonitoredValues.Accel_Sensor1_ShortToVcc = Value;
-        break;
-    case PEDALS_Accel_Sensor1_OutOfRangeOutput:
-        PedalsMonitoredValues.Accel_Sensor1_OutOfRangeOutput = Value;
-        break;
-    case PEDALS_Accel_Sensor2_ShortToGnd:
-        PedalsMonitoredValues.Accel_Sensor2_ShortToGnd = Value;
-        break;
-    case PEDALS_Accel_Sensor2_ShortToVcc:
-        PedalsMonitoredValues.Accel_Sensor2_ShortToVcc = Value;
-        break;
-    case PEDALS_Accel_Sensor2_OutOfRangeOutput:
-        PedalsMonitoredValues.Accel_Sensor2_OutOfRangeOutput = Value;
-        break;
-    case PEDALS_Accel_Implausibility:
-        PedalsMonitoredValues.Accel_Implausibility = Value;
-        break;
-    case PEDALS_Brake_Sensor1_ShortToGnd:
-        PedalsMonitoredValues.Brake_Sensor1_ShortToGnd = Value;
-        break;
-    case PEDALS_Brake_Sensor1_ShortToVcc:
-        PedalsMonitoredValues.Brake_Sensor1_ShortToVcc = Value;
-        break;
-    case PEDALS_Brake_Sensor1_OutOfRangeOutput:
-        PedalsMonitoredValues.Brake_Sensor1_OutOfRangeOutput = Value;
-        break;
-    case PEDALS_Brake_Sensor2_ShortToGnd:
-        PedalsMonitoredValues.Brake_Sensor2_ShortToGnd = Value;
-        break;
-    case PEDALS_Brake_Sensor2_ShortToVcc:
-        PedalsMonitoredValues.Brake_Sensor2_ShortToVcc = Value;
-        break;
-    case PEDALS_Brake_Sensor2_OutOfRangeOutput:
-        PedalsMonitoredValues.Brake_Sensor2_OutOfRangeOutput = Value;
-        break;
-    case PEDALS_Brake_Implausibility:
-        PedalsMonitoredValues.Brake_Implausibility = Value;
-        break;
-    case TSAC_ChargerCommand:
-        TsacMonitoredvalues.ChargerCommand = Value;
-        break;
-    case TSAC_DesiredChargingCurrent:
-        if(Value > 320)
-            TsacMonitoredvalues.DesiredChargingCurrent = 0;
-        else
-            TsacMonitoredvalues.DesiredChargingCurrent = Value;
-        break;
-    case TSAC_DesiredChargingVoltage:
-        if(Value > 1008)
-            TsacMonitoredvalues.DesiredChargingVoltage = 0;
-        else
-            TsacMonitoredvalues.DesiredChargingVoltage = Value;
-        break;
-    //INVERTERS
-    case INVERTERS_LeftInverterTemperature:
-        InvertersMonitoredValues.LeftInverterTemperature = Value;
-        break;
-    case INVERTERS_LeftMotorTemperature:
-        InvertersMonitoredValues.LeftMotorTemperature = Value;
-        break;
-    case INVERTERS_LeftInverterInputVoltage:
-        if(Value>1800)
-            InvertersMonitoredValues.LeftInverterInputVoltage = 0;
-        else
-            InvertersMonitoredValues.LeftInverterInputVoltage = Value;
-        break;
-    case INVERTERS_LeftInverterCurrent:
-        if(Value>4000)
-            InvertersMonitoredValues.LeftInverterCurrent = 0;
-        else
-            InvertersMonitoredValues.LeftInverterCurrent = Value;
-        break;
-    case INVERTERS_LeftMotorRpm:
-        if(Value>6000)
-            InvertersMonitoredValues.LeftMotorRpm = 0;
-        else
-            InvertersMonitoredValues.LeftMotorRpm = Value;
-        break;
-    case INVERTERS_LeftMotorSpeedKmh:
-        InvertersMonitoredValues.LeftMotorSpeedKmh = Value;
-        break;
-    case INVERTERS_LeftInverterThrottle:
-        if(Value>250)
-            InvertersMonitoredValues.LeftInverterThrottle = 0;
-        else
-            InvertersMonitoredValues.LeftInverterThrottle = Value;
-        break;
-    case INVERTERS_LeftInverterThrottleFeedback:
-        if(Value>250)
-            InvertersMonitoredValues.LeftInverterThrottleFeedback = 0;
-        else
-            InvertersMonitoredValues.LeftInverterThrottleFeedback = Value;
-        break;
-    case INVERTERS_RightInverterTemperature:
-        InvertersMonitoredValues.RightInverterTemperature = Value;
-        break;
-    case INVERTERS_RightMotorTemperature:
-        InvertersMonitoredValues.RightMotorTemperature = Value;
-        break;
-    case INVERTERS_RightInverterInputVoltage:
-        if(Value>1800)
-            InvertersMonitoredValues.RightInverterInputVoltage = 0;
-        else
-            InvertersMonitoredValues.RightInverterInputVoltage = Value;
-        break;
-    case INVERTERS_RightInverterCurrent:
-        if(Value>4000)
-            InvertersMonitoredValues.RightInverterCurrent = 0;
-        else
-            InvertersMonitoredValues.RightInverterCurrent = Value;
-        break;
-    case INVERTERS_RightMotorRpm:
-        if(Value>6000)
-            InvertersMonitoredValues.RightMotorRpm = 0;
-        else
-            InvertersMonitoredValues.RightMotorRpm = Value;
-        break;
-    case INVERTERS_RightMotorSpeedKmh:
-        InvertersMonitoredValues.RightMotorSpeedKmh = Value;
-        break;
-    case INVERTERS_RightInverterSentThrottle:
-        if(Value>250)
-            InvertersMonitoredValues.RightInverterSentThrottle = 0;
-        else
-            InvertersMonitoredValues.RightInverterSentThrottle = Value;
-        break;
-    case INVERTERS_RightInverterThrottleFeedback:
-        if(Value>250)
-            InvertersMonitoredValues.RightInverterThrottleFeedback = 0;
-        else
-            InvertersMonitoredValues.RightInverterThrottleFeedback = Value;
-        break;
-    case INVERTERS_IsCarInReverse:
-        InvertersMonitoredValues.IsCarInReverse = Value;
-        break;
-    case INVERTERS_IsCarRunning:
-        InvertersMonitoredValues.IsCarRunning = Value;
-        break;
-    //DASHBOARD
-    case DASHBOARD_ActivationButtonPressed:
-        DashboardMonitoredValues.ActivationButtonPressed = Value;
-        break;
-    case DASHBOARD_CarReverseCommandPressed:
-        DashboardMonitoredValues.CarReverseCommandPressed = Value;
-        break;
-    case DASHBOARD_IsDisplayWorking:
-        DashboardMonitoredValues.IsDisplayWorking = Value;
-        break;
-    case DASHBOARD_IsSegmentsDriverWorking:
-        DashboardMonitoredValues.IsSegmentsDriverWorking = Value;
-        break;
-    //COMMUNICATIONS
-    case COMMUNICATIONS_IsInverterVcuSimulated:
-        CommunicationMonitoredValues.IsInverterVcuSimulated = Value;
-        break;
-    case COMMUNICATIONS_IsTsacVcuSimulated:
-        CommunicationMonitoredValues.IsTsacVcuSimulated = Value;
-        break;
-    case COMMUNICATIONS_IsDashboardVcuSimulated:
-        CommunicationMonitoredValues.IsDashboardVcuSimulated = Value;
-        break;
-    case COMMUNICATIONS_IsPedalsVcuSimulated:
-        CommunicationMonitoredValues.IsPedalsVcuSimulated = Value;
-        break;
-    default:
-        break;
+            MonitoredValues.TsacMonitoredValues.CellVoltage[index].valueUart = 1023;
     }
 }
-
-void CarData_SetCellVoltage(uint16_t Value, uint16_t index){
-    //qDebug()<<"Index: "<<index<<" CellVoltage: "<<Value;
+void UartMessaging_SetCellVoltageErrors(bool Value, uint16_t index){
+    //NU SCOATE IF-URILE: SUNT DE SIGURANTA
     if(index < CELLS_NUM)
-        TsacMonitoredvalues.CellVoltage[index] = Value;
+        MonitoredValues.TsacMonitoredValues.CellVoltage[index].errorUart = Value;
 }
-void CarData_SetCellVoltageErrors(bool Value, uint16_t index){
-    if(index < CELLS_NUM)
-        TsacMonitoredvalues.CellVoltageErrors[index] = Value;
-}
-void CarData_SetCellTemperature(uint16_t Value, uint16_t index){
-    //qDebug()<<"Index: "<<index<<" CellTemperature: "<<Value;
-    if(index < THERMISTOR_NUM)
-        TsacMonitoredvalues.ThermistorTemperature[index] = Value;
-}
-void CarData_SetCellTemperatureErrors(bool Value, uint16_t index){
-    if(index < THERMISTOR_NUM)
-        TsacMonitoredvalues.ThermistorTemperatureErrors[index] = Value;
-}
-
-uint32_t CarData_ReadValue(MonitoredValue_t DesiredValueType){
-
-    switch(DesiredValueType){
-    case TSAC_MedianCellTemperature:
-        return TsacMonitoredvalues.MedianCellTemperature;
-    case TSAC_HighestCellTemperature:
-        return TsacMonitoredvalues.HighestCellTemperature;
-    case TSAC_LowestCellTemperature:
-        return TsacMonitoredvalues.LowestCellTemperature;
-    case TSAC_MedianCellVoltage:
-        return TsacMonitoredvalues.MedianCellVoltage;
-    case TSAC_HighestCellVoltage:
-        return TsacMonitoredvalues.HighestCellVoltage;
-    case TSAC_LowestCellVoltage:
-        return TsacMonitoredvalues.LowestCellVoltage;
-    case TSAC_OverallVoltage:
-        return TsacMonitoredvalues.OverallVoltage;
-    case TSAC_OverallCurrent:
-        return TsacMonitoredvalues.OverallCurrent;
-    case TSAC_IsAmsSafe:
-        return TsacMonitoredvalues.AmsError;
-    case TSAC_IsTransceiverWorking:
-        return TsacMonitoredvalues.TransceiverError;
-    case TSAC_IsShuntWorking:
-        return TsacMonitoredvalues.ShuntError;
-    case TSAC_IsBms0Working:
-        return TsacMonitoredvalues.Bms0Error;
-    case TSAC_IsBms1Working:
-        return TsacMonitoredvalues.Bms1Error;
-    case TSAC_IsCharging:
-        return TsacMonitoredvalues.ChargerStatus;
-    case TSAC_AreThermistorsWorking:
-        return TsacMonitoredvalues.ThermistorsError;
-    case TSAC_ReportedChargingCurrent:
-        return TsacMonitoredvalues.ReportedChargingCurrent;
-    case TSAC_ReportedChargingVoltage:
-        return TsacMonitoredvalues.ReportedChargingVoltage;
-    case TSAC_ChargerCommand:
-        return TsacMonitoredvalues.ChargerCommand;
-    case TSAC_DesiredChargingCurrent:
-        return TsacMonitoredvalues.DesiredChargingCurrent;
-    case TSAC_DesiredChargingVoltage:
-        return TsacMonitoredvalues.DesiredChargingVoltage;
-    case PEDALS_AcceleratorSensor1Voltage:
-        return PedalsMonitoredValues.AcceleratorSensor1Voltage;
-    case PEDALS_AcceleratorSensor2Voltage:
-        return PedalsMonitoredValues.AcceleratorSensor2Voltage;
-    case PEDALS_AcceleratorSensor1TravelPercentage:
-        return PedalsMonitoredValues.AcceleratorSensor1TravelPercentage;
-    case PEDALS_AcceleratorSensor2TravelPercentage:
-        return PedalsMonitoredValues.AcceleratorSensor2TravelPercentage;
-    case PEDALS_BrakeSensor1Voltage:
-        return PedalsMonitoredValues.BrakeSensor1Voltage;
-    case PEDALS_BrakeSensor2Voltage:
-        return PedalsMonitoredValues.BrakeSensor2Voltage;
-    case PEDALS_BrakeSensor1TravelPercentage:
-        return PedalsMonitoredValues.BrakeSensor1TravelPercentage;
-    case PEDALS_BrakeSensor2TravelPercentage:
-        return PedalsMonitoredValues.BrakeSensor2TravelPercentage;
-    case PEDALS_PressureSensorVoltage:
-        return PedalsMonitoredValues.PressureSensorVoltage;
-    case PEDALS_PressureSensorBars:
-        return PedalsMonitoredValues.PressureSensorBars;
-    case PEDALS_Accel_Sensor1_ShortToGnd:
-        return PedalsMonitoredValues.Accel_Sensor1_ShortToGnd;
-    case PEDALS_Accel_Sensor1_ShortToVcc:
-        return PedalsMonitoredValues.Accel_Sensor1_ShortToVcc;
-    case PEDALS_Accel_Sensor1_OutOfRangeOutput:
-        return PedalsMonitoredValues.Accel_Sensor1_OutOfRangeOutput;
-    case PEDALS_Accel_Sensor2_ShortToGnd:
-        return PedalsMonitoredValues.Accel_Sensor2_ShortToGnd;
-    case PEDALS_Accel_Sensor2_ShortToVcc:
-        return PedalsMonitoredValues.Accel_Sensor2_ShortToVcc;
-    case PEDALS_Accel_Sensor2_OutOfRangeOutput:
-        return PedalsMonitoredValues.Accel_Sensor2_OutOfRangeOutput;
-    case PEDALS_Accel_Implausibility:
-        return PedalsMonitoredValues.Accel_Implausibility;
-    case PEDALS_Brake_Sensor1_ShortToGnd:
-        return PedalsMonitoredValues.Brake_Sensor1_ShortToGnd;
-    case PEDALS_Brake_Sensor1_ShortToVcc:
-        return PedalsMonitoredValues.Brake_Sensor1_ShortToVcc;
-    case PEDALS_Brake_Sensor1_OutOfRangeOutput:
-        return PedalsMonitoredValues.Brake_Sensor1_OutOfRangeOutput;
-    case PEDALS_Brake_Sensor2_ShortToGnd:
-        return PedalsMonitoredValues.Brake_Sensor2_ShortToGnd;
-    case PEDALS_Brake_Sensor2_ShortToVcc:
-        return PedalsMonitoredValues.Brake_Sensor2_ShortToVcc;
-    case PEDALS_Brake_Sensor2_OutOfRangeOutput:
-        return PedalsMonitoredValues.Brake_Sensor2_OutOfRangeOutput;
-    case PEDALS_Brake_Implausibility:
-        return PedalsMonitoredValues.Brake_Implausibility;
-    case INVERTERS_LeftInverterTemperature:
-        return InvertersMonitoredValues.LeftInverterTemperature;
-    case INVERTERS_LeftMotorTemperature:
-        return InvertersMonitoredValues.LeftMotorTemperature;
-    case INVERTERS_LeftInverterInputVoltage:
-        return InvertersMonitoredValues.LeftInverterInputVoltage;
-    case INVERTERS_LeftInverterCurrent:
-        return InvertersMonitoredValues.LeftInverterCurrent;
-    case INVERTERS_LeftMotorRpm:
-        return InvertersMonitoredValues.LeftMotorRpm;
-    case INVERTERS_LeftMotorSpeedKmh:
-        return InvertersMonitoredValues.LeftMotorSpeedKmh;
-    case INVERTERS_LeftInverterThrottle:
-        return InvertersMonitoredValues.LeftInverterThrottle;
-    case INVERTERS_LeftInverterThrottleFeedback:
-        return InvertersMonitoredValues.LeftInverterThrottleFeedback;
-    case INVERTERS_RightInverterTemperature:
-        return InvertersMonitoredValues.RightInverterTemperature;
-    case INVERTERS_RightMotorTemperature:
-        return InvertersMonitoredValues.RightMotorTemperature;
-    case INVERTERS_RightInverterInputVoltage:
-        return InvertersMonitoredValues.RightInverterInputVoltage;
-    case INVERTERS_RightInverterCurrent:
-        return InvertersMonitoredValues.RightInverterCurrent;
-    case INVERTERS_RightMotorRpm:
-        return InvertersMonitoredValues.RightMotorRpm;
-    case INVERTERS_RightMotorSpeedKmh:
-        return InvertersMonitoredValues.RightMotorSpeedKmh;
-    case INVERTERS_RightInverterSentThrottle:
-        return InvertersMonitoredValues.RightInverterSentThrottle;
-    case INVERTERS_RightInverterThrottleFeedback:
-        return InvertersMonitoredValues.RightInverterThrottleFeedback;
-    case INVERTERS_IsCarInReverse:
-        return InvertersMonitoredValues.IsCarInReverse;
-    case INVERTERS_IsCarRunning:
-        return InvertersMonitoredValues.IsCarRunning;
-    case DASHBOARD_ActivationButtonPressed:
-        return DashboardMonitoredValues.ActivationButtonPressed;
-    case DASHBOARD_CarReverseCommandPressed:
-        return DashboardMonitoredValues.CarReverseCommandPressed;
-    case DASHBOARD_IsDisplayWorking:
-        return DashboardMonitoredValues.IsDisplayWorking;
-    case DASHBOARD_IsSegmentsDriverWorking:
-        return DashboardMonitoredValues.IsSegmentsDriverWorking;
-    //COMMUNICATIONS
-    case COMMUNICATIONS_IsInverterVcuSimulated:
-        return CommunicationMonitoredValues.IsInverterVcuSimulated;
-    case COMMUNICATIONS_IsTsacVcuSimulated:
-        return CommunicationMonitoredValues.IsTsacVcuSimulated;
-    case COMMUNICATIONS_IsDashboardVcuSimulated:
-        return CommunicationMonitoredValues.IsDashboardVcuSimulated;
-    case COMMUNICATIONS_IsPedalsVcuSimulated:
-        return CommunicationMonitoredValues.IsPedalsVcuSimulated;
-    default:
-        return 0;
+void UartMessaging_SetCellTemperature(uint16_t Value, uint16_t index){
+    //qDebug()<<"Index: "<<index<<" Value: "<<Value;
+    //NU SCOATE IF-URILE: SUNT DE SIGURANTA
+    if(index < THERMISTOR_NUM){
+        if(Value <= 1023)
+            MonitoredValues.TsacMonitoredValues.ThermistorTemperature[index].valueUart = Value;
+        else
+            MonitoredValues.TsacMonitoredValues.ThermistorTemperature[index].valueUart = 1023;
+        //qDebug()<<MonitoredValues.TsacMonitoredValues.ThermistorTemperature[index].valueUart;
     }
-    return 0;
 }
-
-uint16_t CarData_ReadCellVoltage(uint16_t index){
-    if(index < CELLS_NUM)
-        return TsacMonitoredvalues.CellVoltage[index];
-    else
-        return 0;
-}
-bool CarData_ReadCellVoltageErrors(uint16_t index){
-    if(index < CELLS_NUM)
-        return TsacMonitoredvalues.CellVoltageErrors[index];
-    else
-        return 0;
-}
-uint16_t CarData_ReadCellTemperature(uint16_t index){
+void UartMessaging_SetCellTemperatureErrors(bool Value, uint16_t index){
+    //NU SCOATE IF-URILE: SUNT DE SIGURANTA
     if(index < THERMISTOR_NUM)
-        return TsacMonitoredvalues.ThermistorTemperature[index];
-    else
-        return 0;
-}
-bool CarData_ReadCellTemperatureErrors(uint16_t index){
-    if(index < THERMISTOR_NUM)
-        return TsacMonitoredvalues.ThermistorTemperatureErrors[index];
-    else
-        return 0;
+        MonitoredValues.TsacMonitoredValues.ThermistorTemperature[index].errorUart = Value;
 }
 
 #ifdef __cplusplus
