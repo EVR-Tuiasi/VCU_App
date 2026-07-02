@@ -595,14 +595,12 @@ bool UartMessaging_ReadCellTemperatureErrors(uint16_t index){
 }
 
 void UartMessaging_SetCellVoltage(uint16_t Value, uint16_t index){
-    //qDebug()<<"Index: "<<index<<" Value: "<<Value;
     //NU SCOATE IF-URILE: SUNT DE SIGURANTA
     if(index < CELLS_NUM){
         if(Value <= 1023)
             MonitoredValues.TsacMonitoredValues.CellVoltage[index].valueUart = Value;
         else
             MonitoredValues.TsacMonitoredValues.CellVoltage[index].valueUart = 1023;
-        //qDebug()<<MonitoredValues.TsacMonitoredValues.CellVoltage[index].valueUart;
     }
 }
 void UartMessaging_SetCellVoltageErrors(bool Value, uint16_t index){
@@ -611,12 +609,14 @@ void UartMessaging_SetCellVoltageErrors(bool Value, uint16_t index){
         MonitoredValues.TsacMonitoredValues.CellVoltage[index].errorUart = Value;
 }
 void UartMessaging_SetCellTemperature(uint16_t Value, uint16_t index){
+    //qDebug()<<"Index: "<<index<<" Value: "<<Value;
     //NU SCOATE IF-URILE: SUNT DE SIGURANTA
     if(index < THERMISTOR_NUM){
         if(Value <= 1023)
             MonitoredValues.TsacMonitoredValues.ThermistorTemperature[index].valueUart = Value;
         else
             MonitoredValues.TsacMonitoredValues.ThermistorTemperature[index].valueUart = 1023;
+        //qDebug()<<MonitoredValues.TsacMonitoredValues.ThermistorTemperature[index].valueUart;
     }
 }
 void UartMessaging_SetCellTemperatureErrors(bool Value, uint16_t index){
