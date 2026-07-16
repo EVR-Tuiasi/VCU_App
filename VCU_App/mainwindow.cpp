@@ -75,6 +75,7 @@ void MainWindow::on_comboBox_BaudRate_currentIndexChanged(int BaudRate_index)
 
 void MainWindow::on_connectButton_toggled(bool connected)
 {
+    UartMessaging_SetPortName(ui->Com_Port->currentText());
     UartMessaging_SetConnection(connected);
     if(connected)
     {
@@ -82,7 +83,9 @@ void MainWindow::on_connectButton_toggled(bool connected)
 
     }
     else
+    {
         ui->connectButton->setText("Connect");
+    }
 }
 
 

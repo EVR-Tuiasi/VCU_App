@@ -1,6 +1,8 @@
 #ifndef UART_MESSAGING_H
 #define UART_MESSAGING_H
 
+#include <qobject.h>
+#include <string>
 #ifdef __cplusplus
 extern "C"{
 #endif
@@ -12,7 +14,6 @@ extern "C"{
 * 2) needed interfaces from external units
 * 3) internal and external interfaces from this unit
 ==================================================================================================*/
-
 #include "stdint.h"
 #include "CarData.h"
 
@@ -29,7 +30,7 @@ typedef enum{
 typedef struct{
     bool shouldPortBeConnected;
     uint32_t desiredBaudRate;
-    char port[6];
+    QString port;
 }ComPortSettings_t;
 /*==================================================================================================
 *                                       LOCAL MACROS
@@ -73,7 +74,7 @@ static void sendTest();
 
 void UartMessaging_SetConnection(bool connected);
 void UartMessaging_SetBaudRate(int BaudRate);
-void UartMessaging_SetPortName(const char &port);
+void UartMessaging_SetPortName(QString port);
 /*==================================================================================================
 *                                       GLOBAL FUNCTIONS
 ==================================================================================================*/
