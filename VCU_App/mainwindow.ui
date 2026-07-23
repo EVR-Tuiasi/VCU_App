@@ -2435,11 +2435,7 @@
                </layout>
               </item>
               <item>
-               <widget class="QQuickWidget" name="quickWidget_3">
-                <property name="resizeMode">
-                 <enum>QQuickWidget::ResizeMode::SizeRootObjectToView</enum>
-                </property>
-               </widget>
+               <widget class="Graph" name="widget_CellVoltages" native="true"/>
               </item>
              </layout>
             </widget>
@@ -35246,6 +35242,12 @@
    <class>QQuickWidget</class>
    <extends>QWidget</extends>
    <header location="global">QtQuickWidgets/QQuickWidget</header>
+  </customwidget>
+  <customwidget>
+   <class>Graph</class>
+   <extends>QWidget</extends>
+   <header>Graph.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
