@@ -34,7 +34,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QFrame" name="frame">
+     <widget class="QFrame" name="Header">
       <property name="frameShape">
        <enum>QFrame::Shape::StyledPanel</enum>
       </property>
@@ -68,18 +68,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="Com_Port">
-         <item>
-          <property name="text">
-           <string>COM 0</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>COM 1</string>
-          </property>
-         </item>
-        </widget>
+        <widget class="QComboBox" name="Com_Port"/>
        </item>
        <item>
         <widget class="QLabel" name="label_baudRate">
@@ -188,9 +177,9 @@
        <enum>QTabWidget::TabShape::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
-      <widget class="QWidget" name="tab_general">
+      <widget class="QWidget" name="tab_General">
        <property name="palette">
         <palette>
          <active>
@@ -666,7 +655,7 @@
        <attribute name="title">
         <string>General</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,2,1,1">
+       <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,2,1,1">
         <property name="spacing">
          <number>2</number>
         </property>
@@ -1159,7 +1148,7 @@
           <property name="frameShape">
            <enum>QFrame::Shape::Box</enum>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_tsac" stretch="0,10,10,10">
+          <layout class="QVBoxLayout" name="verticalLayout_tsac" stretch="1,10,10,10">
            <property name="spacing">
             <number>3</number>
            </property>
@@ -1176,22 +1165,33 @@
             <number>3</number>
            </property>
            <item>
-            <widget class="QLabel" name="labelTSAC">
-             <property name="font">
-              <font>
-               <pointsize>11</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>TSAC</string>
-             </property>
-             <property name="textFormat">
-              <enum>Qt::TextFormat::PlainText</enum>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignmentFlag::AlignCenter</set>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="Tsac_Checkbox" stretch="1,0">
+             <item>
+              <widget class="QLabel" name="labelTSAC">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>TSAC</string>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::TextFormat::PlainText</enum>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="checkBox">
+               <property name="text">
+                <string>Simulate</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
             <widget class="QFrame" name="frame_cellTemperatures">
@@ -1687,7 +1687,7 @@
                <number>2</number>
               </property>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,0">
+               <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1">
                 <item>
                  <widget class="QLabel" name="label_7">
                   <property name="text">
@@ -1695,13 +1695,6 @@
                   </property>
                   <property name="textFormat">
                    <enum>Qt::TextFormat::PlainText</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="checkBox">
-                  <property name="text">
-                   <string>Simulate</string>
                   </property>
                  </widget>
                 </item>
@@ -2311,7 +2304,7 @@
                <number>2</number>
               </property>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,0">
+               <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1">
                 <item>
                  <widget class="QLabel" name="label_15">
                   <property name="text">
@@ -2319,13 +2312,6 @@
                   </property>
                   <property name="textFormat">
                    <enum>Qt::TextFormat::PlainText</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="checkBox_3">
-                  <property name="text">
-                   <string>Simulate</string>
                   </property>
                  </widget>
                 </item>
@@ -2938,7 +2924,7 @@
                <number>2</number>
               </property>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,0">
+               <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1">
                 <item>
                  <widget class="QLabel" name="label_19">
                   <property name="text">
@@ -2946,13 +2932,6 @@
                   </property>
                   <property name="textFormat">
                    <enum>Qt::TextFormat::PlainText</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="checkBox_4">
-                  <property name="text">
-                   <string>Simulate</string>
                   </property>
                  </widget>
                 </item>
@@ -13201,7 +13180,7 @@
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_pedals" stretch="1,1">
+           <layout class="QHBoxLayout" name="horizontalLayout_pedals" stretch="0,0">
             <property name="spacing">
              <number>2</number>
             </property>
@@ -13682,7 +13661,7 @@
               <property name="frameShape">
                <enum>QFrame::Shape::Panel</enum>
               </property>
-              <layout class="QVBoxLayout" name="verticalLayout_accel" stretch="0,10,10">
+              <layout class="QVBoxLayout" name="verticalLayout_accel" stretch="1,10,10">
                <property name="spacing">
                 <number>3</number>
                </property>
@@ -13699,19 +13678,30 @@
                 <number>3</number>
                </property>
                <item>
-                <widget class="QLabel" name="label_2">
-                 <property name="font">
-                  <font>
-                   <pointsize>11</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Accelerator pedal</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignmentFlag::AlignCenter</set>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="Accelerator_Checkbox" stretch="1,0">
+                 <item>
+                  <widget class="QLabel" name="label_2">
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Accelerator pedal</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="checkBox_5">
+                   <property name="text">
+                    <string>Simulate</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
                <item>
                 <widget class="QFrame" name="frame_voltage">
@@ -14207,7 +14197,7 @@
                    <number>3</number>
                   </property>
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="1,0">
+                   <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="1">
                     <item>
                      <widget class="QLabel" name="label_22">
                       <property name="text">
@@ -14215,13 +14205,6 @@
                       </property>
                       <property name="textFormat">
                        <enum>Qt::TextFormat::PlainText</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QCheckBox" name="checkBox_5">
-                      <property name="text">
-                       <string>Simulate</string>
                       </property>
                      </widget>
                     </item>
@@ -14807,7 +14790,7 @@
                    <number>3</number>
                   </property>
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="1,0">
+                   <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="1">
                     <item>
                      <widget class="QLabel" name="label_25">
                       <property name="text">
@@ -14815,13 +14798,6 @@
                       </property>
                       <property name="textFormat">
                        <enum>Qt::TextFormat::PlainText</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QCheckBox" name="checkBox_6">
-                      <property name="text">
-                       <string>Simulate</string>
                       </property>
                      </widget>
                     </item>
@@ -15410,19 +15386,30 @@
                 <number>3</number>
                </property>
                <item>
-                <widget class="QLabel" name="label_3">
-                 <property name="font">
-                  <font>
-                   <pointsize>11</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Brake pedal</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignmentFlag::AlignCenter</set>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="Brake_Checkbox" stretch="1,0">
+                 <item>
+                  <widget class="QLabel" name="label_3">
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Brake pedal</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="checkBox_7">
+                   <property name="text">
+                    <string>Simulate</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
                <item>
                 <widget class="QFrame" name="frame_voltage_2">
@@ -15918,7 +15905,7 @@
                    <number>3</number>
                   </property>
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="1,0">
+                   <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="1">
                     <item>
                      <widget class="QLabel" name="label_28">
                       <property name="text">
@@ -15926,13 +15913,6 @@
                       </property>
                       <property name="textFormat">
                        <enum>Qt::TextFormat::PlainText</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QCheckBox" name="checkBox_7">
-                      <property name="text">
-                       <string>Simulate</string>
                       </property>
                      </widget>
                     </item>
@@ -16535,7 +16515,7 @@
                    <number>3</number>
                   </property>
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_19" stretch="1,0">
+                   <layout class="QHBoxLayout" name="horizontalLayout_19" stretch="1">
                     <item>
                      <widget class="QLabel" name="label_34">
                       <property name="text">
@@ -16543,13 +16523,6 @@
                       </property>
                       <property name="textFormat">
                        <enum>Qt::TextFormat::PlainText</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QCheckBox" name="checkBox_9">
-                      <property name="text">
-                       <string>Simulate</string>
                       </property>
                      </widget>
                     </item>
@@ -17168,22 +17141,33 @@
             <number>3</number>
            </property>
            <item>
-            <widget class="QLabel" name="label_leftInverter">
-             <property name="font">
-              <font>
-               <pointsize>11</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Left inverter</string>
-             </property>
-             <property name="textFormat">
-              <enum>Qt::TextFormat::PlainText</enum>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignmentFlag::AlignCenter</set>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="leftInverter_Checkbox" stretch="1,0">
+             <item>
+              <widget class="QLabel" name="label_leftInverter">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Left inverter</string>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::TextFormat::PlainText</enum>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="checkBox_13">
+               <property name="text">
+                <string>Simulate</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
             <widget class="QFrame" name="frame_leftInverterTemp">
@@ -17679,7 +17663,7 @@
                <number>2</number>
               </property>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_27" stretch="1,0">
+               <layout class="QHBoxLayout" name="horizontalLayout_27" stretch="1">
                 <item>
                  <widget class="QLabel" name="label_46">
                   <property name="palette">
@@ -18156,13 +18140,6 @@
                   </property>
                   <property name="textFormat">
                    <enum>Qt::TextFormat::PlainText</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="checkBox_13">
-                  <property name="text">
-                   <string>Simulate</string>
                   </property>
                  </widget>
                 </item>
@@ -18748,7 +18725,7 @@
                <number>2</number>
               </property>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_25" stretch="1,0">
+               <layout class="QHBoxLayout" name="horizontalLayout_25" stretch="1">
                 <item>
                  <widget class="QLabel" name="label_43">
                   <property name="text">
@@ -18756,13 +18733,6 @@
                   </property>
                   <property name="textFormat">
                    <enum>Qt::TextFormat::PlainText</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="checkBox_12">
-                  <property name="text">
-                   <string>Simulate</string>
                   </property>
                  </widget>
                 </item>
@@ -19348,7 +19318,7 @@
                <number>2</number>
               </property>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_23" stretch="1,0">
+               <layout class="QHBoxLayout" name="horizontalLayout_23" stretch="1">
                 <item>
                  <widget class="QLabel" name="label_40">
                   <property name="text">
@@ -19356,13 +19326,6 @@
                   </property>
                   <property name="textFormat">
                    <enum>Qt::TextFormat::PlainText</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="checkBox_11">
-                  <property name="text">
-                   <string>Simulate</string>
                   </property>
                  </widget>
                 </item>
@@ -19948,7 +19911,7 @@
                <number>2</number>
               </property>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_17" stretch="1,0">
+               <layout class="QHBoxLayout" name="horizontalLayout_17" stretch="1">
                 <item>
                  <widget class="QLabel" name="label_31">
                   <property name="text">
@@ -19956,13 +19919,6 @@
                   </property>
                   <property name="textFormat">
                    <enum>Qt::TextFormat::PlainText</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="checkBox_8">
-                  <property name="text">
-                   <string>Simulate</string>
                   </property>
                  </widget>
                 </item>
@@ -20551,22 +20507,33 @@
             <number>3</number>
            </property>
            <item>
-            <widget class="QLabel" name="label_rightInverter">
-             <property name="font">
-              <font>
-               <pointsize>11</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Right inverter</string>
-             </property>
-             <property name="textFormat">
-              <enum>Qt::TextFormat::PlainText</enum>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignmentFlag::AlignCenter</set>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="rightInverter_Checkbox" stretch="1,0">
+             <item>
+              <widget class="QLabel" name="label_rightInverter">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Right inverter</string>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::TextFormat::PlainText</enum>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="checkBox_14">
+               <property name="text">
+                <string>Simulate</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
             <widget class="QFrame" name="frame_rightInverterTemp">
@@ -21062,7 +21029,7 @@
                <number>2</number>
               </property>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_29" stretch="1,0">
+               <layout class="QHBoxLayout" name="horizontalLayout_29" stretch="1">
                 <item>
                  <widget class="QLabel" name="label_49">
                   <property name="palette">
@@ -21539,13 +21506,6 @@
                   </property>
                   <property name="textFormat">
                    <enum>Qt::TextFormat::PlainText</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="checkBox_14">
-                  <property name="text">
-                   <string>Simulate</string>
                   </property>
                  </widget>
                 </item>
@@ -22131,7 +22091,7 @@
                <number>2</number>
               </property>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_31" stretch="1,0">
+               <layout class="QHBoxLayout" name="horizontalLayout_31" stretch="1">
                 <item>
                  <widget class="QLabel" name="label_52">
                   <property name="text">
@@ -22139,13 +22099,6 @@
                   </property>
                   <property name="textFormat">
                    <enum>Qt::TextFormat::PlainText</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="checkBox_15">
-                  <property name="text">
-                   <string>Simulate</string>
                   </property>
                  </widget>
                 </item>
@@ -22731,7 +22684,7 @@
                <number>2</number>
               </property>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_33" stretch="1,0">
+               <layout class="QHBoxLayout" name="horizontalLayout_33" stretch="1">
                 <item>
                  <widget class="QLabel" name="label_55">
                   <property name="text">
@@ -22739,13 +22692,6 @@
                   </property>
                   <property name="textFormat">
                    <enum>Qt::TextFormat::PlainText</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="checkBox_16">
-                  <property name="text">
-                   <string>Simulate</string>
                   </property>
                  </widget>
                 </item>
@@ -23331,7 +23277,7 @@
                <number>2</number>
               </property>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_21" stretch="1,0">
+               <layout class="QHBoxLayout" name="horizontalLayout_21" stretch="1">
                 <item>
                  <widget class="QLabel" name="label_37">
                   <property name="text">
@@ -23339,13 +23285,6 @@
                   </property>
                   <property name="textFormat">
                    <enum>Qt::TextFormat::PlainText</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="checkBox_10">
-                  <property name="text">
-                   <string>Simulate</string>
                   </property>
                  </widget>
                 </item>
@@ -24419,22 +24358,33 @@
             <number>7</number>
            </property>
            <item>
-            <widget class="QLabel" name="label_97">
-             <property name="font">
-              <font>
-               <pointsize>11</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Overall</string>
-             </property>
-             <property name="textFormat">
-              <enum>Qt::TextFormat::PlainText</enum>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignmentFlag::AlignCenter</set>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="Overall_Checkbox" stretch="1,0">
+             <item>
+              <widget class="QLabel" name="label_97">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Overall</string>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::TextFormat::PlainText</enum>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="checkBox_21">
+               <property name="text">
+                <string>Simulate</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
             <widget class="QFrame" name="Frame_Temperature_5">
@@ -24939,7 +24889,7 @@
                   <number>11</number>
                  </property>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_45" stretch="4,1">
+                  <layout class="QHBoxLayout" name="horizontalLayout_45" stretch="4">
                    <item>
                     <widget class="QLabel" name="label_138">
                      <property name="font">
@@ -24952,13 +24902,6 @@
                      </property>
                      <property name="textFormat">
                       <enum>Qt::TextFormat::PlainText</enum>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QCheckBox" name="checkBox_21">
-                     <property name="text">
-                      <string>Simulate</string>
                      </property>
                     </widget>
                    </item>
@@ -25547,7 +25490,7 @@
                   <number>11</number>
                  </property>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_44" stretch="4,1">
+                  <layout class="QHBoxLayout" name="horizontalLayout_44" stretch="4">
                    <item>
                     <widget class="QLabel" name="label_132">
                      <property name="font">
@@ -25560,13 +25503,6 @@
                      </property>
                      <property name="textFormat">
                       <enum>Qt::TextFormat::PlainText</enum>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QCheckBox" name="checkBox_20">
-                     <property name="text">
-                      <string>Simulate</string>
                      </property>
                     </widget>
                    </item>
@@ -25672,6 +25608,12 @@
               </property>
               <item>
                <widget class="QFrame" name="verticalFrame_5">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="palette">
                  <palette>
                   <active>
@@ -26144,7 +26086,7 @@
                 <property name="autoFillBackground">
                  <bool>true</bool>
                 </property>
-                <layout class="QVBoxLayout" name="verticalLayout_60" stretch="1,1,10">
+                <layout class="QVBoxLayout" name="verticalLayout_60" stretch="0,0,10">
                  <property name="spacing">
                   <number>0</number>
                  </property>
@@ -26155,7 +26097,7 @@
                   <number>11</number>
                  </property>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_43" stretch="4,1">
+                  <layout class="QHBoxLayout" name="horizontalLayout_43" stretch="4">
                    <item>
                     <widget class="QLabel" name="label_123">
                      <property name="font">
@@ -26168,13 +26110,6 @@
                      </property>
                      <property name="textFormat">
                       <enum>Qt::TextFormat::PlainText</enum>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QCheckBox" name="checkBox_19">
-                     <property name="text">
-                      <string>Simulate</string>
                      </property>
                     </widget>
                    </item>
@@ -26232,6 +26167,12 @@
                  </item>
                  <item>
                   <widget class="QQuickWidget" name="quickWidget_18">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="resizeMode">
                     <enum>QQuickWidget::ResizeMode::SizeRootObjectToView</enum>
                    </property>
@@ -33268,7 +33209,7 @@
                   <number>11</number>
                  </property>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_56" stretch="5,1">
+                  <layout class="QHBoxLayout" name="horizontalLayout_56" stretch="5,0">
                    <item>
                     <widget class="QLabel" name="label_120">
                      <property name="font">
@@ -33282,9 +33223,9 @@
                     </widget>
                    </item>
                    <item>
-                    <widget class="QCheckBox" name="checkBox_18">
+                    <widget class="QCheckBox" name="checkBox_Charging">
                      <property name="text">
-                      <string>Simulate</string>
+                      <string>Start Charging</string>
                      </property>
                     </widget>
                    </item>
@@ -33327,13 +33268,13 @@
                    <item>
                     <layout class="QVBoxLayout" name="verticalLayout_114">
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_53"/>
+                      <widget class="QLineEdit" name="LineEdit_Charging_maxVolt"/>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_54"/>
+                      <widget class="QLineEdit" name="LineEdit_Charging_maxCurrent"/>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_55"/>
+                      <widget class="QLineEdit" name="lineEdit_test"/>
                      </item>
                      <item>
                       <widget class="QLineEdit" name="lineEdit_56"/>
@@ -33343,21 +33284,30 @@
                    <item>
                     <layout class="QVBoxLayout" name="verticalLayout_115">
                      <item>
-                      <widget class="QSlider" name="horizontalSlider_43">
+                      <widget class="QSlider" name="Slider_Charging_maxVolt">
+                       <property name="maximum">
+                        <number>65535</number>
+                       </property>
                        <property name="orientation">
                         <enum>Qt::Orientation::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QSlider" name="horizontalSlider_44">
+                      <widget class="QSlider" name="Slider_Charging_maxCurrent">
+                       <property name="maximum">
+                        <number>65535</number>
+                       </property>
                        <property name="orientation">
                         <enum>Qt::Orientation::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QSlider" name="horizontalSlider_42">
+                      <widget class="QSlider" name="Slider_test">
+                       <property name="maximum">
+                        <number>1023</number>
+                       </property>
                        <property name="orientation">
                         <enum>Qt::Orientation::Horizontal</enum>
                        </property>
@@ -33375,7 +33325,10 @@
                   </layout>
                  </item>
                  <item>
-                  <widget class="QQuickWidget" name="quickWidget_21">
+                  <widget class="QQuickWidget" name="quickWidget_TSAC_Charging">
+                   <property name="autoFillBackground">
+                    <bool>true</bool>
+                   </property>
                    <property name="resizeMode">
                     <enum>QQuickWidget::ResizeMode::SizeRootObjectToView</enum>
                    </property>
@@ -35181,12 +35134,12 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="tab_Parameters">
        <attribute name="title">
         <string>Parameters</string>
        </attribute>
       </widget>
-      <widget class="QWidget" name="tab_3">
+      <widget class="QWidget" name="tab_Debug">
        <attribute name="title">
         <string>Debug</string>
        </attribute>

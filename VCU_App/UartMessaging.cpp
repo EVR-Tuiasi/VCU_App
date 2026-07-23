@@ -131,6 +131,7 @@ void UartMessaging_SetBaudRate(int BaudRate)
     settings.desiredBaudRate=BaudRate;
 }
 
+
 void UartMessaging_Update(void){
     if(!serialPort)
         serialPort = new QSerialPort();

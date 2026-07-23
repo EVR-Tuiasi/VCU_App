@@ -2,7 +2,11 @@
 #include "./ui_mainwindow.h"
 
 #include <QTimer>
-#include<QDebug>
+#include <QDebug>
+#include <QPainter>
+
+#include <QQmlComponent>
+#include <QQmlEngine>
 
 #include "CarData.h"
 #include "UartMessaging.h"
@@ -25,7 +29,11 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    qDebug() << "MainWindow constructor start";
     ui->setupUi(this);
+
+    setupSliderBindings();
+
     timer = new QTimer();
     timer->callOnTimeout(MainWindow_Update);
     timer->setTimerType(Qt::PreciseTimer);
@@ -65,8 +73,25 @@ MainWindow::MainWindow(QWidget *parent)
         for (int col_index = 0; col_index < VOLT_COLS; col_index++)
             ui->Cell_Volt_tableWidget->setItem(row_index, col_index, new QTableWidgetItem("--"));
 
+    //Graphs
+    setupGraph();
+/*   gridPixmap = QPixmap(800,300);
+    wavePixmap = QPixmap(800,300);
+    finalPixmap = QPixmap(800,300);
 
+    gridPixmap.fill(Qt::black);
+    wavePixmap.fill(Qt::transparent);
+    QPainter grid(&gridPixmap);
+
+    ui->oscilloscopeLabel->setPixmap(finalPixmap);*/
 }
+/*void MainWindow::on_ComPort_currentIndexChanged(int ComPort_index)
+{
+    if (ComPort_index >= 0)
+        UartMessaging_SetPortName(ui->Com_Port->currentText());
+    // qDebug()<<"Main: val.shouldPortBeConencted:"<<BaudRate_array[BaudRate_index];
+}*/
+
 void MainWindow::on_comboBox_BaudRate_currentIndexChanged(int BaudRate_index)
 {
     UartMessaging_SetBaudRate(BaudRate_array[BaudRate_index]);
@@ -79,10 +104,130 @@ void MainWindow::on_connectButton_toggled(bool connected)
     if(connected)
     {
         ui->connectButton->setText("Disconnect");
-
     }
     else
+    {
         ui->connectButton->setText("Connect");
+    }
+}
+
+void MainWindow::on_checkBox_Charging_toggled(bool checked)
+{
+    if (checked == 1) {
+        ui->checkBox_Charging->setText("Stop Charging");
+        WriteUartDataAtAddress(1, &MonitoredValues.TsacMonitoredValues.ChargerCommand);/*1 means charger should be charging, 0 means charger should NOT be charging */
+        //WriteUartDataAtAddress(ui->label->value(), &MonitoredValues.TsacMonitoredValues.DesiredChargingCurrent);
+        //WriteUartDataAtAddress(ui->label->value(), &MonitoredValues.TsacMonitoredValues.DesiredChargingVoltage);
+
+    } else {
+        ui->checkBox_Charging->setText("Start Charging");
+        WriteUartDataAtAddress(0, &MonitoredValues.TsacMonitoredValues.ChargerCommand);
+        WriteUartDataAtAddress(0, &MonitoredValues.TsacMonitoredValues.DesiredChargingCurrent);
+        WriteUartDataAtAddress(0, &MonitoredValues.TsacMonitoredValues.DesiredChargingVoltage);
+
+    }
+}
+
+void MainWindow::setupGraph()
+{
+    ui->quickWidget_TSAC_Charging->setResizeMode(QQuickWidget::SizeRootObjectToView);
+
+    static const char *qml = R"QML(
+import QtQuick
+import QtGraphs
+
+
+    GraphsView {
+        anchors.fill: parent
+        anchors.margins: 0
+
+axisX: ValueAxis {
+    min: 0
+    max: 30
+    tickInterval: 2
+    subTickCount: 1
+}
+
+        axisY: ValueAxis {
+            min: 0
+            max: 120
+            tickInterval: 20
+labelDecimals: 0
+        }
+}
+
+)QML";
+
+    auto *component = new QQmlComponent(
+        ui->quickWidget_TSAC_Charging->engine(), this);
+
+    component->setData(QByteArray(qml), QUrl());
+
+    QObject *root = component->create();
+
+    if (!root) {
+        qDebug() << "Root object was not created!";
+        return;
+    }
+
+    ui->quickWidget_TSAC_Charging->setContent(QUrl(), component, root);
+}
+
+void MainWindow::setupSliderBindings()
+{
+    SliderLink_vect = {
+        { ui->Slider_Charging_maxVolt,  ui->LineEdit_Charging_maxVolt,   10.0, 1 },
+        { ui->Slider_Charging_maxCurrent,  ui->LineEdit_Charging_maxCurrent,   10.0, 1 },
+        { ui->Slider_test,  ui->lineEdit_test,   100.0, 2 },
+    };
+
+    for (int bindingIndex=0; bindingIndex<SliderLink_vect.size();bindingIndex++)
+    {
+        SliderLink currentBinding = SliderLink_vect.at(bindingIndex);
+        connect(currentBinding.slider, &QSlider::valueChanged, this, &MainWindow::onAnySlider_ValueChanged);
+        connect(currentBinding.lineEdit, &QLineEdit::editingFinished, this, &MainWindow::onAnyLineEdit_editingFinished);
+    }
+}
+
+void MainWindow::onAnySlider_ValueChanged(int value)
+{
+    QObject *senderObject = sender();
+    for (int bindingIndex=0; bindingIndex<SliderLink_vect.size();bindingIndex++)
+    {
+        SliderLink currentBinding = SliderLink_vect.at(bindingIndex);
+        if (currentBinding.slider == senderObject)
+        {
+            double realValue = value / currentBinding.divisor;
+            currentBinding.lineEdit->setText(QString::number(realValue, 'f', currentBinding.decimals));
+        }
+    }
+}
+
+void MainWindow::onAnyLineEdit_editingFinished()
+{
+    QObject *senderObject = sender();
+    for (int bindingIndex = 0; bindingIndex < SliderLink_vect.size(); bindingIndex++)
+    {
+        SliderLink currentBinding = SliderLink_vect.at(bindingIndex);
+        if (currentBinding.lineEdit == senderObject)
+        {
+            QString enteredText = currentBinding.lineEdit->text();
+            bool conversionSucceeded = false;
+            double realValue = enteredText.toDouble(&conversionSucceeded);
+
+            if (!conversionSucceeded)
+                return;
+
+            int sliderValue = realValue * currentBinding.divisor;
+            sliderValue = qBound(currentBinding.slider->minimum(), sliderValue, currentBinding.slider->maximum());
+
+            currentBinding.slider->setValue(sliderValue);
+
+            double normalizedValue = sliderValue / currentBinding.divisor;
+            currentBinding.lineEdit->setText(QString::number(normalizedValue, 'f', currentBinding.decimals));
+            return;
+        }
+    }
 }
 
 
@@ -1188,11 +1333,5 @@ void DebugTab_Update(MainWindow* window)
     //TODO
 }
 
-/*
-    TO DO:
-1.lista simulare
-4.grafuri
-5.bms interfata
 
-*/
 
