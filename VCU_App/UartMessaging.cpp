@@ -132,6 +132,11 @@ void UartMessaging_SetBaudRate(int BaudRate)
 }
 
 
+void UartMessaging_SetPortName(QString port){
+    settings.port = port;
+}
+
+
 void UartMessaging_Update(void){
     if(!serialPort)
         serialPort = new QSerialPort();

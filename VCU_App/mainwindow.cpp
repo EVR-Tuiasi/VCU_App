@@ -11,6 +11,7 @@
 #include "CarData.h"
 #include "UartMessaging.h"
 #include <QSerialPortInfo>
+#include "Graph.h"
 
 static MainWindow* window;
 static const uint32_t BaudRate_array[11]={9600, 19200, 28800, 38400, 57600, 76800, 115200, 230400, 460800, 576000, 921600};
@@ -100,6 +101,7 @@ void MainWindow::on_comboBox_BaudRate_currentIndexChanged(int BaudRate_index)
 
 void MainWindow::on_connectButton_toggled(bool connected)
 {
+    UartMessaging_SetPortName(ui->Com_Port->currentText());
     UartMessaging_SetConnection(connected);
     if(connected)
     {
@@ -109,6 +111,7 @@ void MainWindow::on_connectButton_toggled(bool connected)
     {
         ui->connectButton->setText("Connect");
     }
+
 }
 
 void MainWindow::on_checkBox_Charging_toggled(bool checked)
@@ -1265,8 +1268,18 @@ void TsacTab_Update(MainWindow* window)
         for (int col_index = 0; col_index < TEMP_COLS; col_index++)
         {
             int idx = row_index * TEMP_COLS + col_index;
-            readValue = UartMessaging_ReadCellTemperature(idx);
 
+            readValue = UartMessaging_ReadCellTemperatureErrors(idx);
+            if(readValue == true)
+            {
+                window->ui->Cell_Temp_tableWidget->item(row_index, col_index)->setBackground(QColor("#ff4444"));
+            }
+            else
+            {
+                window->ui->Cell_Temp_tableWidget->item(row_index, col_index)->setBackground(Qt::transparent);
+            }
+
+            readValue = UartMessaging_ReadCellTemperature(idx);
             index = 0U;
             if(readValue >= 1000U)
             {
@@ -1293,31 +1306,29 @@ void TsacTab_Update(MainWindow* window)
         for (int col_index = 0; col_index < VOLT_COLS; col_index++)
         {
             int idx = row_index * VOLT_COLS + col_index;
-            readValue = UartMessaging_ReadCellTemperatureErrors(idx);
+            readValue = UartMessaging_ReadCellVoltageErrors(idx);
             if(readValue == true)
             {
                 window->ui->Cell_Volt_tableWidget->item(row_index, col_index)->setBackground(QColor("#ff4444"));
-                window->ui->Cell_Volt_tableWidget->item(row_index, col_index)->setText(QString("Error"));
             }
             else
             {
                 window->ui->Cell_Volt_tableWidget->item(row_index, col_index)->setBackground(Qt::transparent);
-                readValue = UartMessaging_ReadCellTemperature(idx);
-                index = 0U;
-                if(readValue >= 1000U)
-                {
-                    char_array[index++] = '0' + (readValue/1000U);
-                }
-                char_array[index++] = '0' + (readValue/100U)%10U;
-                char_array[index++] = '.';
-                char_array[index++] = '0' + (readValue/10U)%10U;
-                char_array[index++] = '0' + readValue%10U;
-                char_array[index++] = ' ';
-                char_array[index++] = 'V';
-                char_array[index++] = 0;
-                window->ui->Cell_Volt_tableWidget->item(row_index, col_index)->setText(QString(char_array));
             }
-
+            readValue = UartMessaging_ReadCellVoltage(idx);
+            index = 0U;
+            if(readValue >= 1000U)
+            {
+                char_array[index++] = '0' + (readValue/1000U);
+            }
+            char_array[index++] = '0' + (readValue/100U)%10U;
+            char_array[index++] = '.';
+            char_array[index++] = '0' + (readValue/10U)%10U;
+            char_array[index++] = '0' + readValue%10U;
+            char_array[index++] = ' ';
+            char_array[index++] = 'V';
+            char_array[index++] = 0;
+            window->ui->Cell_Volt_tableWidget->item(row_index, col_index)->setText(QString(char_array));
         }
     }
 

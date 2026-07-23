@@ -32,6 +32,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         UartMessaging.cpp
         CarData.h
         CarData.cpp
+        Graph.cpp
+        Graph.h
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET VCU_App APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -55,6 +57,8 @@ target_link_libraries(VCU_App PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(VCU_App PRIVATE Qt${QT_VERSION_MAJOR}::Graphs)
 target_link_libraries(VCU_App PRIVATE Qt${QT_VERSION_MAJOR}::QuickWidgets)
 target_link_libraries(VCU_App PRIVATE Qt${QT_VERSION_MAJOR}::SerialPort)
+
+target_include_directories(VCU_App PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

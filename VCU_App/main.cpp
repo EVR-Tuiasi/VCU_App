@@ -125,15 +125,14 @@ void SimulatedData_Update(void)
     for (int i = 0; i < CELLS_NUM; i++)
     {
         // STEP 1: increment
-        CellVoltage[i] += 5U;
+        CellVoltage[i] += 1U;
 
         // STEP 2: bounds check
-        if (CellVoltage[i] > 5000U)  // max 5000mV
+        if (CellVoltage[i] > 1023U)  // max 10.23V
             CellVoltage[i] = 0U;
 
         // STEP 3: simulează eroare când tensiunea e în afara ferestrei normale
-        CellVoltageErrors[i] = (CellVoltage[i] < 2500U || CellVoltage[i] > 4200U);//bool
-
+        CellVoltageErrors[i] = (((CellVoltage[i] < 250U) ? 1 : 0) || ((CellVoltage[i] > 420U) ? 1 : 0));//bool
         // STEP 4: set values
         UartMessaging_SetCellVoltage(CellVoltage[i], i);
         UartMessaging_SetCellVoltageErrors(CellVoltageErrors[i], i);
