@@ -7,6 +7,7 @@
 #include <QSlider>
 #include <QLineEdit>
 #include <QPixmap>
+#include "Graph.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -22,7 +23,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     Ui::MainWindow *ui;
+    Graph *graph;
     QTimer* timer;
+     double phase = 0.0;
 private:
     struct SliderLink {
         QSlider*   slider;

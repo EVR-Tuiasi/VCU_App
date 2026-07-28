@@ -5,8 +5,6 @@
 #include <QDebug>
 #include <QPainter>
 
-#include <QQmlComponent>
-#include <QQmlEngine>
 
 #include "CarData.h"
 #include "UartMessaging.h"
@@ -30,16 +28,28 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    qDebug() << "MainWindow constructor start";
     ui->setupUi(this);
-
-    setupSliderBindings();
-
     timer = new QTimer();
     timer->callOnTimeout(MainWindow_Update);
     timer->setTimerType(Qt::PreciseTimer);
     timer->setInterval(20);
+
+    //GRAPH
+    ui->widget_CellVoltages->setRange_Oy(0.0, 10.23);
+    connect(timer, &QTimer::timeout, this, [this]()
+            {
+                double rawValue = ReadUartDataFromAddress(
+                    &MonitoredValues.TsacMonitoredValues.HighestCellVoltage);
+
+                double voltage = rawValue / 100.0;
+                ui->widget_CellVoltages->addSample(voltage);
+                phase += 0.05;
+            });
     timer->start();
+
+    //Sliders and LineEdit
+    setupSliderBindings();
+
     //COM PORT
     const QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
     ui->Com_Port->clear();
@@ -74,18 +84,9 @@ MainWindow::MainWindow(QWidget *parent)
         for (int col_index = 0; col_index < VOLT_COLS; col_index++)
             ui->Cell_Volt_tableWidget->setItem(row_index, col_index, new QTableWidgetItem("--"));
 
-    //Graphs
-    setupGraph();
-/*   gridPixmap = QPixmap(800,300);
-    wavePixmap = QPixmap(800,300);
-    finalPixmap = QPixmap(800,300);
-
-    gridPixmap.fill(Qt::black);
-    wavePixmap.fill(Qt::transparent);
-    QPainter grid(&gridPixmap);
-
-    ui->oscilloscopeLabel->setPixmap(finalPixmap);*/
 }
+
+
 /*void MainWindow::on_ComPort_currentIndexChanged(int ComPort_index)
 {
     if (ComPort_index >= 0)
@@ -131,106 +132,60 @@ void MainWindow::on_checkBox_Charging_toggled(bool checked)
     }
 }
 
-void MainWindow::setupGraph()
-{
-    ui->quickWidget_TSAC_Charging->setResizeMode(QQuickWidget::SizeRootObjectToView);
-
-    static const char *qml = R"QML(
-import QtQuick
-import QtGraphs
-
-
-    GraphsView {
-        anchors.fill: parent
-        anchors.margins: 0
-
-axisX: ValueAxis {
-    min: 0
-    max: 30
-    tickInterval: 2
-    subTickCount: 1
-}
-
-        axisY: ValueAxis {
-            min: 0
-            max: 120
-            tickInterval: 20
-labelDecimals: 0
-        }
-}
-
-)QML";
-
-    auto *component = new QQmlComponent(
-        ui->quickWidget_TSAC_Charging->engine(), this);
-
-    component->setData(QByteArray(qml), QUrl());
-
-    QObject *root = component->create();
-
-    if (!root) {
-        qDebug() << "Root object was not created!";
-        return;
-    }
-
-    ui->quickWidget_TSAC_Charging->setContent(QUrl(), component, root);
-}
-
 void MainWindow::setupSliderBindings()
 {
     SliderLink_vect = {
         { ui->Slider_Charging_maxVolt,  ui->LineEdit_Charging_maxVolt,   10.0, 1 },
         { ui->Slider_Charging_maxCurrent,  ui->LineEdit_Charging_maxCurrent,   10.0, 1 },
         { ui->Slider_test,  ui->lineEdit_test,   100.0, 2 },
+       // { ui->Tsac_Volt_Median_Slider, ui->Tsac_Volt_Median_lineEdit, 10.0, 1}
     };
 
     for (int bindingIndex=0; bindingIndex<SliderLink_vect.size();bindingIndex++)
     {
-        SliderLink currentBinding = SliderLink_vect.at(bindingIndex);
+        const SliderLink currentBinding = SliderLink_vect.at(bindingIndex);
+
+        currentBinding.slider->setProperty("bindingIndex",bindingIndex);
+        currentBinding.lineEdit->setProperty("bindingIndex",bindingIndex);
+
         connect(currentBinding.slider, &QSlider::valueChanged, this, &MainWindow::onAnySlider_ValueChanged);
         connect(currentBinding.lineEdit, &QLineEdit::editingFinished, this, &MainWindow::onAnyLineEdit_editingFinished);
     }
 }
-
 void MainWindow::onAnySlider_ValueChanged(int value)
 {
     QObject *senderObject = sender();
-    for (int bindingIndex=0; bindingIndex<SliderLink_vect.size();bindingIndex++)
-    {
-        SliderLink currentBinding = SliderLink_vect.at(bindingIndex);
-        if (currentBinding.slider == senderObject)
-        {
-            double realValue = value / currentBinding.divisor;
-            currentBinding.lineEdit->setText(QString::number(realValue, 'f', currentBinding.decimals));
-        }
-    }
-}
+    if(!senderObject)
+        return;
+    int bindingIndex = senderObject->property("bindingIndex").toInt();
+    const SliderLink &currentBinding = SliderLink_vect.at(bindingIndex);
 
+    double realValue = value / currentBinding.divisor;
+    currentBinding.lineEdit->setText(QString::number(realValue, 'f', currentBinding.decimals));
+}
 void MainWindow::onAnyLineEdit_editingFinished()
 {
     QObject *senderObject = sender();
-    for (int bindingIndex = 0; bindingIndex < SliderLink_vect.size(); bindingIndex++)
-    {
-        SliderLink currentBinding = SliderLink_vect.at(bindingIndex);
-        if (currentBinding.lineEdit == senderObject)
-        {
-            QString enteredText = currentBinding.lineEdit->text();
-            bool conversionSucceeded = false;
-            double realValue = enteredText.toDouble(&conversionSucceeded);
 
-            if (!conversionSucceeded)
-                return;
+    if (!senderObject)
+        return;
 
-            int sliderValue = realValue * currentBinding.divisor;
-            sliderValue = qBound(currentBinding.slider->minimum(), sliderValue, currentBinding.slider->maximum());
+    int bindingIndex = senderObject->property("bindingIndex").toInt();
+    const SliderLink &currentBinding = SliderLink_vect.at(bindingIndex);
 
-            currentBinding.slider->setValue(sliderValue);
+    QString enteredText = currentBinding.lineEdit->text();
+    bool conversionSucceeded = false;
+    double realValue = enteredText.toDouble(&conversionSucceeded);
 
-            double normalizedValue = sliderValue / currentBinding.divisor;
-            currentBinding.lineEdit->setText(QString::number(normalizedValue, 'f', currentBinding.decimals));
-            return;
-        }
-    }
+    if (!conversionSucceeded)
+        return;
+
+    int sliderValue = realValue * currentBinding.divisor;
+    sliderValue = qBound(currentBinding.slider->minimum(), sliderValue, currentBinding.slider->maximum());
+
+    currentBinding.slider->setValue(sliderValue);
+    double normalizedValue = sliderValue / currentBinding.divisor;
+    currentBinding.lineEdit->setText(QString::number(normalizedValue, 'f', currentBinding.decimals));
 }
 
 

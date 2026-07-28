@@ -1776,21 +1776,21 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider">
+                   <widget class="QSlider" name="General_Tsac_Temp_Median_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_3">
+                   <widget class="QSlider" name="General_Tsac_Temp_Highest_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_2">
+                   <widget class="QSlider" name="General_Tsac_Temp_Lowest_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
@@ -2393,7 +2393,7 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_7">
+                   <widget class="QSlider" name="General_Tsac_Volt_Median_Slider">
                     <property name="enabled">
                      <bool>true</bool>
                     </property>
@@ -2403,14 +2403,14 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_8">
+                   <widget class="QSlider" name="General_Tsac_Volt_Highest_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_9">
+                   <widget class="QSlider" name="General_Tsac_Volt_Lowest_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
@@ -2992,14 +2992,14 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_10">
+                   <widget class="QSlider" name="General_Tsac_V_Median_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_11">
+                   <widget class="QSlider" name="General_Tsac_Current_Median_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
@@ -14265,14 +14265,14 @@
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QSlider" name="horizontalSlider_12">
+                       <widget class="QSlider" name="Accel_Volt_S1_Slider">
                         <property name="orientation">
                          <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
                       <item>
-                       <widget class="QSlider" name="horizontalSlider_13">
+                       <widget class="QSlider" name="Accel_Volt_S2_Slider">
                         <property name="orientation">
                          <enum>Qt::Orientation::Horizontal</enum>
                         </property>
@@ -14858,14 +14858,14 @@
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QSlider" name="horizontalSlider_14">
+                       <widget class="QSlider" name="Accel_Travel_S1_Slider">
                         <property name="orientation">
                          <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
                       <item>
-                       <widget class="QSlider" name="horizontalSlider_15">
+                       <widget class="QSlider" name="Accel_Travel_S2_Slider">
                         <property name="orientation">
                          <enum>Qt::Orientation::Horizontal</enum>
                         </property>
@@ -15983,21 +15983,21 @@
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QSlider" name="horizontalSlider_16">
+                       <widget class="QSlider" name="Brake_Volt_S1_Slider">
                         <property name="orientation">
                          <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
                       <item>
-                       <widget class="QSlider" name="horizontalSlider_17">
+                       <widget class="QSlider" name="Brake_Volt_S2_Slider">
                         <property name="orientation">
                          <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
                       <item>
-                       <widget class="QSlider" name="horizontalSlider_45">
+                       <widget class="QSlider" name="Pressure_Volt_Slider">
                         <property name="orientation">
                          <enum>Qt::Orientation::Horizontal</enum>
                         </property>
@@ -16596,21 +16596,21 @@
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QSlider" name="horizontalSlider_20">
+                       <widget class="QSlider" name="Brake_Travel_S1_Slider">
                         <property name="orientation">
                          <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
                       <item>
-                       <widget class="QSlider" name="horizontalSlider_21">
+                       <widget class="QSlider" name="Brake_Travel_S2_Slider">
                         <property name="orientation">
                          <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
                       <item>
-                       <widget class="QSlider" name="horizontalSlider_47">
+                       <widget class="QSlider" name="Pressure_Bars_Slider">
                         <property name="orientation">
                          <enum>Qt::Orientation::Horizontal</enum>
                         </property>
@@ -18200,14 +18200,14 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_28">
+                   <widget class="QSlider" name="Inverter_Left_Temp_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_29">
+                   <widget class="QSlider" name="Inverter_Left_Motor_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
@@ -18793,14 +18793,14 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_26">
+                   <widget class="QSlider" name="Inverter_Left_InV_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_27">
+                   <widget class="QSlider" name="Inverter_Left_Current_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
@@ -19386,14 +19386,14 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_24">
+                   <widget class="QSlider" name="Inverter_Left_Motor_Rpm_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_25">
+                   <widget class="QSlider" name="Inverter_Left_Motor_Speed_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
@@ -19979,14 +19979,14 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_18">
+                   <widget class="QSlider" name="Inverter_Left_Throttle_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_19">
+                   <widget class="QSlider" name="Inverter_Left_Feedback_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
@@ -21566,14 +21566,14 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_30">
+                   <widget class="QSlider" name="Inverter_Right_Temp_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_31">
+                   <widget class="QSlider" name="Inverter_Right_Motor_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
@@ -22159,14 +22159,14 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_32">
+                   <widget class="QSlider" name="Inverter_Right_InV_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_33">
+                   <widget class="QSlider" name="Inverter_Right_Current_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
@@ -22752,14 +22752,14 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_34">
+                   <widget class="QSlider" name="Inverter_Right_Motor_Rpm_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_35">
+                   <widget class="QSlider" name="Inverter_Right_Motor_Speed_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
@@ -23345,14 +23345,14 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_22">
+                   <widget class="QSlider" name="Inverter_Right_Throttle_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSlider" name="horizontalSlider_23">
+                   <widget class="QSlider" name="Inverter_Right_Feedback_Slider">
                     <property name="orientation">
                      <enum>Qt::Orientation::Horizontal</enum>
                     </property>
@@ -24946,21 +24946,21 @@
                    <item>
                     <layout class="QVBoxLayout" name="verticalLayout_112">
                      <item>
-                      <widget class="QSlider" name="horizontalSlider_54">
+                      <widget class="QSlider" name="Tsac_Temp_Median_Slider">
                        <property name="orientation">
                         <enum>Qt::Orientation::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QSlider" name="horizontalSlider_55">
+                      <widget class="QSlider" name="Tsac_Temp_Highest_Slider">
                        <property name="orientation">
                         <enum>Qt::Orientation::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QSlider" name="horizontalSlider_56">
+                      <widget class="QSlider" name="Tsac_Temp_Lowest_Slider">
                        <property name="orientation">
                         <enum>Qt::Orientation::Horizontal</enum>
                        </property>
@@ -25547,21 +25547,21 @@
                    <item>
                     <layout class="QVBoxLayout" name="verticalLayout_108">
                      <item>
-                      <widget class="QSlider" name="horizontalSlider_49">
+                      <widget class="QSlider" name="Tsac_Volt_Median_Slider">
                        <property name="orientation">
                         <enum>Qt::Orientation::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QSlider" name="horizontalSlider_50">
+                      <widget class="QSlider" name="Tsac_Volt_Highest_Slider">
                        <property name="orientation">
                         <enum>Qt::Orientation::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QSlider" name="horizontalSlider_52">
+                      <widget class="QSlider" name="Tsac_Volt_Lowest_Slider">
                        <property name="orientation">
                         <enum>Qt::Orientation::Horizontal</enum>
                        </property>
@@ -26144,14 +26144,14 @@
                    <item>
                     <layout class="QVBoxLayout" name="verticalLayout_103">
                      <item>
-                      <widget class="QSlider" name="horizontalSlider_46">
+                      <widget class="QSlider" name="Tsac_V_Median_Slider">
                        <property name="orientation">
                         <enum>Qt::Orientation::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QSlider" name="horizontalSlider_48">
+                      <widget class="QSlider" name="Tsac_Current_Median_Slider">
                        <property name="orientation">
                         <enum>Qt::Orientation::Horizontal</enum>
                        </property>
