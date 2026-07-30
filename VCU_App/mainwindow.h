@@ -25,7 +25,6 @@ public:
     Ui::MainWindow *ui;
     Graph *graph;
     QTimer* timer;
-     double phase = 0.0;
 private:
     struct SliderLink {
         QSlider*   slider;
@@ -46,7 +45,6 @@ private slots:
     void on_comboBox_BaudRate_currentIndexChanged(int index);
     //void on_ComPort_currentIndexChanged(int index);
     void on_checkBox_Charging_toggled(bool checked);
-    void setupGraph();
     void onAnySlider_ValueChanged(int value);
     void onAnyLineEdit_editingFinished();
 //    void updateGraph();

@@ -36,14 +36,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     //GRAPH
     ui->widget_CellVoltages->setRange_Oy(0.0, 10.23);
+    ui->widget_CellVoltages->setSignalCount(3);
     connect(timer, &QTimer::timeout, this, [this]()
             {
-                double rawValue = ReadUartDataFromAddress(
-                    &MonitoredValues.TsacMonitoredValues.HighestCellVoltage);
-
-                double voltage = rawValue / 100.0;
-                ui->widget_CellVoltages->addSample(voltage);
-                phase += 0.05;
+                ui->widget_CellVoltages->addSample(0,ReadUartDataFromAddress(
+                                                      &MonitoredValues.TsacMonitoredValues.MedianCellVoltage)/100.0);
+                ui->widget_CellVoltages->addSample(1,ReadUartDataFromAddress(
+                                                        &MonitoredValues.TsacMonitoredValues.HighestCellVoltage)/100.0);
+                ui->widget_CellVoltages->addSample(2,ReadUartDataFromAddress(
+                                                        &MonitoredValues.TsacMonitoredValues.LowestCellVoltage)/100.0);
             });
     timer->start();
 

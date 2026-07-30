@@ -10,11 +10,17 @@ Graph::Graph(QWidget *parent) : QWidget(parent) {
     timer->setTimerType(Qt::PreciseTimer);
     timer->setInterval(20);
     timer->start();*/
+    setSignalCount(3);
+    signalDataBuffers[0].color = Qt::green;
+    signalDataBuffers[1].color = Qt::yellow;
+    signalDataBuffers[2].color = Qt::red;
 }
-void Graph::addSample(double Value) {
-    signalDataBuffer.append(Value);
-    if (signalDataBuffer.size() > width())
-        signalDataBuffer.removeFirst();
+void Graph::addSample(int index, double Value) {
+    if (index >= signalDataBuffers.size())
+        return;
+    signalDataBuffers[index].buffer.append(Value);
+    if (signalDataBuffers[index].buffer.size() > width())
+        signalDataBuffers[index].buffer.removeFirst();
     update();
 }
 /*void Graph::onTimerTimeout()
@@ -27,6 +33,11 @@ void Graph::setRange_Oy(double minVal, double maxVal) {
     maxGraph = maxVal;
     update();
 }
+void Graph::setSignalCount(int count)
+{
+    signalDataBuffers.resize(count);
+}
+
 /*void Graph::setMaxSamples_Ox(int count) {
     maxSamples = count;
     while (m_samples.size() > m_maxSamples)
@@ -48,21 +59,22 @@ void Graph::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event);
     QPainter painter(this);
     painter.fillRect(rect(), Qt::black);
-    QPen pen(Qt::green);
-    pen.setWidth(3);
-    painter.setPen(pen);
-    if (signalDataBuffer.size() < 2)
-       return;
+    for (int signalIndex = 0; signalIndex < signalDataBuffers.size(); ++signalIndex)
+    {
+        if (signalDataBuffers[signalIndex].buffer.size() < 2)
+            continue;
+
+        QPen pen(signalDataBuffers[signalIndex].color);
+        painter.setPen(pen);
 
     QPainterPath path;
-    path.moveTo(0, valueToY(signalDataBuffer[0]));
-    for (int x = 1; x < signalDataBuffer.size(); ++x) {
-        double y = valueToY(signalDataBuffer[x]);
+    path.moveTo(0, valueToY(signalDataBuffers[signalIndex].buffer[0]));
+    for (int x = 1; x < signalDataBuffers[signalIndex].buffer.size(); ++x) {
+        double y = valueToY(signalDataBuffers[signalIndex].buffer[x]);
         path.lineTo(x, y);
     }
-    qDebug() << signalDataBuffer.first()
-             << signalDataBuffer.last();
     painter.drawPath(path);
+    }
 }
 
 

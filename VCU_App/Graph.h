@@ -3,6 +3,13 @@
 #include <QPaintEvent>
 
 #include <QVector>
+#include <QColor>
+
+struct Signal
+{
+    QVector<double> buffer;
+    QColor color;
+};
 
 class Graph : public QWidget {
     Q_OBJECT
@@ -10,14 +17,17 @@ public:
     explicit Graph(QWidget *parent = nullptr);
     void setRange_Oy(double minVal, double maxVal);
 //    void setMaxSamples_Ox(int count);
-    void addSample(double Value);
+    void addSample(int index, double Value);
+    void setSignalCount(int count);
 
 
 protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
-    QVector<double> signalDataBuffer;
+
+    QVector<Signal> signalDataBuffers;
+
     double valueToY(double val);
     double minGraph = -1.0;
     double maxGraph = 1.0;

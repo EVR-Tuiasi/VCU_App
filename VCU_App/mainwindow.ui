@@ -177,7 +177,7 @@
        <enum>QTabWidget::TabShape::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_General">
        <property name="palette">
@@ -1749,6 +1749,43 @@
                   </property>
                   <item>
                    <widget class="QLineEdit" name="General_Tsac_Temp_Median_lineEdit">
+                    <property name="palette">
+                     <palette>
+                      <active>
+                       <colorrole role="Accent">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>255</red>
+                          <green>0</green>
+                          <blue>127</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </active>
+                      <inactive>
+                       <colorrole role="Accent">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>255</red>
+                          <green>0</green>
+                          <blue>127</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </inactive>
+                      <disabled>
+                       <colorrole role="Accent">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>255</red>
+                          <green>0</green>
+                          <blue>127</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </disabled>
+                     </palette>
+                    </property>
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
@@ -2366,6 +2403,12 @@
                   </property>
                   <item>
                    <widget class="QLineEdit" name="General_Tsac_Volt_Median_lineEdit">
+                    <property name="styleSheet">
+                     <string notr="true">    background-color: white;
+    color: black;
+    border: 2px solid green;
+    border-radius: 1px;</string>
+                    </property>
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
@@ -2373,6 +2416,12 @@
                   </item>
                   <item>
                    <widget class="QLineEdit" name="General_Tsac_Volt_Highest_lineEdit">
+                    <property name="styleSheet">
+                     <string notr="true">    background-color: white;
+    color: black;
+    border: 2px solid yellow;
+    border-radius: 2px;</string>
+                    </property>
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
@@ -2380,6 +2429,12 @@
                   </item>
                   <item>
                    <widget class="QLineEdit" name="General_Tsac_Volt_Lowest_lineEdit">
+                    <property name="styleSheet">
+                     <string notr="true">    background-color: white;
+    color: black;
+    border: 2px solid red;
+    border-radius: 2px;</string>
+                    </property>
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>

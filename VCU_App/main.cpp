@@ -60,9 +60,9 @@ void SimulatedData_Update(void)
 	WriteUartDataAtAddress(cnt, &MonitoredValues.TsacMonitoredValues.MedianCellTemperature);
 	WriteUartDataAtAddress(cnt, &MonitoredValues.TsacMonitoredValues.HighestCellTemperature);
 	WriteUartDataAtAddress(cnt, &MonitoredValues.TsacMonitoredValues.LowestCellTemperature);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.TsacMonitoredValues.MedianCellVoltage);
+    WriteUartDataAtAddress(cnt+30, &MonitoredValues.TsacMonitoredValues.MedianCellVoltage);
 	WriteUartDataAtAddress(cnt, &MonitoredValues.TsacMonitoredValues.HighestCellVoltage);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.TsacMonitoredValues.LowestCellVoltage);
+    WriteUartDataAtAddress(cnt-30, &MonitoredValues.TsacMonitoredValues.LowestCellVoltage);
 	WriteUartDataAtAddress(cnt, &MonitoredValues.TsacMonitoredValues.OverallVoltage);
 	WriteUartDataAtAddress(cnt, &MonitoredValues.TsacMonitoredValues.OverallCurrent);
 
