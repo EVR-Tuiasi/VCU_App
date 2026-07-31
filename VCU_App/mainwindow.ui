@@ -33283,7 +33283,7 @@
                   </layout>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_39" stretch="1,1,4">
+                  <layout class="QHBoxLayout" name="horizontalLayout_39" stretch="1,2,2">
                    <item>
                     <layout class="QVBoxLayout" name="verticalLayout_88">
                      <item>
@@ -33303,14 +33303,14 @@
                      <item>
                       <widget class="QLabel" name="label_125">
                        <property name="text">
-                        <string>Reporterted output voltage:</string>
+                        <string>Reporterted voltage:</string>
                        </property>
                       </widget>
                      </item>
                      <item>
                       <widget class="QLabel" name="label_124">
                        <property name="text">
-                        <string>Reported output current:</string>
+                        <string>Reported current:</string>
                        </property>
                       </widget>
                      </item>
