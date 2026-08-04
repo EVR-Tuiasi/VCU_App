@@ -3,7 +3,7 @@
 
 #include <QApplication>
 #include <QThread>
-static const bool simulateUart = false; // --- IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ---
+static const bool simulateUart = true; // --- IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ---
 //TRUE: values will be generated randomly by the data acquisition thread to test the user interface.
 //FALSE: value will be read from the COM port
 static bool shouldDataAcquisitionThreadRun = true;
@@ -52,19 +52,19 @@ int main(int argc, char *argv[])
 
 void SimulatedData_Update(void)
 {//this is called by the data acquisition thread. This should create new data and save it in the global structures with the CarData_SetValue function
-    static int cnt = 0;
+    static uint64_t cnt = 0;
     static uint8_t CellVoltageIndex=0U, ThermistorTemperatureIndex=0U;
     static uint16_t CellVoltage[CELLS_NUM]={0}, ThermistorTemperature[THERMISTOR_NUM]={0};
     static bool CellVoltageErrors[CELLS_NUM]={false}, ThermistorTemperatureErrors[THERMISTOR_NUM]={false};
 
-    WriteUartDataAtAddress(cnt+30, &MonitoredValues.TsacMonitoredValues.MedianCellTemperature);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.TsacMonitoredValues.HighestCellTemperature);
-    WriteUartDataAtAddress(cnt-30, &MonitoredValues.TsacMonitoredValues.LowestCellTemperature);
-    WriteUartDataAtAddress(cnt+30, &MonitoredValues.TsacMonitoredValues.MedianCellVoltage);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.TsacMonitoredValues.HighestCellVoltage);
-    WriteUartDataAtAddress(cnt-30, &MonitoredValues.TsacMonitoredValues.LowestCellVoltage);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.TsacMonitoredValues.OverallVoltage);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.TsacMonitoredValues.OverallCurrent);
+    WriteUartDataAtAddress(((cnt+60)*2)%1024, &MonitoredValues.TsacMonitoredValues.MedianCellTemperature);
+    WriteUartDataAtAddress(((cnt+120)*2)%1024, &MonitoredValues.TsacMonitoredValues.HighestCellTemperature);
+    WriteUartDataAtAddress((cnt*2)%1024, &MonitoredValues.TsacMonitoredValues.LowestCellTemperature);
+    WriteUartDataAtAddress(((cnt+60)*2)%1024, &MonitoredValues.TsacMonitoredValues.MedianCellVoltage);
+    WriteUartDataAtAddress(((cnt+120)*2)%1024, &MonitoredValues.TsacMonitoredValues.HighestCellVoltage);
+    WriteUartDataAtAddress((cnt*2)%1024, &MonitoredValues.TsacMonitoredValues.LowestCellVoltage);
+    WriteUartDataAtAddress((cnt*2)%2048, &MonitoredValues.TsacMonitoredValues.OverallVoltage);
+    WriteUartDataAtAddress(((cnt+60)*8)%8096, &MonitoredValues.TsacMonitoredValues.OverallCurrent);
 
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.TsacMonitoredValues.AmsError);
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.TsacMonitoredValues.TransceiverError);
@@ -72,16 +72,16 @@ void SimulatedData_Update(void)
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.TsacMonitoredValues.Bms0Error);
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.TsacMonitoredValues.Bms1Error);
 
-    WriteUartDataAtAddress(cnt+30, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor1Voltage);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor2Voltage);
-    WriteUartDataAtAddress(cnt+5, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor1TravelPercentage);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor2TravelPercentage);
-    WriteUartDataAtAddress(cnt+30, &MonitoredValues.PedalsMonitoredValues.BrakeSensor1Voltage);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.PedalsMonitoredValues.BrakeSensor2Voltage);
-    WriteUartDataAtAddress(cnt+5, &MonitoredValues.PedalsMonitoredValues.BrakeSensor1TravelPercentage);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.PedalsMonitoredValues.BrakeSensor2TravelPercentage);
-    WriteUartDataAtAddress(cnt+10, &MonitoredValues.PedalsMonitoredValues.PressureSensorVoltage);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.PedalsMonitoredValues.PressureSensorBars);
+    WriteUartDataAtAddress((cnt*30)%16384, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor1Voltage);
+    WriteUartDataAtAddress(((cnt+60)*30)%16384, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor2Voltage);
+    WriteUartDataAtAddress((cnt/4)%101, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor1TravelPercentage);
+    WriteUartDataAtAddress(((cnt+60)/4)%101, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor2TravelPercentage);
+    WriteUartDataAtAddress((cnt*30)%16384, &MonitoredValues.PedalsMonitoredValues.BrakeSensor1Voltage);
+    WriteUartDataAtAddress(((cnt+60)*30)%16384, &MonitoredValues.PedalsMonitoredValues.BrakeSensor2Voltage);
+    WriteUartDataAtAddress((cnt/4)%101, &MonitoredValues.PedalsMonitoredValues.BrakeSensor1TravelPercentage);
+    WriteUartDataAtAddress(((cnt+60)/4)%101, &MonitoredValues.PedalsMonitoredValues.BrakeSensor2TravelPercentage);
+    WriteUartDataAtAddress((cnt*3/2)%501, &MonitoredValues.PedalsMonitoredValues.PressureSensorVoltage);
+    WriteUartDataAtAddress(cnt%256, &MonitoredValues.PedalsMonitoredValues.PressureSensorBars);
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor1_ShortToGnd);
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor1_ShortToVcc);
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.PedalsMonitoredValues.Accel_Sensor1_OutOfRangeOutput);
@@ -97,22 +97,22 @@ void SimulatedData_Update(void)
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.PedalsMonitoredValues.Brake_Sensor2_OutOfRangeOutput);
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.PedalsMonitoredValues.Brake_Implausibility);
 
-    WriteUartDataAtAddress(cnt+30, &MonitoredValues.InvertersMonitoredValues.LeftInverterTemperature);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.InvertersMonitoredValues.LeftMotorTemperature);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.InvertersMonitoredValues.LeftInverterInputVoltage);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.InvertersMonitoredValues.LeftInverterCurrent);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.InvertersMonitoredValues.LeftMotorRpm);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.InvertersMonitoredValues.LeftMotorSpeedKmh);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.InvertersMonitoredValues.LeftInverterThrottle);
-    WriteUartDataAtAddress(cnt+10, &MonitoredValues.InvertersMonitoredValues.LeftInverterThrottleFeedback);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.InvertersMonitoredValues.RightInverterTemperature);
-    WriteUartDataAtAddress(cnt+30, &MonitoredValues.InvertersMonitoredValues.RightMotorTemperature);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.InvertersMonitoredValues.RightInverterInputVoltage);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.InvertersMonitoredValues.RightInverterCurrent);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.InvertersMonitoredValues.RightMotorRpm);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.InvertersMonitoredValues.RightMotorSpeedKmh);
-	WriteUartDataAtAddress(cnt, &MonitoredValues.InvertersMonitoredValues.RightInverterThrottle);
-    WriteUartDataAtAddress(cnt+10, &MonitoredValues.InvertersMonitoredValues.RightInverterThrottleFeedback);
+    WriteUartDataAtAddress(cnt%256, &MonitoredValues.InvertersMonitoredValues.LeftInverterTemperature);
+    WriteUartDataAtAddress((cnt+60)%256, &MonitoredValues.InvertersMonitoredValues.LeftMotorTemperature);
+    WriteUartDataAtAddress(cnt%1801, &MonitoredValues.InvertersMonitoredValues.LeftInverterInputVoltage);
+    WriteUartDataAtAddress(cnt%401, &MonitoredValues.InvertersMonitoredValues.LeftInverterCurrent);
+    WriteUartDataAtAddress(cnt%6000, &MonitoredValues.InvertersMonitoredValues.LeftMotorRpm);
+    WriteUartDataAtAddress(cnt%256, &MonitoredValues.InvertersMonitoredValues.LeftMotorSpeedKmh);
+    WriteUartDataAtAddress(cnt%251, &MonitoredValues.InvertersMonitoredValues.LeftInverterThrottle);
+    WriteUartDataAtAddress((cnt+60)%251, &MonitoredValues.InvertersMonitoredValues.LeftInverterThrottleFeedback);
+    WriteUartDataAtAddress(cnt%256, &MonitoredValues.InvertersMonitoredValues.RightInverterTemperature);
+    WriteUartDataAtAddress((cnt+60)%256, &MonitoredValues.InvertersMonitoredValues.RightMotorTemperature);
+    WriteUartDataAtAddress(cnt%1801, &MonitoredValues.InvertersMonitoredValues.RightInverterInputVoltage);
+    WriteUartDataAtAddress(cnt%401, &MonitoredValues.InvertersMonitoredValues.RightInverterCurrent);
+    WriteUartDataAtAddress(cnt%6000, &MonitoredValues.InvertersMonitoredValues.RightMotorRpm);
+    WriteUartDataAtAddress(cnt%256, &MonitoredValues.InvertersMonitoredValues.RightMotorSpeedKmh);
+    WriteUartDataAtAddress(cnt%251, &MonitoredValues.InvertersMonitoredValues.RightInverterThrottle);
+    WriteUartDataAtAddress((cnt+60)%251, &MonitoredValues.InvertersMonitoredValues.RightInverterThrottleFeedback);
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.InvertersMonitoredValues.IsCarInReverse);
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.InvertersMonitoredValues.IsCarRunning);
 

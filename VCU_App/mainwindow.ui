@@ -177,7 +177,7 @@
        <enum>QTabWidget::TabShape::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_General">
        <property name="palette">
@@ -33684,7 +33684,7 @@
                       <widget class="QLineEdit" name="LineEdit_Charging_maxCurrent"/>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_test">
+                      <widget class="QLineEdit" name="ReportedChargingVoltage">
                        <property name="styleSheet">
                         <string notr="true">    background-color: white;
     color: black;
@@ -33694,7 +33694,7 @@
                       </widget>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_56">
+                      <widget class="QLineEdit" name="ReportedChargingCurrent">
                        <property name="styleSheet">
                         <string notr="true">    background-color: white;
     color: black;
