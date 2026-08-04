@@ -177,7 +177,7 @@
        <enum>QTabWidget::TabShape::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_General">
        <property name="palette">
@@ -33642,7 +33642,7 @@
                   </layout>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_39" stretch="1,1,1">
+                  <layout class="QHBoxLayout" name="horizontalLayout_39" stretch="1,2,2">
                    <item>
                     <layout class="QVBoxLayout" name="verticalLayout_88">
                      <item>

@@ -128,7 +128,7 @@ void MainWindow::setupSliderBindings()
     SliderLink_vect = {
         { ui->Slider_Charging_maxVolt,  ui->LineEdit_Charging_maxVolt,   10.0, 1 },
         { ui->Slider_Charging_maxCurrent,  ui->LineEdit_Charging_maxCurrent,   10.0, 1 },
-        { ui->Slider_test,  ui->lineEdit_test,   100.0, 2 },
+        //{ ui->Slider_test,  ui->ReportedChargingVoltage,   100.0, 2 } ????,
        // { ui->Tsac_Volt_Median_Slider, ui->Tsac_Volt_Median_lineEdit, 10.0, 1}
     };
 
@@ -1424,6 +1424,34 @@ void TsacTab_Update(MainWindow* window)
             window->ui->Cell_Volt_tableWidget->item(row_index, col_index)->setText(QString(char_array));
         }
     }
+
+    //TSAC_ReportedChargingCurrent
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.ReportedChargingCurrent);
+    index = 0U;
+    char_array[index++] = '0' + (readValue/100U)%10U;
+    char_array[index++] = '0' + (readValue/10U)%10U;
+    char_array[index++] = '.';
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'A';
+    char_array[index++] = 0;
+    window->ui->ReportedChargingCurrent->setText((const QString)QString(char_array));
+
+    //TSAC_ReportedChargingCurrent
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.ReportedChargingVolts);
+    index = 0U;
+    if(readValue >= 1000U)
+    {
+        char_array[index++] = '0' + (readValue/1000U);
+    }
+    char_array[index++] = '0' + (readValue/100U)%10U;
+    char_array[index++] = '0' + (readValue/10U)%10U;
+    char_array[index++] = '.';
+    char_array[index++] = '0' + readValue%10U;
+    char_array[index++] = ' ';
+    char_array[index++] = 'V';
+    char_array[index++] = 0;
+    window->ui->ReportedChargingVoltage->setText((const QString)QString(char_array));
 
 }
 
