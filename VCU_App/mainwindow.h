@@ -34,6 +34,7 @@ private:
     };
     QVector<SliderLink> SliderLink_vect;
     void setupSliderBindings();
+    void setupGraphs();
 /*
     QPixmap gridPixmap;
     QPixmap wavePixmap;

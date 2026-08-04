@@ -33,20 +33,10 @@ MainWindow::MainWindow(QWidget *parent)
     timer->callOnTimeout(MainWindow_Update);
     timer->setTimerType(Qt::PreciseTimer);
     timer->setInterval(20);
-
-    //GRAPH
-    ui->widget_CellVoltages->setRange_Oy(0.0, 10.23);
-    ui->widget_CellVoltages->setSignalCount(3);
-    connect(timer, &QTimer::timeout, this, [this]()
-            {
-                ui->widget_CellVoltages->addSample(0,ReadUartDataFromAddress(
-                                                      &MonitoredValues.TsacMonitoredValues.MedianCellVoltage)/100.0);
-                ui->widget_CellVoltages->addSample(1,ReadUartDataFromAddress(
-                                                        &MonitoredValues.TsacMonitoredValues.HighestCellVoltage)/100.0);
-                ui->widget_CellVoltages->addSample(2,ReadUartDataFromAddress(
-                                                        &MonitoredValues.TsacMonitoredValues.LowestCellVoltage)/100.0);
-            });
     timer->start();
+
+    //GRAPHs
+    setupGraphs();
 
     //Sliders and LineEdit
     setupSliderBindings();
@@ -189,6 +179,50 @@ void MainWindow::onAnyLineEdit_editingFinished()
     currentBinding.lineEdit->setText(QString::number(normalizedValue, 'f', currentBinding.decimals));
 }
 
+void MainWindow::setupGraphs()
+{
+    ui->widget_CellTemp->setRange_Oy(0.0, 103.3);
+    ui->widget_CellTemp->setSignalCount(3);
+    ui->widget_CellVoltages->setRange_Oy(0.0, 10.33);
+    ui->widget_CellVoltages->setSignalCount(3);
+    ui->widget_BrakeVolt->setRange_Oy(0.0, 5.100);
+    ui->widget_BrakeVolt->setSignalCount(3);
+    ui->widget_BrakeTravel->setRange_Oy(0.0, 256);
+    ui->widget_BrakeTravel->setSignalCount(3);   
+    ui->widget_VoltCurrent->setRange_Oy(0.0, 809.5);
+    ui->widget_VoltCurrent->setSignalCount(2);
+    ui->widget_AccelVolt->setRange_Oy(0.0, 5.1);
+    ui->widget_AccelVolt->setSignalCount(2);
+    ui->widget_AccelTravel->setRange_Oy(0.0, 101.0);
+    ui->widget_AccelTravel->setSignalCount(2);
+
+    ui->widget_LeftInv_Temp->setRange_Oy(0.0, 260);
+    ui->widget_LeftInv_Temp->setSignalCount(2);
+    ui->widget_LeftInv_VoltCurr->setRange_Oy(0.0, 401.0);
+    ui->widget_LeftInv_VoltCurr->setSignalCount(2);
+    ui->widget_LeftInv_RPM->setRange_Oy(0.0, 6000);
+    ui->widget_LeftInv_RPM->setSignalCount(2);
+    ui->widget_LeftInv_Throttle->setRange_Oy(0.0, 5.10);
+    ui->widget_LeftInv_Throttle->setSignalCount(2);
+    ui->widget_RightInv_Temp->setRange_Oy(0.0, 260);
+    ui->widget_RightInv_Temp->setSignalCount(2);
+    ui->widget_RightInv_VoltCurr->setRange_Oy(0.0, 400.0);
+    ui->widget_RightInv_VoltCurr->setSignalCount(2);
+    ui->widget_RightInv_RPM->setRange_Oy(0.0, 6000);
+    ui->widget_RightInv_RPM->setSignalCount(2);
+    ui->widget_RightInv_Throttle->setRange_Oy(0.0, 5.10);
+    ui->widget_RightInv_Throttle->setSignalCount(2);
+
+    ui->widget_TSAC_Temp->setRange_Oy(0.0, 103.3);
+    ui->widget_TSAC_Temp->setSignalCount(3);
+    ui->widget_TSAC_CellVolt->setRange_Oy(0.0, 10.33);
+    ui->widget_TSAC_CellVolt->setSignalCount(3);
+    ui->widget_TSAC_VoltCurr->setRange_Oy(0.0, 810.5);
+    ui->widget_TSAC_VoltCurr->setSignalCount(2);
+    ui->widget_TSAC_Charging->setRange_Oy(0.0, 1001);
+    ui->widget_TSAC_Charging->setSignalCount(2);
+
+}
 
 MainWindow::~MainWindow()
 {
@@ -224,6 +258,7 @@ void MainWindow_Update(void)
 
 void GeneralTab_Update(MainWindow* window)
 {
+    //TOOLTIPS
     static const char textFault[] = "color:'#ff4444'>Fault", textSafe[] = "color:'#44cc77'>OK    ";
     static const uint8_t pedalsErrorsLength = 14U, BmsErrorsLength = 4U;
     static const uint16_t tooltipTextIndexes_Pedals[pedalsErrorsLength] = {54, 134, 220, 300, 380, 466, 542, 622, 702, 788, 868, 948, 1034, 1110 } ,
@@ -256,9 +291,87 @@ void GeneralTab_Update(MainWindow* window)
                             "<tr><td>Transceiver</td><td style='color:#44cc77'>OK     </td></tr>"
                             "</table>";
 
+    //GRAPHS
+
+    //CellVoltages
+    window->ui->widget_CellVoltages->addSample(0,ReadUartDataFromAddress(
+                                                      &MonitoredValues.TsacMonitoredValues.MedianCellVoltage)/100.0);
+    window->ui->widget_CellVoltages->addSample(1,ReadUartDataFromAddress(
+                                                      &MonitoredValues.TsacMonitoredValues.HighestCellVoltage)/100.0);
+    window->ui->widget_CellVoltages->addSample(2,ReadUartDataFromAddress(
+                                                      &MonitoredValues.TsacMonitoredValues.LowestCellVoltage)/100.0);
+    //CellTemp
+    window->ui->widget_CellTemp->addSample(0,ReadUartDataFromAddress(
+                                                      &MonitoredValues.TsacMonitoredValues.MedianCellTemperature)/10.0);
+    window->ui->widget_CellTemp->addSample(1,ReadUartDataFromAddress(
+                                                      &MonitoredValues.TsacMonitoredValues.HighestCellTemperature)/10.0);
+    window->ui->widget_CellTemp->addSample(2,ReadUartDataFromAddress(
+                                                      &MonitoredValues.TsacMonitoredValues.LowestCellTemperature)/10.0);
+    //widget_VoltCurrent
+    window->ui->widget_VoltCurrent->addSample(0,ReadUartDataFromAddress(
+                                                  &MonitoredValues.TsacMonitoredValues.OverallVoltage)/10.0);
+    window->ui->widget_VoltCurrent->addSample(1,ReadUartDataFromAddress(
+                                                  &MonitoredValues.TsacMonitoredValues.OverallCurrent)/10.0);
+    //widget_VoltCurrent
+    window->ui->widget_VoltCurrent->addSample(0,ReadUartDataFromAddress(
+                                                     &MonitoredValues.TsacMonitoredValues.OverallVoltage)/10.0);
+    window->ui->widget_VoltCurrent->addSample(1,ReadUartDataFromAddress(
+                                                     &MonitoredValues.TsacMonitoredValues.OverallCurrent)/10.0);
+    //widget_VoltCurrent
+    window->ui->widget_VoltCurrent->addSample(0,ReadUartDataFromAddress(
+                                                     &MonitoredValues.TsacMonitoredValues.OverallVoltage)/10.0);
+    window->ui->widget_VoltCurrent->addSample(1,ReadUartDataFromAddress(
+                                                     &MonitoredValues.TsacMonitoredValues.OverallCurrent)/10.0);
+    //widget_BrakeVolt
+    window->ui->widget_BrakeVolt->addSample(0,ReadUartDataFromAddress(
+                                                     &MonitoredValues.PedalsMonitoredValues.BrakeSensor1Voltage)*5/16383.0);
+    window->ui->widget_BrakeVolt->addSample(1,ReadUartDataFromAddress(
+                                                     &MonitoredValues.PedalsMonitoredValues.BrakeSensor2Voltage)*5/16383.0);
+    window->ui->widget_BrakeVolt->addSample(2,ReadUartDataFromAddress(
+                                                   &MonitoredValues.PedalsMonitoredValues.PressureSensorVoltage)/100.0);
+    //widget_BrakeTravel
+    window->ui->widget_BrakeTravel->addSample(0,ReadUartDataFromAddress(
+                                                     &MonitoredValues.PedalsMonitoredValues.BrakeSensor1TravelPercentage));
+    window->ui->widget_BrakeTravel->addSample(1,ReadUartDataFromAddress(
+                                                     &MonitoredValues.PedalsMonitoredValues.BrakeSensor2TravelPercentage));
+    //widget_LeftInv_Temp
+    window->ui->widget_LeftInv_Temp->addSample(0,ReadUartDataFromAddress(
+                                                     &MonitoredValues.InvertersMonitoredValues.LeftInverterTemperature));
+    window->ui->widget_LeftInv_Temp->addSample(1,ReadUartDataFromAddress(
+                                                     &MonitoredValues.InvertersMonitoredValues.LeftMotorTemperature));
+    //widget_LeftInv_VoltCurr
+    //widget_LeftInv_RPM
+    //widget_LeftInv_Throttle
+    window->ui->widget_LeftInv_Throttle->addSample(0,ReadUartDataFromAddress(
+                                                           &MonitoredValues.InvertersMonitoredValues.LeftInverterThrottle)*2/100.0);
+    window->ui->widget_LeftInv_Throttle->addSample(1,ReadUartDataFromAddress(
+                                                           &MonitoredValues.InvertersMonitoredValues.LeftInverterThrottleFeedback)*2/100.0);
+    //widget_RightInv_Temp
+    window->ui->widget_RightInv_Temp->addSample(0,ReadUartDataFromAddress(
+                                                      &MonitoredValues.InvertersMonitoredValues.RightInverterTemperature));
+    window->ui->widget_RightInv_Temp->addSample(1,ReadUartDataFromAddress(
+                                                      &MonitoredValues.InvertersMonitoredValues.RightMotorTemperature));
+    //widget_RightInv_VoltCurr
+    //widget_RightInv_RPM
+    //widget_RightInv_Throttle
+    window->ui->widget_RightInv_Throttle->addSample(0,ReadUartDataFromAddress(
+                                                   &MonitoredValues.InvertersMonitoredValues.RightInverterThrottle)*2/100.0);
+    window->ui->widget_RightInv_Throttle->addSample(1,ReadUartDataFromAddress(
+                                                   &MonitoredValues.InvertersMonitoredValues.RightInverterThrottleFeedback)*2/100.0);
+    //widget_AccelVolt
+    window->ui->widget_AccelVolt->addSample(0,ReadUartDataFromAddress(
+                                                     &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor1Voltage)*5/16383.0);
+    window->ui->widget_AccelVolt->addSample(1,ReadUartDataFromAddress(
+                                                     &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor2Voltage)*5/16383.0);
+    //widget_AccelTravel
+    window->ui->widget_AccelTravel->addSample(0,ReadUartDataFromAddress(
+                                                     &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor1TravelPercentage));
+    window->ui->widget_AccelTravel->addSample(1,ReadUartDataFromAddress(
+                                                     &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor2TravelPercentage));
+
     uint32_t readValue, Value;
     char char_array[20], index = 0U;
-    bool IsNegative;
+    bool IsNegative;   
 
     //TSAC_HighestCellTemperature
     readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.HighestCellTemperature);
@@ -1013,6 +1126,30 @@ void TsacTab_Update(MainWindow* window)
 {
     uint32_t readValue;
     char char_array[20], index = 0U;
+
+    //GRAPHs
+    //widget_TSAC_Temp
+    window->ui->widget_TSAC_Temp->addSample(0,ReadUartDataFromAddress(
+                                                   &MonitoredValues.TsacMonitoredValues.MedianCellTemperature)/10.0);
+    window->ui->widget_TSAC_Temp->addSample(1,ReadUartDataFromAddress(
+                                                   &MonitoredValues.TsacMonitoredValues.HighestCellTemperature)/10.0);
+    window->ui->widget_TSAC_Temp->addSample(2,ReadUartDataFromAddress(
+                                                   &MonitoredValues.TsacMonitoredValues.LowestCellTemperature)/10.0);
+    //widget_TSAC_CellVolt
+    window->ui->widget_TSAC_CellVolt->addSample(0,ReadUartDataFromAddress(
+                                                       &MonitoredValues.TsacMonitoredValues.MedianCellVoltage)/100.0);
+    window->ui->widget_TSAC_CellVolt->addSample(1,ReadUartDataFromAddress(
+                                                       &MonitoredValues.TsacMonitoredValues.HighestCellVoltage)/100.0);
+    window->ui->widget_TSAC_CellVolt->addSample(2,ReadUartDataFromAddress(
+                                                       &MonitoredValues.TsacMonitoredValues.LowestCellVoltage)/100.0);
+    //widget_TSAC_VoltCurr
+    window->ui->widget_TSAC_VoltCurr->addSample(0,ReadUartDataFromAddress(
+                                                       &MonitoredValues.TsacMonitoredValues.OverallVoltage)/10.0);
+    window->ui->widget_TSAC_VoltCurr->addSample(1,ReadUartDataFromAddress(
+                                                       &MonitoredValues.TsacMonitoredValues.OverallCurrent)/10.0);
+    //widget_TSAC_Charging
+
+
 
     //TSAC_HighestCellTemperature
     readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.HighestCellTemperature);
