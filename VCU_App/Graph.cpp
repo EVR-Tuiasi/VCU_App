@@ -4,12 +4,6 @@
 #include <QTimer>
 
 Graph::Graph(QWidget *parent) : QWidget(parent) {
-    //generateDataTest();
-    /*timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &Graph::onTimerTimeout);
-    timer->setTimerType(Qt::PreciseTimer);
-    timer->setInterval(20);
-    timer->start();*/
     setSignalCount(3);
     signalDataBuffers[0].color = Qt::green;
     signalDataBuffers[1].color = Qt::yellow;
@@ -23,30 +17,23 @@ void Graph::addSample(int index, double Value) {
         signalDataBuffers[index].buffer.removeFirst();
     update();
 }
-/*void Graph::onTimerTimeout()
+void Graph::setSignalRange(int index, double minVal, double maxVal)
 {
-    addSample(std::sin(phase));
-    phase += frequency;
-}*/
-void Graph::setRange_Oy(double minVal, double maxVal) {
-    minGraph = minVal;
-    maxGraph = maxVal;
-    update();
+    if (index >= signalDataBuffers.size())
+        return;
+
+    signalDataBuffers[index].minValue = minVal;
+    signalDataBuffers[index].maxValue = maxVal;
 }
+
 void Graph::setSignalCount(int count)
 {
     signalDataBuffers.resize(count);
 }
 
-/*void Graph::setMaxSamples_Ox(int count) {
-    maxSamples = count;
-    while (m_samples.size() > m_maxSamples)
-        m_samples.removeFirst();
-    update();
-}*/
-double Graph::valueToY(double value)
+double Graph::valueToY(double value, double minVal, double maxVal)
 {
-    double norm = (value - minGraph) / (maxGraph - minGraph);
+    double norm = (value - minVal) / (maxVal - minVal);
     if(norm < 0)
         norm = 0;
 
@@ -68,9 +55,13 @@ void Graph::paintEvent(QPaintEvent *event) {
         painter.setPen(pen);
 
     QPainterPath path;
-    path.moveTo(0, valueToY(signalDataBuffers[signalIndex].buffer[0]));
+    path.moveTo(0, valueToY(signalDataBuffers[signalIndex].buffer[0],
+                            signalDataBuffers[signalIndex].minValue,
+                            signalDataBuffers[signalIndex].maxValue));
     for (int x = 1; x < signalDataBuffers[signalIndex].buffer.size(); ++x) {
-        double y = valueToY(signalDataBuffers[signalIndex].buffer[x]);
+        double y = valueToY(signalDataBuffers[signalIndex].buffer[x],
+                            signalDataBuffers[signalIndex].minValue,
+                            signalDataBuffers[signalIndex].maxValue);
         path.lineTo(x, y);
     }
     painter.drawPath(path);
@@ -78,15 +69,3 @@ void Graph::paintEvent(QPaintEvent *event) {
 }
 
 
-/*void Graph::generateDataTest()
-{
-    double w = 600;
-    int h = 150;
-    signalDataBuffer.resize(w);
-    double midY = h / 2.0;
-    double amplitude = h / 3.0;
-    double frequency = 0.05;
-    for (int x = 0; x < w; ++x) {
-        signalDataBuffer[x] = midY - amplitude * std::sin(x * frequency);
-    }
-}*/

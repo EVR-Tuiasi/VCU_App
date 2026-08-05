@@ -181,47 +181,72 @@ void MainWindow::onAnyLineEdit_editingFinished()
 
 void MainWindow::setupGraphs()
 {
-    ui->widget_CellTemp->setRange_Oy(0.0, 103.3);
     ui->widget_CellTemp->setSignalCount(3);
-    ui->widget_CellVoltages->setRange_Oy(0.0, 10.33);
+    ui->widget_CellTemp->setSignalRange(0, 0.0, 103.3);
+    ui->widget_CellTemp->setSignalRange(1, 0.0, 103.3);
+    ui->widget_CellTemp->setSignalRange(2, 0.0, 103.3);
     ui->widget_CellVoltages->setSignalCount(3);
-    ui->widget_BrakeVolt->setRange_Oy(0.0, 5.100);
+    ui->widget_CellVoltages->setSignalRange(0, 0.0, 10.33);
+    ui->widget_CellVoltages->setSignalRange(1, 0.0, 10.33);
+    ui->widget_CellVoltages->setSignalRange(2, 0.0, 10.33);
     ui->widget_BrakeVolt->setSignalCount(3);
-    ui->widget_BrakeTravel->setRange_Oy(0.0, 256);
-    ui->widget_BrakeTravel->setSignalCount(3);   
-    ui->widget_VoltCurrent->setRange_Oy(0.0, 809.5);
+    ui->widget_BrakeVolt->setSignalRange(0, 0.0, 5.100);
+    ui->widget_BrakeVolt->setSignalRange(1, 0.0, 5.100);
+    ui->widget_BrakeVolt->setSignalRange(2, 0.0, 5.100);
+    ui->widget_BrakeTravel->setSignalCount(3);
+    ui->widget_BrakeTravel->setSignalRange(0, 0.0, 101.0);
+    ui->widget_BrakeTravel->setSignalRange(1, 0.0, 101.0);
+    ui->widget_BrakeTravel->setSignalRange(2, 0.0, 256);
     ui->widget_VoltCurrent->setSignalCount(2);
-    ui->widget_AccelVolt->setRange_Oy(0.0, 5.1);
+    ui->widget_VoltCurrent->setSignalRange(0, 0.0, 205.7);
+    ui->widget_VoltCurrent->setSignalRange(1, 0.0, 810.5);
     ui->widget_AccelVolt->setSignalCount(2);
-    ui->widget_AccelTravel->setRange_Oy(0.0, 101.0);
+    ui->widget_AccelVolt->setSignalRange(0, 0.0, 5.1);
+    ui->widget_AccelVolt->setSignalRange(1, 0.0, 5.1);
     ui->widget_AccelTravel->setSignalCount(2);
+    ui->widget_AccelTravel->setSignalRange(0, 0.0, 101.0);
+    ui->widget_AccelTravel->setSignalRange(1, 0.0, 101.0);
 
-    ui->widget_LeftInv_Temp->setRange_Oy(0.0, 260);
     ui->widget_LeftInv_Temp->setSignalCount(2);
-    ui->widget_LeftInv_VoltCurr->setRange_Oy(0.0, 401.0);
+    ui->widget_LeftInv_Temp->setSignalRange(0, 0.0, 260);
+    ui->widget_LeftInv_Temp->setSignalRange(1, 0.0, 260);
     ui->widget_LeftInv_VoltCurr->setSignalCount(2);
-    ui->widget_LeftInv_RPM->setRange_Oy(0.0, 6000);
+    ui->widget_LeftInv_VoltCurr->setSignalRange(0, 0.0, 181.0);
+    ui->widget_LeftInv_VoltCurr->setSignalRange(1, 0.0, 401.0);
     ui->widget_LeftInv_RPM->setSignalCount(2);
-    ui->widget_LeftInv_Throttle->setRange_Oy(0.0, 5.10);
+    ui->widget_LeftInv_RPM->setSignalRange(0, 0.0, 6001.0);
+    ui->widget_LeftInv_RPM->setSignalRange(1, 0.0, 256.0);
     ui->widget_LeftInv_Throttle->setSignalCount(2);
-    ui->widget_RightInv_Temp->setRange_Oy(0.0, 260);
+    ui->widget_LeftInv_Throttle->setSignalRange(0, 0.0, 5.1);
+    ui->widget_LeftInv_Throttle->setSignalRange(1, 0.0, 5.1);
+
     ui->widget_RightInv_Temp->setSignalCount(2);
-    ui->widget_RightInv_VoltCurr->setRange_Oy(0.0, 400.0);
+    ui->widget_RightInv_Temp->setSignalRange(0, 0.0, 260);
+    ui->widget_RightInv_Temp->setSignalRange(1, 0.0, 260);
     ui->widget_RightInv_VoltCurr->setSignalCount(2);
-    ui->widget_RightInv_RPM->setRange_Oy(0.0, 6000);
+    ui->widget_RightInv_VoltCurr->setSignalRange(0, 0.0, 181.0);
+    ui->widget_RightInv_VoltCurr->setSignalRange(1, 0.0, 401.0);
     ui->widget_RightInv_RPM->setSignalCount(2);
-    ui->widget_RightInv_Throttle->setRange_Oy(0.0, 5.10);
+    ui->widget_RightInv_RPM->setSignalRange(0, 0.0, 6001.0);
+    ui->widget_RightInv_RPM->setSignalRange(1, 0.0, 256.0);
     ui->widget_RightInv_Throttle->setSignalCount(2);
+    ui->widget_RightInv_Throttle->setSignalRange(0, 0.0, 5.1);
+    ui->widget_RightInv_Throttle->setSignalRange(1, 0.0, 5.1);
 
-    ui->widget_TSAC_Temp->setRange_Oy(0.0, 103.3);
     ui->widget_TSAC_Temp->setSignalCount(3);
-    ui->widget_TSAC_CellVolt->setRange_Oy(0.0, 10.33);
+    ui->widget_TSAC_Temp->setSignalRange(0, 0.0, 103.3);
+    ui->widget_TSAC_Temp->setSignalRange(1, 0.0, 103.3);
+    ui->widget_TSAC_Temp->setSignalRange(2, 0.0, 103.3);
     ui->widget_TSAC_CellVolt->setSignalCount(3);
-    ui->widget_TSAC_VoltCurr->setRange_Oy(0.0, 810.5);
+    ui->widget_TSAC_CellVolt->setSignalRange(0, 0.0, 10.33);
+    ui->widget_TSAC_CellVolt->setSignalRange(1, 0.0, 10.33);
+    ui->widget_TSAC_CellVolt->setSignalRange(2, 0.0, 10.33);
     ui->widget_TSAC_VoltCurr->setSignalCount(2);
-    ui->widget_TSAC_Charging->setRange_Oy(0.0, 1001);
+    ui->widget_TSAC_VoltCurr->setSignalRange(0, 0.0, 205.7);
+    ui->widget_TSAC_VoltCurr->setSignalRange(1, 0.0, 810.5);
     ui->widget_TSAC_Charging->setSignalCount(2);
-
+    ui->widget_TSAC_Charging->setSignalRange(0, 0.0, 6554.6);
+    ui->widget_TSAC_Charging->setSignalRange(1, 0.0, 6554.6);
 }
 
 MainWindow::~MainWindow()
@@ -334,13 +359,24 @@ void GeneralTab_Update(MainWindow* window)
                                                      &MonitoredValues.PedalsMonitoredValues.BrakeSensor1TravelPercentage));
     window->ui->widget_BrakeTravel->addSample(1,ReadUartDataFromAddress(
                                                      &MonitoredValues.PedalsMonitoredValues.BrakeSensor2TravelPercentage));
+    window->ui->widget_BrakeTravel->addSample(2,ReadUartDataFromAddress(
+                                                     &MonitoredValues.PedalsMonitoredValues.PressureSensorBars));
     //widget_LeftInv_Temp
     window->ui->widget_LeftInv_Temp->addSample(0,ReadUartDataFromAddress(
                                                      &MonitoredValues.InvertersMonitoredValues.LeftInverterTemperature));
     window->ui->widget_LeftInv_Temp->addSample(1,ReadUartDataFromAddress(
                                                      &MonitoredValues.InvertersMonitoredValues.LeftMotorTemperature));
     //widget_LeftInv_VoltCurr
+    window->ui->widget_LeftInv_VoltCurr->addSample(0,ReadUartDataFromAddress(
+                                                      &MonitoredValues.InvertersMonitoredValues.LeftInverterInputVoltage)/10);
+    window->ui->widget_LeftInv_VoltCurr->addSample(1,ReadUartDataFromAddress(
+                                                      &MonitoredValues.InvertersMonitoredValues.LeftInverterCurrent));
     //widget_LeftInv_RPM
+    window->ui->widget_LeftInv_RPM->addSample(0,ReadUartDataFromAddress(
+                                                      &MonitoredValues.InvertersMonitoredValues.LeftMotorRpm));
+    window->ui->widget_LeftInv_RPM->addSample(1,ReadUartDataFromAddress(
+                                                      &MonitoredValues.InvertersMonitoredValues.LeftMotorSpeedKmh));
+
     //widget_LeftInv_Throttle
     window->ui->widget_LeftInv_Throttle->addSample(0,ReadUartDataFromAddress(
                                                            &MonitoredValues.InvertersMonitoredValues.LeftInverterThrottle)*2/100.0);
@@ -352,7 +388,15 @@ void GeneralTab_Update(MainWindow* window)
     window->ui->widget_RightInv_Temp->addSample(1,ReadUartDataFromAddress(
                                                       &MonitoredValues.InvertersMonitoredValues.RightMotorTemperature));
     //widget_RightInv_VoltCurr
+    window->ui->widget_RightInv_VoltCurr->addSample(0,ReadUartDataFromAddress(
+                                                          &MonitoredValues.InvertersMonitoredValues.RightInverterInputVoltage)/10);
+    window->ui->widget_RightInv_VoltCurr->addSample(1,ReadUartDataFromAddress(
+                                                          &MonitoredValues.InvertersMonitoredValues.RightInverterCurrent));
     //widget_RightInv_RPM
+    window->ui->widget_RightInv_RPM->addSample(0,ReadUartDataFromAddress(
+                                                     &MonitoredValues.InvertersMonitoredValues.RightMotorRpm));
+    window->ui->widget_RightInv_RPM->addSample(1,ReadUartDataFromAddress(
+                                                     &MonitoredValues.InvertersMonitoredValues.RightMotorSpeedKmh));
     //widget_RightInv_Throttle
     window->ui->widget_RightInv_Throttle->addSample(0,ReadUartDataFromAddress(
                                                    &MonitoredValues.InvertersMonitoredValues.RightInverterThrottle)*2/100.0);
@@ -1148,6 +1192,11 @@ void TsacTab_Update(MainWindow* window)
     window->ui->widget_TSAC_VoltCurr->addSample(1,ReadUartDataFromAddress(
                                                        &MonitoredValues.TsacMonitoredValues.OverallCurrent)/10.0);
     //widget_TSAC_Charging
+    window->ui->widget_TSAC_Charging->addSample(0,ReadUartDataFromAddress(
+                                                       &MonitoredValues.TsacMonitoredValues.ReportedChargingVolts)/10.0);
+    window->ui->widget_TSAC_Charging->addSample(1,ReadUartDataFromAddress(
+                                                       &MonitoredValues.TsacMonitoredValues.ReportedChargingCurrent)/10.0);
+
 
 
 
@@ -1428,7 +1477,17 @@ void TsacTab_Update(MainWindow* window)
     //TSAC_ReportedChargingCurrent
     readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.ReportedChargingCurrent);
     index = 0U;
-    char_array[index++] = '0' + (readValue/100U)%10U;
+    if(readValue >= 10000U)
+    {
+        char_array[index++] = '0' + (readValue/10000U);
+    }
+    if(readValue >= 1000U)
+    {
+        char_array[index++] = '0' + (readValue/1000U)%10U;
+    }
+    if(readValue >= 100U){
+        char_array[index++] = '0' + (readValue/100U)%10U;
+    }
     char_array[index++] = '0' + (readValue/10U)%10U;
     char_array[index++] = '.';
     char_array[index++] = '0' + readValue%10U;
@@ -1437,20 +1496,27 @@ void TsacTab_Update(MainWindow* window)
     char_array[index++] = 0;
     window->ui->ReportedChargingCurrent->setText((const QString)QString(char_array));
 
-    //TSAC_ReportedChargingCurrent
+    //TSAC_ReportedChargingVolts
     readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.ReportedChargingVolts);
     index = 0U;
+    if(readValue >= 10000U)
+    {
+        char_array[index++] = '0' + (readValue/10000U);
+    }
     if(readValue >= 1000U)
     {
-        char_array[index++] = '0' + (readValue/1000U);
+        char_array[index++] = '0' + (readValue/1000U)%10U;
     }
-    char_array[index++] = '0' + (readValue/100U)%10U;
+    if(readValue >= 100U){
+        char_array[index++] = '0' + (readValue/100U)%10U;
+    }
     char_array[index++] = '0' + (readValue/10U)%10U;
     char_array[index++] = '.';
     char_array[index++] = '0' + readValue%10U;
     char_array[index++] = ' ';
     char_array[index++] = 'V';
     char_array[index++] = 0;
+
     window->ui->ReportedChargingVoltage->setText((const QString)QString(char_array));
 
 }

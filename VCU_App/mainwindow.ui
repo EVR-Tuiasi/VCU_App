@@ -177,7 +177,7 @@
        <enum>QTabWidget::TabShape::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_General">
        <property name="palette">
@@ -3246,7 +3246,7 @@
                     <property name="styleSheet">
                      <string notr="true">    background-color: white;
     color: black;
-    border: 2px solid red;
+    border: 2px solid yellow;
     border-radius: 2px;</string>
                     </property>
                     <property name="readOnly">
@@ -14527,7 +14527,7 @@
                         <property name="styleSheet">
                          <string notr="true">    background-color: white;
     color: black;
-    border: 2px solid red;
+    border: 2px solid yellow;
     border-radius: 2px;</string>
                         </property>
                         <property name="readOnly">
@@ -15128,7 +15128,7 @@
                         <property name="styleSheet">
                          <string notr="true">    background-color: white;
     color: black;
-    border: 2px solid red;
+    border: 2px solid yellow;
     border-radius: 2px;</string>
                         </property>
                         <property name="readOnly">
@@ -18508,7 +18508,7 @@
                     <property name="styleSheet">
                      <string notr="true">    background-color: white;
     color: black;
-    border: 2px solid red;
+    border: 2px solid yellow;
     border-radius: 2px;</string>
                     </property>
                     <property name="readOnly">
@@ -19109,7 +19109,7 @@
                     <property name="styleSheet">
                      <string notr="true">    background-color: white;
     color: black;
-    border: 2px solid red;
+    border: 2px solid yellow;
     border-radius: 2px;</string>
                     </property>
                     <property name="readOnly">
@@ -19710,7 +19710,7 @@
                     <property name="styleSheet">
                      <string notr="true">    background-color: white;
     color: black;
-    border: 2px solid red;
+    border: 2px solid yellow;
     border-radius: 2px;</string>
                     </property>
                     <property name="readOnly">
@@ -20311,7 +20311,7 @@
                     <property name="styleSheet">
                      <string notr="true">    background-color: white;
     color: black;
-    border: 2px solid red;
+    border: 2px solid yellow;
     border-radius: 2px;</string>
                     </property>
                     <property name="readOnly">
@@ -21906,7 +21906,7 @@
                     <property name="styleSheet">
                      <string notr="true">    background-color: white;
     color: black;
-    border: 2px solid red;
+    border: 2px solid yellow;
     border-radius: 2px;</string>
                     </property>
                     <property name="readOnly">
@@ -22507,7 +22507,7 @@
                     <property name="styleSheet">
                      <string notr="true">    background-color: white;
     color: black;
-    border: 2px solid red;
+    border: 2px solid yellow;
     border-radius: 2px;</string>
                     </property>
                     <property name="readOnly">
@@ -23108,7 +23108,7 @@
                     <property name="styleSheet">
                      <string notr="true">    background-color: white;
     color: black;
-    border: 2px solid red;
+    border: 2px solid yellow;
     border-radius: 2px;</string>
                     </property>
                     <property name="readOnly">
@@ -23709,7 +23709,7 @@
                     <property name="styleSheet">
                      <string notr="true">    background-color: white;
     color: black;
-    border: 2px solid red;
+    border: 2px solid yellow;
     border-radius: 2px;</string>
                     </property>
                     <property name="readOnly">
@@ -26558,7 +26558,7 @@
                        <property name="styleSheet">
                         <string notr="true">    background-color: white;
     color: black;
-    border: 2px solid red;
+    border: 2px solid yellow;
     border-radius: 2px;</string>
                        </property>
                       </widget>
@@ -33662,7 +33662,7 @@
                      <item>
                       <widget class="QLabel" name="label_125">
                        <property name="text">
-                        <string>Reporterted voltage:</string>
+                        <string>Reported voltage:</string>
                        </property>
                       </widget>
                      </item>
@@ -33681,14 +33681,18 @@
                       <widget class="QLineEdit" name="LineEdit_Charging_maxVolt"/>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="LineEdit_Charging_maxCurrent"/>
+                      <widget class="QLineEdit" name="LineEdit_Charging_maxCurrent">
+                       <property name="styleSheet">
+                        <string notr="true"/>
+                       </property>
+                      </widget>
                      </item>
                      <item>
                       <widget class="QLineEdit" name="ReportedChargingVoltage">
                        <property name="styleSheet">
                         <string notr="true">    background-color: white;
     color: black;
-    border: 2px solid yellow;
+    border: 2px solid green;
     border-radius: 2px;</string>
                        </property>
                       </widget>
@@ -33699,7 +33703,10 @@
                         <string notr="true">    background-color: white;
     color: black;
     border: 2px solid red;
-    border-radius: 2px;</string>
+    bo    background-color: white;
+    color: black;
+    border: 2px solid yellow;
+    border-radius: 2px;rder-radius: 2px;</string>
                        </property>
                       </widget>
                      </item>

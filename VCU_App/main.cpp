@@ -65,6 +65,8 @@ void SimulatedData_Update(void)
     WriteUartDataAtAddress((cnt*2)%1024, &MonitoredValues.TsacMonitoredValues.LowestCellVoltage);
     WriteUartDataAtAddress((cnt*2)%2048, &MonitoredValues.TsacMonitoredValues.OverallVoltage);
     WriteUartDataAtAddress(((cnt+60)*8)%8096, &MonitoredValues.TsacMonitoredValues.OverallCurrent);
+    WriteUartDataAtAddress((cnt*50)%65536, &MonitoredValues.TsacMonitoredValues.ReportedChargingCurrent);
+    WriteUartDataAtAddress(((cnt)*25)%655366, &MonitoredValues.TsacMonitoredValues.ReportedChargingVolts);
 
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.TsacMonitoredValues.AmsError);
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.TsacMonitoredValues.TransceiverError);

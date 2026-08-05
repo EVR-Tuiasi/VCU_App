@@ -9,15 +9,15 @@ struct Signal
 {
     QVector<double> buffer;
     QColor color;
+    double minValue=0.0, maxValue=1.0;
 };
 
 class Graph : public QWidget {
     Q_OBJECT
 public:
     explicit Graph(QWidget *parent = nullptr);
-    void setRange_Oy(double minVal, double maxVal);
-//    void setMaxSamples_Ox(int count);
     void addSample(int index, double Value);
+    void  setSignalRange(int index, double minVal, double maxVal);
     void setSignalCount(int count);
 
 
@@ -28,9 +28,7 @@ private:
 
     QVector<Signal> signalDataBuffers;
 
-    double valueToY(double val);
-    double minGraph = -1.0;
-    double maxGraph = 1.0;
+    double valueToY(double val,double minVal, double maxVal);
 
 
 
