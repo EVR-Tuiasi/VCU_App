@@ -66,7 +66,7 @@ void SimulatedData_Update(void)
     WriteUartDataAtAddress((cnt*2)%2048, &MonitoredValues.TsacMonitoredValues.OverallVoltage);
     WriteUartDataAtAddress(((cnt+60)*8)%8096, &MonitoredValues.TsacMonitoredValues.OverallCurrent);
     WriteUartDataAtAddress((cnt*50)%65536, &MonitoredValues.TsacMonitoredValues.ReportedChargingCurrent);
-    WriteUartDataAtAddress(((cnt)*25)%655366, &MonitoredValues.TsacMonitoredValues.ReportedChargingVolts);
+    WriteUartDataAtAddress(((cnt+100)*50)%65536, &MonitoredValues.TsacMonitoredValues.ReportedChargingVolts);
 
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.TsacMonitoredValues.AmsError);
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.TsacMonitoredValues.TransceiverError);
@@ -101,17 +101,17 @@ void SimulatedData_Update(void)
 
     WriteUartDataAtAddress(cnt%256, &MonitoredValues.InvertersMonitoredValues.LeftInverterTemperature);
     WriteUartDataAtAddress((cnt+60)%256, &MonitoredValues.InvertersMonitoredValues.LeftMotorTemperature);
-    WriteUartDataAtAddress(cnt%1801, &MonitoredValues.InvertersMonitoredValues.LeftInverterInputVoltage);
+    WriteUartDataAtAddress((cnt*10)%1801, &MonitoredValues.InvertersMonitoredValues.LeftInverterInputVoltage);
     WriteUartDataAtAddress(cnt%401, &MonitoredValues.InvertersMonitoredValues.LeftInverterCurrent);
-    WriteUartDataAtAddress(cnt%6000, &MonitoredValues.InvertersMonitoredValues.LeftMotorRpm);
+    WriteUartDataAtAddress((cnt*20)%6000, &MonitoredValues.InvertersMonitoredValues.LeftMotorRpm);
     WriteUartDataAtAddress(cnt%256, &MonitoredValues.InvertersMonitoredValues.LeftMotorSpeedKmh);
     WriteUartDataAtAddress(cnt%251, &MonitoredValues.InvertersMonitoredValues.LeftInverterThrottle);
     WriteUartDataAtAddress((cnt+60)%251, &MonitoredValues.InvertersMonitoredValues.LeftInverterThrottleFeedback);
     WriteUartDataAtAddress(cnt%256, &MonitoredValues.InvertersMonitoredValues.RightInverterTemperature);
     WriteUartDataAtAddress((cnt+60)%256, &MonitoredValues.InvertersMonitoredValues.RightMotorTemperature);
-    WriteUartDataAtAddress(cnt%1801, &MonitoredValues.InvertersMonitoredValues.RightInverterInputVoltage);
+    WriteUartDataAtAddress((cnt*10)%1801, &MonitoredValues.InvertersMonitoredValues.RightInverterInputVoltage);
     WriteUartDataAtAddress(cnt%401, &MonitoredValues.InvertersMonitoredValues.RightInverterCurrent);
-    WriteUartDataAtAddress(cnt%6000, &MonitoredValues.InvertersMonitoredValues.RightMotorRpm);
+    WriteUartDataAtAddress((cnt*20)%6000, &MonitoredValues.InvertersMonitoredValues.RightMotorRpm);
     WriteUartDataAtAddress(cnt%256, &MonitoredValues.InvertersMonitoredValues.RightMotorSpeedKmh);
     WriteUartDataAtAddress(cnt%251, &MonitoredValues.InvertersMonitoredValues.RightInverterThrottle);
     WriteUartDataAtAddress((cnt+60)%251, &MonitoredValues.InvertersMonitoredValues.RightInverterThrottleFeedback);
