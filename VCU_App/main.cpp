@@ -73,6 +73,8 @@ void SimulatedData_Update(void)
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.TsacMonitoredValues.ShuntError);
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.TsacMonitoredValues.Bms0Error);
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.TsacMonitoredValues.Bms1Error);
+    WriteUartDataAtAddress(cnt&1, &MonitoredValues.TsacMonitoredValues.ThermistorsError);
+    WriteUartDataAtAddress(cnt&1, &MonitoredValues.TsacMonitoredValues.ChargerStatus);
 
     WriteUartDataAtAddress((cnt*30)%16384, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor1Voltage);
     WriteUartDataAtAddress(((cnt+60)*30)%16384, &MonitoredValues.PedalsMonitoredValues.AcceleratorSensor2Voltage);

@@ -1022,7 +1022,7 @@ void GeneralTab_Update(MainWindow* window)
         else
         {
             window->ui->General_Car_Status_Qlabel->setStyleSheet("background-color: green;");
-            window->ui->General_Car_Status_Qlabel->setText("REVERSE");
+            window->ui->General_Car_Status_Qlabel->setText("DRIVING");
         }
     }
     //DASHBOARD_ActivationButtonPressed
@@ -1084,7 +1084,7 @@ void GeneralTab_Update(MainWindow* window)
     else
     {
         window->ui->General_7seg_HStatus_Qlabel->setStyleSheet("background-color: red;");
-        window->ui->General_7seg_HStatus_Qlabel->setText("INACTIVED");
+        window->ui->General_7seg_HStatus_Qlabel->setText("INACTIVE");
     }
 
     //Pedals_Sensors
@@ -1164,6 +1164,19 @@ void GeneralTab_Update(MainWindow* window)
         window->ui->General_Bms_HStatus_Qlabel->setStyleSheet("QLabel { background-color: red; }");
     }
     window->ui->General_Bms_HStatus_Qlabel->setToolTip(tooltip_Bms);
+
+    //TSAC_Thermistors
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.ThermistorsError);
+    if(readValue == 0)
+    {
+        window->ui->General_Thermistors_HStatus_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->General_Thermistors_HStatus_Qlabel->setText("SAFE");
+    }
+    else
+    {
+        window->ui->General_Thermistors_HStatus_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->General_Thermistors_HStatus_Qlabel->setText("Error");
+    }
 }
 
 void TsacTab_Update(MainWindow* window)
@@ -1335,6 +1348,7 @@ void TsacTab_Update(MainWindow* window)
     char_array[index++] = 0;
     window->ui->Tsac_Current_Median_lineEdit->setText((const QString)QString(char_array));
 
+    //TSAC_StatusIndicators
 
     //TSAC_IsAmsSafe
     readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.AmsError);
@@ -1347,6 +1361,18 @@ void TsacTab_Update(MainWindow* window)
     {
         window->ui->TSAC_Ams_Status_Qlabel->setStyleSheet("background-color: red;");
         window->ui->TSAC_Ams_Status_Qlabel->setText("UNSAFE");
+    }
+    //TSAC_ChargerStatus
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.ChargerStatus);
+    if(readValue == 0)
+    {
+        window->ui->TSAC_Charger_Status_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->TSAC_Charger_Status_Qlabel->setText("On");
+    }
+    else
+    {
+        window->ui->TSAC_Charger_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->TSAC_Charger_Status_Qlabel->setText("Off");
     }
 
     //TSAC_IsShuntWorking
@@ -1401,6 +1427,21 @@ void TsacTab_Update(MainWindow* window)
         window->ui->TSAC_BMS1_Status_Qlabel->setText("Error");
     }
 
+    //TSAC_Thermistors
+    readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.ThermistorsError);
+    if(readValue == 0)
+    {
+        window->ui->TSAC_Thermistors_Status_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->TSAC_Thermistors_Status_Qlabel->setText("SAFE");
+    }
+    else
+    {
+        window->ui->TSAC_Thermistors_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->TSAC_Thermistors_Status_Qlabel->setText("Error");
+    }
+
+
+    //TABLEs
     //TSAC_CellTemperatures_Table
     window->ui->Cell_Temp_tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     window->ui->Cell_Temp_tableWidget->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
