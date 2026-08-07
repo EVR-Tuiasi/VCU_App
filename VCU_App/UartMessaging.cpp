@@ -296,6 +296,7 @@ static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){/
         case ID_UART_INVERTOARE:
             WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.IsCarRunning);
             WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.IsCarInReverse);
+             WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.InvertersError);
             WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.LeftInverterCurrent);
             WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.InvertersMonitoredValues.RightInverterCurrent);
 			break;

@@ -119,6 +119,7 @@ void SimulatedData_Update(void)
     WriteUartDataAtAddress((cnt+60)%251, &MonitoredValues.InvertersMonitoredValues.RightInverterThrottleFeedback);
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.InvertersMonitoredValues.IsCarInReverse);
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.InvertersMonitoredValues.IsCarRunning);
+    WriteUartDataAtAddress(cnt&1, &MonitoredValues.InvertersMonitoredValues.InvertersError);
 
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.DashboardMonitoredValues.ActivationButtonPressed);
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.DashboardMonitoredValues.CarReverseCommandPressed);

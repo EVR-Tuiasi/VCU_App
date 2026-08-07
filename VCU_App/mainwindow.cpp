@@ -1177,6 +1177,19 @@ void GeneralTab_Update(MainWindow* window)
         window->ui->General_Thermistors_HStatus_Qlabel->setStyleSheet("background-color: red;");
         window->ui->General_Thermistors_HStatus_Qlabel->setText("Error");
     }
+
+    //General_Inverters_HStatus_Qlabel
+    readValue = ReadUartDataFromAddress(&MonitoredValues.InvertersMonitoredValues.InvertersError);
+    if(readValue == 0)
+    {
+        window->ui->General_Inverters_HStatus_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->General_Inverters_HStatus_Qlabel->setText("SAFE");
+    }
+    else
+    {
+        window->ui->General_Inverters_HStatus_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->General_Inverters_HStatus_Qlabel->setText("Error");
+    }
 }
 
 void TsacTab_Update(MainWindow* window)
