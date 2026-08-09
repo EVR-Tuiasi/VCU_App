@@ -134,14 +134,15 @@ void UartMessaging_SetBaudRate(int BaudRate)
 
 void UartMessaging_SetPortName(QString port){
     settings.port = port;
+    qDebug()<<"PORT COM:"<<settings.port;
 }
 
 
 void UartMessaging_Update(void){
     if(!serialPort)
         serialPort = new QSerialPort();
-    /*qDebug()<<"PORT COM:"<<serialPort->portName();
-    qDebug()<<"Uart: val.shouldPortBeConencted:"<<settings.desiredBaudRate;
+
+    /*qDebug()<<"Uart: val.shouldPortBeConencted:"<<settings.desiredBaudRate;
     qDebug()<<"Uart: val.shouldPortBeConencted:"<<settings.shouldPortBeConnected;*/
     if(settings.shouldPortBeConnected){
         if(serialPort->isOpen()){
