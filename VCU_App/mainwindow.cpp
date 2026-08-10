@@ -22,6 +22,7 @@ void MainWindow_Create(){
 
 void MainWindow_Show(void){
     window->show();
+    window->showMaximized();
 }
 
 MainWindow::MainWindow(QWidget *parent)
@@ -56,6 +57,9 @@ MainWindow::MainWindow(QWidget *parent)
             ui->Com_Port->addItem(ports[index].portName());
         }
     }
+    UartMessaging_SetPortName(ports[ports.size()-1].portName());
+    ui->Com_Port->setCurrentIndex(ports.size() - 1);
+
 
     //BAUDRATE and CONNECTBUTTON
     ui->comboBox_BaudRate->setCurrentIndex(10);
@@ -76,14 +80,6 @@ MainWindow::MainWindow(QWidget *parent)
             ui->Cell_Volt_tableWidget->setItem(row_index, col_index, new QTableWidgetItem("--"));
 
 }
-
-
-/*void MainWindow::on_ComPort_currentIndexChanged(int ComPort_index)
-{
-    if (ComPort_index >= 0)
-        UartMessaging_SetPortName(ui->Com_Port->currentText());
-    // qDebug()<<"Main: val.shouldPortBeConencted:"<<BaudRate_array[BaudRate_index];
-}*/
 
 void MainWindow::on_comboBox_BaudRate_currentIndexChanged(int BaudRate_index)
 {
