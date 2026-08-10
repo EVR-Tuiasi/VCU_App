@@ -1190,6 +1190,58 @@ void GeneralTab_Update(MainWindow* window)
         window->ui->General_Inverters_HStatus_Qlabel->setStyleSheet("background-color: red;");
         window->ui->General_Inverters_HStatus_Qlabel->setText("Error");
     }
+
+    //General_Dashboard_Status_Qlabel
+    readValue = ReadUartDataFromAddress(&MonitoredValues.CommunicationsMonitoredValues.IsDashboardVCUSimulated);
+    if(readValue == 0)
+    {
+        window->ui->General_Dashboard_Status_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->General_Dashboard_Status_Qlabel->setText("SAFE");
+    }
+    else
+    {
+        window->ui->General_Dashboard_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->General_Dashboard_Status_Qlabel->setText("Error");
+    }
+
+    //General_Inverters_Status_Qlabel
+    readValue = ReadUartDataFromAddress(&MonitoredValues.CommunicationsMonitoredValues.IsInvertersVCUSimulated);
+    if(readValue == 0)
+    {
+        window->ui->General_Inverters_Status_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->General_Inverters_Status_Qlabel->setText("SAFE");
+    }
+    else
+    {
+        window->ui->General_Inverters_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->General_Inverters_Status_Qlabel->setText("Error");
+    }
+
+    //General_Pedals_Status_Qlabel
+    readValue = ReadUartDataFromAddress(&MonitoredValues.CommunicationsMonitoredValues.IsPedalsVCUSimulated);
+    if(readValue == 0)
+    {
+        window->ui->General_Pedals_Status_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->General_Pedals_Status_Qlabel->setText("SAFE");
+    }
+    else
+    {
+        window->ui->General_Pedals_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->General_Pedals_Status_Qlabel->setText("Error");
+    }
+
+    //General_Tsac_Status_Qlabel
+    readValue = ReadUartDataFromAddress(&MonitoredValues.CommunicationsMonitoredValues.IsTsacVCUSimulated);
+    if(readValue == 0)
+    {
+        window->ui->General_Tsac_Status_Qlabel->setStyleSheet("background-color: green;");
+        window->ui->General_Tsac_Status_Qlabel->setText("SAFE");
+    }
+    else
+    {
+        window->ui->General_Tsac_Status_Qlabel->setStyleSheet("background-color: red;");
+        window->ui->General_Tsac_Status_Qlabel->setText("Error");
+    }
 }
 
 void TsacTab_Update(MainWindow* window)

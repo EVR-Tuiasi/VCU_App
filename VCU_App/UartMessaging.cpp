@@ -223,6 +223,7 @@ static UartBufferValidity_t UartMessaging_CheckValidityOfBuffer(uint8_t buffer[1
         case ID_UART_INVERTOARE:
         case ID_UART_INVERTOR_STANGA:
         case ID_UART_INVERTOR_DREAPTA:
+        case ID_UART_COMUNICATII:
             return BufferValid;
         default:
             return BufferHeaderInvalid;

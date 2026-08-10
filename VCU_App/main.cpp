@@ -125,6 +125,11 @@ void SimulatedData_Update(void)
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.DashboardMonitoredValues.CarReverseCommandPressed);
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.DashboardMonitoredValues.IsDisplayWorking);
     WriteUartDataAtAddress(cnt&1, &MonitoredValues.DashboardMonitoredValues.IsSegmentsDriverWorking);
+
+    WriteUartDataAtAddress(cnt&1, &MonitoredValues.CommunicationsMonitoredValues.IsDashboardVCUSimulated);
+    WriteUartDataAtAddress(cnt&1, &MonitoredValues.CommunicationsMonitoredValues.IsInvertersVCUSimulated);
+    WriteUartDataAtAddress(cnt&1, &MonitoredValues.CommunicationsMonitoredValues.IsPedalsVCUSimulated);
+    WriteUartDataAtAddress(cnt&1, &MonitoredValues.CommunicationsMonitoredValues.IsTsacVCUSimulated);
 	cnt++;
 
     for (int i = 0; i < CELLS_NUM; i++)
