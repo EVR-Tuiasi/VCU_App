@@ -1033,7 +1033,7 @@ void GeneralTab_Update(MainWindow* window)
         window->ui->General_Activation_Status_Qlabel->setStyleSheet("background-color: red;");
         window->ui->General_Activation_Status_Qlabel->setText("INACTIVE");
     }
-    //DASHBOARD_CarReverseCommandPressed
+   /* //DASHBOARD_CarReverseCommandPressed
     readValue = ReadUartDataFromAddress(&MonitoredValues.DashboardMonitoredValues.CarReverseCommandPressed);
     if(readValue == 1)
     {
@@ -1044,7 +1044,7 @@ void GeneralTab_Update(MainWindow* window)
     {
         window->ui->General_Reverse_Status_Qlabel->setStyleSheet("background-color: red;");
         window->ui->General_Reverse_Status_Qlabel->setText("INACTIVE");
-    }
+    }*/
     //TSAC_IsAmsSafe
     readValue = ReadUartDataFromAddress(&MonitoredValues.TsacMonitoredValues.AmsError);
     if(readValue == 0)
