@@ -1188,7 +1188,7 @@ void GeneralTab_Update(MainWindow* window)
     }
 
     //General_Dashboard_Status_Qlabel
-    readValue = ReadUartDataFromAddress(&MonitoredValues.CommunicationsMonitoredValues.IsDashboardVCUSimulated);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.CommunicationsMonitoredValues.DashboardTimeout);
     if(readValue == 0)
     {
         window->ui->General_Dashboard_Status_Qlabel->setStyleSheet("background-color: green;");
@@ -1201,7 +1201,7 @@ void GeneralTab_Update(MainWindow* window)
     }
 
     //General_Inverters_Status_Qlabel
-    readValue = ReadUartDataFromAddress(&MonitoredValues.CommunicationsMonitoredValues.IsInvertersVCUSimulated);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.CommunicationsMonitoredValues.InvertersTimeout);
     if(readValue == 0)
     {
         window->ui->General_Inverters_Status_Qlabel->setStyleSheet("background-color: green;");
@@ -1214,7 +1214,7 @@ void GeneralTab_Update(MainWindow* window)
     }
 
     //General_Pedals_Status_Qlabel
-    readValue = ReadUartDataFromAddress(&MonitoredValues.CommunicationsMonitoredValues.IsPedalsVCUSimulated);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.CommunicationsMonitoredValues.PedalsTimeout);
     if(readValue == 0)
     {
         window->ui->General_Pedals_Status_Qlabel->setStyleSheet("background-color: green;");
@@ -1227,7 +1227,7 @@ void GeneralTab_Update(MainWindow* window)
     }
 
     //General_Tsac_Status_Qlabel
-    readValue = ReadUartDataFromAddress(&MonitoredValues.CommunicationsMonitoredValues.IsTsacVCUSimulated);
+    readValue = ReadUartDataFromAddress(&MonitoredValues.CommunicationsMonitoredValues.TsacTimeout);
     if(readValue == 0)
     {
         window->ui->General_Tsac_Status_Qlabel->setStyleSheet("background-color: green;");

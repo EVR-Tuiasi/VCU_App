@@ -544,7 +544,35 @@ MonitoredValues_t MonitoredValues ={
             1U,	   /* nrOfBits */
             60U,   /* shift */
             1U     /* maxValue */
-        }
+        },
+        {/* InvertersTimeout */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            59U,   /* shift */
+            1U     /* maxValue */
+         },
+         {/* TsacTimeout */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            58U,   /* shift */
+            1U     /* maxValue */
+         },
+         {/* DashboardTimeout */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            57U,   /* shift */
+            1U     /* maxValue */
+         },
+         {/* PedalsTimeout */
+            0,	   /* value */
+            0,	   /* value */
+            1U,	   /* nrOfBits */
+            56U,   /* shift */
+            1U     /* maxValue */
+         }
     }/* END CommunicationsMonitoredValues */
 };
 

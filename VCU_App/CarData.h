@@ -198,6 +198,10 @@ typedef struct{
 	BoolMonitoredValue_t IsTsacVCUSimulated;							/* 1 bit, 0 means NOT simulated, 1 means simulated */
 	BoolMonitoredValue_t IsDashboardVCUSimulated;						/* 1 bit, 0 means NOT simulated, 1 means simulated */
 	BoolMonitoredValue_t IsPedalsVCUSimulated;							/* 1 bit, 0 means NOT simulated, 1 means simulated */
+    BoolMonitoredValue_t InvertersTimeout;								/* 1 bit, 0 means NOT timeout, 1 means timeout */
+    BoolMonitoredValue_t TsacTimeout;									/* 1 bit, 0 means NOT timeout, 1 means timeout */
+    BoolMonitoredValue_t DashboardTimeout;								/* 1 bit, 0 means NOT timeout, 1 means timeout */
+    BoolMonitoredValue_t PedalsTimeout;									/* 1 bit, 0 means NOT timeout, 1 means timeout */
 }CommunicationsMonitoredValues_t;
 
 typedef struct{

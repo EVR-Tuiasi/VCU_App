@@ -374,10 +374,10 @@ static void UartMessaging_ExtractValuesFromValidatedBuffer(uint8_t buffer[10]){/
             WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.DashboardMonitoredValues.IsSegmentsDriverWorking);
 			break;
         case ID_UART_COMUNICATII:
-            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.IsDashboardVCUSimulated);
-            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.IsInvertersVCUSimulated);
-            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.IsPedalsVCUSimulated);
-            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.IsTsacVCUSimulated);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.InvertersTimeout);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.TsacTimeout);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.DashboardTimeout);
+            WriteUartDataFromRawBufferAtAddress(buffer_merged, &MonitoredValues.CommunicationsMonitoredValues.PedalsTimeout);
 			break;
     }
 }
